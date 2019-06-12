@@ -14,8 +14,10 @@
 //
 
 #include "inet/common/packet/chunk/SliceChunk.h"
+#include "inet/common/packet/chunk/FieldsChunk.h"
 #include "inet/common/packet/serializer/ChunkSerializer.h"
 #include "inet/common/packet/serializer/ChunkSerializerRegistry.h"
+#include "inet/common/ObjectPrinter.h"
 
 namespace inet {
 
@@ -163,6 +165,23 @@ void Chunk::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk,
     auto endPosition = stream.getLength();
     auto expectedChunkLength = length == b(-1) ? chunk->getChunkLength() - offset : length;
     CHUNK_CHECK_IMPLEMENTATION(expectedChunkLength == endPosition - startPosition);
+    if (dynamic_cast<const FieldsChunk*>(chunkPointer) != nullptr){
+        ObjectPrinter p(nullptr, "*: not mutable and not className and not fullName and not fullPath and not info and not rawBin and not rawHex");
+        std::string orig = p.printObjectToString(const_cast<Chunk*>(chunk.get()));
+
+        std::vector<uint8_t> bytes;
+        stream.copyData(bytes, startPosition, endPosition - startPosition);
+        MemoryInputStream tmpStream(bytes);
+        const Ptr<Chunk> restoredChunk = deserialize(tmpStream, typeid(*chunkPointer));
+        std::string restored = p.printObjectToString(restoredChunk.get());
+
+        if (orig != restored) {
+            EV_STATICCONTEXT;
+            EV << orig << endl;
+            EV << restored << endl;
+            ASSERT(false);
+        }
+    }
 #endif
 }
 
@@ -171,11 +190,31 @@ const Ptr<Chunk> Chunk::deserialize(MemoryInputStream& stream, const std::type_i
     auto serializer = ChunkSerializerRegistry::globalRegistry.getSerializer(typeInfo);
 #if CHUNK_CHECK_IMPLEMENTATION_ENABLED
     auto startPosition = B(stream.getPosition());
+    auto startPosition_b = b(stream.getPosition());
 #endif
     auto chunk = serializer->deserialize(stream, typeInfo);
 #if CHUNK_CHECK_IMPLEMENTATION_ENABLED
     auto endPosition = B(stream.getPosition());
+    auto endPosition_b = b(stream.getPosition());
     CHUNK_CHECK_IMPLEMENTATION(chunk->getChunkLength() == endPosition - startPosition);
+    ///////////////////////////////////////////////////////////////////////////////////
+//    MemoryOutputStream tmpStream;
+//    serializer->serialize(tmpStream, chunk, startPosition_b, endPosition_b);
+//
+//    //V1
+//    std::vector<uint8_t> reserializedArray;
+//    tmpStream.copyData(reserializedArray, B(0), endPosition - startPosition);
+//    std::vector<uint8_t> originalArray;
+//    stream.copyData(originalArray, startPosition, endPosition);
+//    CHUNK_CHECK_IMPLEMENTATION(reserializedArray == originalArray);
+    //CHUNK_CHECK_IMPLEMENTATION(mStream.getData() == stream.getData());
+    //CHUNK_CHECK_IMPLEMENTATION(std::equal(tmpStream.getData().begin(), tmpStream.getData().end(), std::advance(stream.getData().begin(), startPosition.get())));
+
+    //V2
+    //for(int i = 0; i < (endPosition - startPosition); ++i){
+    //    CHUNK_CHECK_IMPLEMENTATION(tmpStream.getData()[i] == stream.getData()[i + startPosition]);
+    //}
+    ///////////////////////////////////////////////////////////////////////////////////
 #endif
     if (stream.isReadBeyondEnd())
         chunk->markIncomplete();
