@@ -21,28 +21,54 @@ namespace inet {
 
 Register_Serializer(LinkStateMsg, LinkStatePacketSerializer);
 
+namespace {
+
+void write64BitDoubleValue(MemoryOutputStream& stream, const double val) {
+    uint8_t rawBytes[8];
+    std::memcpy(rawBytes, &val, 8);
+    stream.writeBytes(rawBytes, B(8));
+}
+
+double read64BitDoubleValue(MemoryInputStream& stream) {
+    uint8_t rawBytes[8];
+    stream.readBytes(rawBytes, B(8));
+    double val;
+    std::memcpy(&val, rawBytes, 8);
+    return val;
+}
+
+}
+
 void LinkStatePacketSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const
 {
-    throw cRuntimeError("LinkStatePacketSerializer not fully implemented yet.");
+    std::cout << "initial length of the stream: " << B(stream.getLength()) << endl;
     const auto& linkStateMsg = staticPtrCast<const LinkStateMsg>(chunk);
     size_t size = linkStateMsg->getLinkInfoArraySize();
     stream.writeByte(size);
-    for(size_t i = 0; i < size; ++i){
-        stream.writeIpv4Address(linkStateMsg->getLinkInfo(i).advrouter);
-        stream.writeIpv4Address(linkStateMsg->getLinkInfo(i).linkid);
-        stream.writeIpv4Address(linkStateMsg->getLinkInfo(i).local);
-        stream.writeIpv4Address(linkStateMsg->getLinkInfo(i).remote);
-//        stream.writeDoubleOn64Bits(linkStateMsg->getLinkInfo(i).metric);
-//        stream.writeDoubleOn64Bits(linkStateMsg->getLinkInfo(i).MaxBandwidth);
-//        for(int e = 0; e < 8; ++e)
-//            stream.writeDoubleOn64Bits(linkStateMsg->getLinkInfo(i).UnResvBandwidth[i]);
-        stream.writeUint64Be(linkStateMsg->getLinkInfo(i).timestamp.raw());
-        stream.writeUint32Be(linkStateMsg->getLinkInfo(i).sourceId);
-        stream.writeUint32Be(linkStateMsg->getLinkInfo(i).messageId);
-        stream.writeBit(linkStateMsg->getLinkInfo(i).state);
+    std::cout << "before length of the stream: " << B(stream.getLength()) << endl;
+    for (size_t i = 0; i < size; ++i) {
+        auto& linkInfo = linkStateMsg->getLinkInfo(i);
+        stream.writeIpv4Address(linkInfo.advrouter);
+        stream.writeIpv4Address(linkInfo.linkid);
+        stream.writeIpv4Address(linkInfo.local);
+        stream.writeIpv4Address(linkInfo.remote);
+        write64BitDoubleValue(stream, linkInfo.metric);
+        write64BitDoubleValue(stream, linkInfo.MaxBandwidth);
+        for (uint8_t e = 0; e < 8; ++e) {
+            write64BitDoubleValue(stream, linkInfo.UnResvBandwidth[e]);
+        }
+        stream.writeUint64Be(linkInfo.timestamp.inUnit(SIMTIME_MS));
+        stream.writeUint32Be(linkInfo.sourceId);
+        stream.writeUint32Be(linkInfo.messageId);
+        stream.writeBit(linkInfo.state);
+        stream.writeBitRepeatedly(false, 7);
+        std::cout << "after length of the stream: " << B(stream.getLength()) << endl;
     }
     stream.writeBit(linkStateMsg->getRequest());
+    stream.writeBitRepeatedly(false, 7);
     stream.writeUint32Be(linkStateMsg->getCommand());
+    std::cout << "chunkLength: " << B(linkStateMsg->getChunkLength()) << endl;
+    std::cout << "length of the stream: " << B(stream.getLength()) << endl;
 }
 
 const Ptr<Chunk> LinkStatePacketSerializer::deserialize(MemoryInputStream& stream) const
@@ -50,25 +76,28 @@ const Ptr<Chunk> LinkStatePacketSerializer::deserialize(MemoryInputStream& strea
     auto linkStateMsg = makeShared<LinkStateMsg>();
     size_t size = stream.readByte();
     linkStateMsg->setLinkInfoArraySize(size);
-    TeLinkStateInfo linkInfo;
-    for(size_t i = 0; i < size; ++i){
-        linkInfo.advrouter = Ipv4Address(stream.readIpv4Address());
-        linkInfo.linkid = Ipv4Address(stream.readIpv4Address());
-        linkInfo.local = Ipv4Address(stream.readIpv4Address());
-        linkInfo.remote = Ipv4Address(stream.readIpv4Address());
-//        linkInfo.metric = stream.readDoubleAs64BitValue();
-//        linkInfo.MaxBandwidth = stream.readDoubleAs64BitValue();
-//        for(int e = 0; i < 8; ++e)
-//            linkInfo.UnResvBandwidth[e] = stream.readDoubleAs64BitValue();
-        linkInfo.timestamp = SimTime().setRaw(stream.readUint64Be());
-        linkInfo.sourceId = stream.readUint32Be();
-        linkInfo.messageId = stream.readUint32Be();
-        linkInfo.state = stream.readBit();
-
-        linkStateMsg->setLinkInfo(i, linkInfo);
+    for (size_t i = 0; i < size; ++i) {
+        TeLinkStateInfo* linkInfo = new TeLinkStateInfo();
+        linkInfo->advrouter = Ipv4Address(stream.readIpv4Address());
+        linkInfo->linkid = Ipv4Address(stream.readIpv4Address());
+        linkInfo->local = Ipv4Address(stream.readIpv4Address());
+        linkInfo->remote = Ipv4Address(stream.readIpv4Address());
+        linkInfo->metric = read64BitDoubleValue(stream);
+        linkInfo->MaxBandwidth = read64BitDoubleValue(stream);
+        for (uint8_t e = 0; e < 8; ++e) {
+            linkInfo->UnResvBandwidth[e] = read64BitDoubleValue(stream);
+        }
+        linkInfo->timestamp = SimTime(stream.readUint64Be(), SIMTIME_MS);
+        linkInfo->sourceId = stream.readUint32Be();
+        linkInfo->messageId = stream.readUint32Be();
+        linkInfo->state = stream.readBit();
+        stream.readBitRepeatedly(false, 7);
+        linkStateMsg->setLinkInfo(i, *linkInfo);
     }
     linkStateMsg->setRequest(stream.readBit());
+    stream.readBitRepeatedly(false, 7);
     linkStateMsg->setCommand(stream.readUint32Be());
+    linkStateMsg->setChunkLength(B(size * 113 + 6));
     return linkStateMsg;
 }
 
