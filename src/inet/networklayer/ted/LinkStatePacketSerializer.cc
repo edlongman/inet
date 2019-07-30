@@ -41,11 +41,9 @@ double read64BitDoubleValue(MemoryInputStream& stream) {
 
 void LinkStatePacketSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const
 {
-    std::cout << "initial length of the stream: " << B(stream.getLength()) << endl;
     const auto& linkStateMsg = staticPtrCast<const LinkStateMsg>(chunk);
     size_t size = linkStateMsg->getLinkInfoArraySize();
     stream.writeByte(size);
-    std::cout << "before length of the stream: " << B(stream.getLength()) << endl;
     for (size_t i = 0; i < size; ++i) {
         auto& linkInfo = linkStateMsg->getLinkInfo(i);
         stream.writeIpv4Address(linkInfo.advrouter);
@@ -62,13 +60,10 @@ void LinkStatePacketSerializer::serialize(MemoryOutputStream& stream, const Ptr<
         stream.writeUint32Be(linkInfo.messageId);
         stream.writeBit(linkInfo.state);
         stream.writeBitRepeatedly(false, 7);
-        std::cout << "after length of the stream: " << B(stream.getLength()) << endl;
     }
     stream.writeBit(linkStateMsg->getRequest());
     stream.writeBitRepeatedly(false, 7);
     stream.writeUint32Be(linkStateMsg->getCommand());
-    std::cout << "chunkLength: " << B(linkStateMsg->getChunkLength()) << endl;
-    std::cout << "length of the stream: " << B(stream.getLength()) << endl;
 }
 
 const Ptr<Chunk> LinkStatePacketSerializer::deserialize(MemoryInputStream& stream) const
