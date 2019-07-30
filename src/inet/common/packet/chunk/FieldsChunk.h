@@ -44,7 +44,12 @@ class INET_API FieldsChunk : public Chunk
     /** @name Field accessor functions */
     //@{
     const std::vector<uint8_t> *getSerializedBytes() const { return serializedBytes; }
-    void setSerializedBytes(const std::vector<uint8_t> *bytes) const { CHUNK_CHECK_IMPLEMENTATION(B(bytes->size()) == chunkLength); this->serializedBytes = bytes; }
+    void setSerializedBytes(const std::vector<uint8_t> *bytes) const {
+        if (b(bytes->size() * 8).get() != b(chunkLength).get()) {
+            std::cout << "b(bytes->size()): " << b(bytes->size() * 8).get() << " bits       " << "chunkLength: " << b(chunkLength).get() << " bits" << endl;
+        }
+        CHUNK_CHECK_IMPLEMENTATION(b(bytes->size() * 8) == b(chunkLength));
+        this->serializedBytes = bytes; }
     //@}
 
     virtual const Ptr<Chunk> peekUnchecked(PeekPredicate predicate, PeekConverter converter, const Iterator& iterator, b length, int flags) const override;
