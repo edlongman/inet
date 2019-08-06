@@ -28,6 +28,7 @@ Register_Serializer(IcmpEchoReply, IcmpHeaderSerializer);
 void IcmpHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const
 {
     const auto& icmpHeader = staticPtrCast<const IcmpHeader>(chunk);
+    B startPos = B(stream.getLength());
     stream.writeByte(icmpHeader->getType());
     stream.writeByte(icmpHeader->getCode());
     stream.writeUint16Be(icmpHeader->getChksum());
@@ -54,6 +55,7 @@ void IcmpHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const
         default:
             throw cRuntimeError("Can not serialize ICMP packet: type %d  not supported.", icmpHeader->getType());
     }
+    ASSERT((B(stream.getLength()) - startPos) == B(icmpHeader->getChunkLength()));
 }
 
 const Ptr<Chunk> IcmpHeaderSerializer::deserialize(MemoryInputStream& stream) const
