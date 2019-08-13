@@ -152,8 +152,8 @@ void SimpleVoipSender::sendVoIPPacket()
     voice->setTalkspurtID(talkspurtID - 1);
     voice->setTalkspurtNumPackets(talkspurtNumPackets);
     voice->setPacketID(packetID);
-    voice->setVoipTimestamp(simTime() - packetizationInterval);    // start time of voice in this packet
-    voice->setVoiceDuration(packetizationInterval);
+    voice->setVoipTimestamp((simTime() - packetizationInterval).trunc(SIMTIME_MS));    // start time of voice in this packet
+    voice->setVoiceDuration(packetizationInterval.trunc(SIMTIME_MS));
     voice->setTotalLengthField(talkPacketSize);
     voice->setChunkLength(B(talkPacketSize));
     packet->insertAtBack(voice);
