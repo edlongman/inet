@@ -23,9 +23,8 @@ Register_Serializer(LMacHeader, LMacHeaderSerializer);
 
 void LMacHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const
 {
-    //throw cRuntimeError("LMacHeaderSerializer not fully implemented yet.");
+    B startPos = B(stream.getLength());
     const auto& lMacHeader = staticPtrCast<const LMacHeader>(chunk);
-    //auto lMacHeader = makeShared<LMacHeader>();
     stream.writeMacAddress(lMacHeader->getSrcAddr());
     stream.writeMacAddress(lMacHeader->getDestAddr());
     stream.writeUint16Be(lMacHeader->getNetworkProtocol());
@@ -34,12 +33,14 @@ void LMacHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const
     for (size_t i = 0; i < lMacHeader->getOccupiedSlotsArraySize(); ++i) {
         stream.writeMacAddress(lMacHeader->getOccupiedSlots(i));
     }
+    while (B(stream.getLength()) - startPos < B(lMacHeader->getChunkLength()))
+        stream.writeByte('?');
 }
 
 const Ptr<Chunk> LMacHeaderSerializer::deserialize(MemoryInputStream& stream) const
 {
-    //throw cRuntimeError("LMacHeaderSerializer not fully implemented yet.");
     auto lMacHeader = makeShared<LMacHeader>();
+    lMacHeader->setChunkLength(stream.getRemainingLength());
     lMacHeader->setSrcAddr(stream.readMacAddress());
     lMacHeader->setDestAddr(stream.readMacAddress());
     lMacHeader->setNetworkProtocol(stream.readUint16Be());
@@ -51,6 +52,8 @@ const Ptr<Chunk> LMacHeaderSerializer::deserialize(MemoryInputStream& stream) co
         lMacHeader->setOccupiedSlots(i, stream.readMacAddress());
         ++i;
     }
+    while (B(stream.getRemainingLength()) > B(0))
+        stream.readByte();
     return lMacHeader;
 }
 
