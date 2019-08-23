@@ -43,7 +43,8 @@ const Ptr<Chunk> LMacHeaderSerializer::deserialize(MemoryInputStream& stream) co
     lMacHeader->setChunkLength(stream.getRemainingLength());
     lMacHeader->setSrcAddr(stream.readMacAddress());
     lMacHeader->setDestAddr(stream.readMacAddress());
-    lMacHeader->setNetworkProtocol(stream.readUint16Be());
+    int16_t networkProtocol = stream.readUint16Be();
+    lMacHeader->setNetworkProtocol(networkProtocol);
     lMacHeader->setType(static_cast<LMacType>(stream.readByte()));
     lMacHeader->setMySlot(stream.readUint64Be());
     size_t i = 0;
