@@ -46,7 +46,7 @@ class INET_API FieldsChunk : public Chunk
     const std::vector<uint8_t> *getSerializedBytes() const { return serializedBytes; }
     void setSerializedBytes(const std::vector<uint8_t> *bytes) const {
         if (b(bytes->size() * 8).get() != b(chunkLength).get()) {
-            std::cout << "b(bytes->size()): " << b(bytes->size() * 8).get() << " bits       " << "chunkLength: " << b(chunkLength).get() << " bits" << endl;
+            std::cout << typeid(*this).name() << ": " << "b(bytes->size()): " << b(bytes->size() * 8).get() << " bits       " << "chunkLength: " << b(chunkLength).get() << " bits" << endl;
         }
         CHUNK_CHECK_IMPLEMENTATION(b(bytes->size() * 8) == b(chunkLength));
         this->serializedBytes = bytes; }
