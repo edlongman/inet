@@ -23,7 +23,6 @@ Register_Serializer(LMacHeader, LMacHeaderSerializer);
 
 void LMacHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const
 {
-    B startPos = B(stream.getLength());
     const auto& lMacHeader = staticPtrCast<const LMacHeader>(chunk);
     stream.writeMacAddress(lMacHeader->getSrcAddr());
     stream.writeMacAddress(lMacHeader->getDestAddr());
@@ -33,8 +32,6 @@ void LMacHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const
     for (size_t i = 0; i < lMacHeader->getOccupiedSlotsArraySize(); ++i) {
         stream.writeMacAddress(lMacHeader->getOccupiedSlots(i));
     }
-    while (B(stream.getLength()) - startPos < B(lMacHeader->getChunkLength()))
-        stream.writeByte('?');
 }
 
 const Ptr<Chunk> LMacHeaderSerializer::deserialize(MemoryInputStream& stream) const
@@ -48,13 +45,11 @@ const Ptr<Chunk> LMacHeaderSerializer::deserialize(MemoryInputStream& stream) co
     lMacHeader->setType(static_cast<LMacType>(stream.readByte()));
     lMacHeader->setMySlot(stream.readUint64Be());
     size_t i = 0;
-    while (stream.getRemainingLength().get() > 0) {
+    while (B(stream.getRemainingLength()) > B(0)) {
         lMacHeader->setOccupiedSlotsArraySize(i + 1);
         lMacHeader->setOccupiedSlots(i, stream.readMacAddress());
         ++i;
     }
-    while (B(stream.getRemainingLength()) > B(0))
-        stream.readByte();
     return lMacHeader;
 }
 
