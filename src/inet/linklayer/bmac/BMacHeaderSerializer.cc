@@ -25,6 +25,7 @@ void BMacHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const
 {
     B startPos = B(stream.getLength());
     const auto& bMacHeader = staticPtrCast<const BMacHeader>(chunk);
+    stream.writeByte(B(bMacHeader->getChunkLength()).get());
     stream.writeMacAddress(bMacHeader->getSrcAddr());
     stream.writeMacAddress(bMacHeader->getDestAddr());
     stream.writeUint16Be(bMacHeader->getNetworkProtocol());
@@ -37,13 +38,16 @@ void BMacHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const
 
 const Ptr<Chunk> BMacHeaderSerializer::deserialize(MemoryInputStream& stream) const
 {
+    B startPos = stream.getPosition();
     auto bMacHeader = makeShared<BMacHeader>();
-    bMacHeader->setChunkLength(B(stream.getRemainingLength()));
+    uint8_t length = stream.readByte();
+    bMacHeader->setChunkLength(B(length));
     bMacHeader->setSrcAddr(stream.readMacAddress());
     bMacHeader->setDestAddr(stream.readMacAddress());
-    bMacHeader->setNetworkProtocol(stream.readUint16Be());
+    int16_t networkProtocol = stream.readUint16Be();
+    bMacHeader->setNetworkProtocol(networkProtocol);
     bMacHeader->setType(static_cast<BMacType>(stream.readByte()));
-    while (B(stream.getRemainingLength()) > B(0))
+    while (B(length) - (stream.getPosition() - startPos) > B(0))
         stream.readByte();
     return bMacHeader;
 }
