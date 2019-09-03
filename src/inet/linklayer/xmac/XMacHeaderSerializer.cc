@@ -45,7 +45,8 @@ const Ptr<Chunk> XMacHeaderSerializer::deserialize(MemoryInputStream& stream) co
     xMacHeader->setChunkLength(B(length));
     xMacHeader->setSrcAddr(stream.readMacAddress());
     xMacHeader->setDestAddr(stream.readMacAddress());
-    xMacHeader->setNetworkProtocol(stream.readUint16Be());
+    int16_t networkProtocol = stream.readUint16Be();
+    xMacHeader->setNetworkProtocol(networkProtocol);
     xMacHeader->setType(static_cast<XMacTypes>(stream.readByte()));
     xMacHeader->setSequenceId(stream.readUint64Be());
     while (B(length) - (stream.getPosition() - startPos) > B(0))
