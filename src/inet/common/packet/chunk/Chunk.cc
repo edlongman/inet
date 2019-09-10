@@ -167,7 +167,7 @@ void Chunk::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk,
     auto endPosition = stream.getLength();
     auto expectedChunkLength = length == b(-1) ? chunk->getChunkLength() - offset : length;
     CHUNK_CHECK_IMPLEMENTATION(expectedChunkLength == endPosition - startPosition);
-    /*if (dynamic_cast<const FieldsChunk*>(chunkPointer) != nullptr && dynamic_cast<const EthernetPadding*>(chunkPointer) == nullptr && dynamic_cast<const TransportPseudoHeader*>(chunkPointer) == nullptr){
+    if (dynamic_cast<const FieldsChunk*>(chunkPointer) != nullptr && dynamic_cast<const EthernetPadding*>(chunkPointer) == nullptr && dynamic_cast<const TransportPseudoHeader*>(chunkPointer) == nullptr){
         ObjectPrinter p(nullptr, "*: not mutable and not className and not fullName and not fullPath and not info and not rawBin and not rawHex and not tags and not payloadProtocol");
         std::string orig = p.printObjectToString(const_cast<Chunk*>(chunk.get()));
 
@@ -181,9 +181,20 @@ void Chunk::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk,
             EV_STATICCONTEXT;
             EV << orig << endl;
             EV << restored << endl;
+            std::stringstream origBuffer;
+            origBuffer << orig << endl;
+            std::stringstream restoredBuffer;
+            restoredBuffer << restored << endl;
+            std::string str("Serializer or deserializer not working properly, data currupted.\n" + origBuffer.str() + restoredBuffer.str());
+            char* error = const_cast<char*>(str.c_str());
+            for (uint16_t i = 0; i < std::strlen(error); ++i) {
+                if (error[i] == '\n')
+                    error[i] = ' ';
+            }
+            throw cRuntimeError(error);
             ASSERT(false);
         }
-    }*/
+    }
 #endif
 }
 
