@@ -31,6 +31,7 @@ void ApplicationPacketSerializer::serialize(MemoryOutputStream& stream, const Pt
     if (remainders < 0)
         throw cRuntimeError("ApplicationPacket length = %d smaller than required %d bytes", (int)B(applicationPacket->getChunkLength()).get(), (int)B(stream.getLength() - startPosition).get());
     stream.writeByteRepeatedly('?', remainders);
+    ASSERT(applicationPacket->getChunkLength() == (stream.getLength() - startPosition));
 }
 
 const Ptr<Chunk> ApplicationPacketSerializer::deserialize(MemoryInputStream& stream) const
@@ -38,6 +39,7 @@ const Ptr<Chunk> ApplicationPacketSerializer::deserialize(MemoryInputStream& str
     auto startPosition = stream.getPosition();
     auto applicationPacket = makeShared<ApplicationPacket>();
     B dataLength = B(stream.readUint32Be());
+    applicationPacket->setChunkLength(dataLength);
     applicationPacket->setSequenceNumber(stream.readUint32Be());
     B remainders = dataLength - (stream.getPosition() - startPosition);
     ASSERT(remainders >= B(0));
