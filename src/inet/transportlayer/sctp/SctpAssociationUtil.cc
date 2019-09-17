@@ -578,6 +578,7 @@ void SctpAssociation::sendInit()
     sctpmsg->setChunkLength(B(SCTP_COMMON_HEADER));
     SctpInitChunk *initChunk = new SctpInitChunk();
     initChunk->setSctpChunkType(INIT);
+    initChunk->setName("INIT");
     initChunk->setInitTag((uint32)(fmod(RNGCONTEXT intrand(INT32_MAX), 1.0 + (double)(unsigned)0xffffffffUL)) & 0xffffffffUL);
 
     peerVTag = initChunk->getInitTag();
