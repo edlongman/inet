@@ -999,7 +999,8 @@ void Ipv4::encapsulate(Packet *transportPacket)
         delete ecnReq;
     }
 
-    ipv4Header->setIdentification(curFragmentId++);
+    ipv4Header->setIdentification(curFragmentId % 65536);
+    ++curFragmentId;
     ipv4Header->setMoreFragments(false);
     ipv4Header->setDontFragment(dontFragment);
     ipv4Header->setFragmentOffset(0);
