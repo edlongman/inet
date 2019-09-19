@@ -86,7 +86,11 @@ const Ptr<Chunk> SctpHeaderSerializer::deserialize(MemoryInputStream& stream) co
     struct common_header *common_header = (struct common_header *)((void *)&buffer);
     uint32_t tempChecksum = common_header->checksum;
     common_header->checksum = 0;
-    uint32_t chksum = SctpChecksum::checksum((unsigned char *)common_header, bufsize);
+    buffer[8] = 0;
+    buffer[9] = 0;
+    buffer[10] = 0;
+    buffer[11] = 0;
+    uint32_t chksum = SctpChecksum::checksum(&buffer, bufsize);
     common_header->checksum = tempChecksum;
 
     const unsigned char *chunks = (unsigned char *)(buffer + sizeof(struct common_header));
@@ -1170,7 +1174,7 @@ uint8* SctpHeaderSerializer::serializeSctpHeaderIntoBuffer(const Ptr<const SctpH
     ch->source_port = htons(msg->getSrcPort());
     ch->destination_port = htons(msg->getDestPort());
     ch->verification_tag = htonl(msg->getVTag());
-    ch->checksum = htonl(msg->getCrc());
+    ch->checksum = msg->getCrc();
 
     // SCTP chunks:
     int32 noChunks = msg->getSctpChunksArraySize();
