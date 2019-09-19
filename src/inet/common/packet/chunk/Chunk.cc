@@ -168,7 +168,7 @@ void Chunk::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk,
     auto expectedChunkLength = length == b(-1) ? chunk->getChunkLength() - offset : length;
     CHUNK_CHECK_IMPLEMENTATION(expectedChunkLength == endPosition - startPosition);
     if (dynamic_cast<const FieldsChunk*>(chunkPointer) != nullptr && dynamic_cast<const EthernetPadding*>(chunkPointer) == nullptr && dynamic_cast<const TransportPseudoHeader*>(chunkPointer) == nullptr){
-        ObjectPrinter p(nullptr, "*: not mutable and not className and not fullName and not fullPath and not info and not rawBin and not rawHex and not tags and not payloadProtocol");
+        ObjectPrinter p(nullptr, "*: not mutable and not className and not fullName and not fullPath and not info and not rawBin and not rawHex and not tags and not payloadProtocol and not id and not treeId");
         std::string orig = p.printObjectToString(const_cast<Chunk*>(chunk.get()));
 
         std::vector<uint8_t> bytes;
