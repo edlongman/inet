@@ -1272,7 +1272,7 @@ uint8* SctpHeaderSerializer::serializeSctpHeaderIntoBuffer(const Ptr<const SctpH
                         ipv6addr->type = htons(INIT_PARAM_IPV6);
                         ipv6addr->length = htons(20);
                         for (int32 j = 0; j < 4; j++) {
-                            ipv6addr->address[j] = htonl(initChunk->getAddresses(i).toIpv6().words()[j]);
+                            ipv6addr->address[j] = initChunk->getAddresses(i).toIpv6().words()[j];
                         }
                         parPtr += sizeof(struct init_ipv6_address_parameter);
                     }
