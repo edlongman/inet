@@ -22,6 +22,7 @@
 #include "inet/transportlayer/sctp/SctpCrcInsertionHook.h"
 #include "inet/transportlayer/sctp/SctpHeader.h"
 #include "inet/transportlayer/udp/UdpHeader_m.h"
+#include "inet/transportlayer/sctp/SctpHeaderSerializer.h"
 
 namespace inet {
 namespace sctp {
@@ -63,15 +64,9 @@ void SctpCrcInsertion::insertCrc(const Protocol *networkProtocol, const L3Addres
             // this computation is delayed after the routing decision, see INetfilter hook
             sctpHeader->setCrc(0); // make sure that the CRC is 0 in the SCTP header before computing the CRC
             MemoryOutputStream sctpPacketStream;
-            Chunk::serialize(sctpPacketStream, sctpHeader);
-            Chunk::serialize(sctpPacketStream, packet->peekData(Chunk::PF_ALLOW_EMPTY));
-            const auto& sctpPacketBytes = sctpPacketStream.getData();
-            auto length = sctpPacketBytes.size();
-            auto buffer = new uint8_t[length];
-            std::copy(sctpPacketBytes.begin(), sctpPacketBytes.end(), (uint8_t *)buffer);
-            auto crc = SctpChecksum::checksum(buffer, length);
-            sctpHeader->setCrc(crc);
-            delete [] buffer;
+            uint32 writtenBytes = 0;
+            uint8* tmp_buffer = SctpHeaderSerializer::serializeSctpHeaderIntoBuffer(sctpHeader, writtenBytes);
+            sctpHeader->setCrc(SctpChecksum::checksum(tmp_buffer, writtenBytes));
             break;
         }
         default:
