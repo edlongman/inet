@@ -794,6 +794,7 @@ void SctpAssociation::sendInitAck(SctpInitChunk *initChunk)
     EV_INFO << "sendInitAck at " << localAddr << ". Provided InitTag=" << initChunk->getInitTag() << "\n";
     SctpInitAckChunk *initAckChunk = new SctpInitAckChunk();
     initAckChunk->setSctpChunkType(INIT_ACK);
+    initAckChunk->setName("INIT_ACK");
     SctpCookie *cookie = new SctpCookie();
     cookie->setCreationTime(simTime());
     cookie->setLocalTieTagArraySize(32);
