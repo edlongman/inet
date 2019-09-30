@@ -1,3 +1,15 @@
+Wireless tutorial:
+- Step 8: energyBalance is nan J
+
+Configurator tutorial:
+?- interfaceTableVisualizer doesn't show the netmask (shows 10.0.0.1 instead of 10.0.0.1/29)
++ step9: no routes shown at start, they're displayed later when the simulation is run
+!- step11A-B: no routes shown (actually, missing routes)
++ step8a: no route shown from area3lan3host1 to area3lan3host3 -> used to be
+- step12: too many routes shown (it is also slow)
+
+Misc:
+
 - CRASH:	RadioMedium.cc				line 715: listener->radioRemoved(radio);
 			MediumOSGVisualizer.cc		line 325: auto module = const_cast<cModule *>(check_and_cast<const cModule *>(radio));
 			No source available for "0x72657a"
