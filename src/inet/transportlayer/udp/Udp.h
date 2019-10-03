@@ -210,6 +210,12 @@ class INET_API Udp : public TransportProtocolBase
   protected:
     virtual void initialize(int stage) override;
     virtual int numInitStages() const override { return NUM_INIT_STAGES; }
+
+    void udpBindCommand(omnetpp::cMessage *msg);
+    void udpConnectCommand(omnetpp::cMessage *msg);
+    void udpSetOptCommand(omnetpp::cMessage *msg);
+    void udpCloseCommand(omnetpp::cMessage *msg);
+    void udpDestroyCommand(omnetpp::cMessage *msg);
 };
 
 } // namespace inet
