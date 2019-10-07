@@ -79,6 +79,7 @@ class INET_API FieldsChunk : public Chunk
     }
     virtual void setChunkLength(b chunkLength) { handleChange(); this->chunkLength = chunkLength; }
     virtual void addChunkLength(b chunkLength) { handleChange(); this->chunkLength += chunkLength; }
+    virtual void subtractChunkLength(b chunkLength) { handleChange(); this->chunkLength -= chunkLength; }
     //@}
 };
 
