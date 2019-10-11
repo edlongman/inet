@@ -89,7 +89,7 @@ void OperationalBase::handleMessageWhenDown(cMessage *message)
 
 bool OperationalBase::handleOperationStage(LifecycleOperation *operation, IDoneCallback *doneCallback)
 {
-    Enter_Method_Silent();
+    Enter_Method_Silent("handleOperationStage");
     int stage = operation->getCurrentStage();
     if (dynamic_cast<ModuleStartOperation *>(operation)) {
         if (isModuleStartStage(stage)) {
