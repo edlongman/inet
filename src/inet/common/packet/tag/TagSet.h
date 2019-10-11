@@ -119,6 +119,11 @@ inline int TagSet::getTagIndex() const
 template <typename T>
 inline T *TagSet::findTag() const
 {
+    {
+        std::ostringstream os;
+        os << "=SelfDoc=" << getSimulation()->getContextModule()->getComponentType()->getFullName() << ": TAG: findTag " << opp_typename(typeid(T));
+        globalSelfDoc.insert(os.str());
+    }
     int index = getTagIndex<T>();
     return index == -1 ? nullptr : static_cast<T *>((*tags)[index]);
 }
@@ -126,6 +131,13 @@ inline T *TagSet::findTag() const
 template <typename T>
 inline T *TagSet::getTag() const
 {
+#ifdef __INET_SELFDOC_H
+    {
+        std::ostringstream os;
+        os << "=SelfDoc=" << getSimulation()->getContextModule()->getComponentType()->getFullName() << ": TAG: getTag " << opp_typename(typeid(T));
+        globalSelfDoc.insert(os.str());
+    }
+#endif // __INET_SELFDOC_H
     int index = getTagIndex<T>();
     if (index == -1)
         throw cRuntimeError("Tag '%s' is absent", opp_typename(typeid(T)));
@@ -135,6 +147,13 @@ inline T *TagSet::getTag() const
 template <typename T>
 inline T *TagSet::addTag()
 {
+#ifdef __INET_SELFDOC_H
+    {
+        std::ostringstream os;
+        os << "=SelfDoc=" << getSimulation()->getContextModule()->getComponentType()->getFullName() << ": TAG: addTag " << opp_typename(typeid(T));
+        globalSelfDoc.insert(os.str());
+    }
+#endif // __INET_SELFDOC_H
     int index = getTagIndex<T>();
     if (index != -1)
         throw cRuntimeError("Tag '%s' is present", opp_typename(typeid(T)));
@@ -146,15 +165,31 @@ inline T *TagSet::addTag()
 template <typename T>
 inline T *TagSet::addTagIfAbsent()
 {
-    T *tag = findTag<T>();
-    if (tag == nullptr)
-        addTag(tag = new T());
+#ifdef __INET_SELFDOC_H
+    {
+        std::ostringstream os;
+        os << "=SelfDoc=" << getSimulation()->getContextModule()->getComponentType()->getFullName() << ": TAG: addTagIfAbsent " << opp_typename(typeid(T));
+        globalSelfDoc.insert(os.str());
+    }
+#endif // __INET_SELFDOC_H
+    int index = getTagIndex<T>();
+    if (index != -1)
+        return static_cast<T *>((*tags)[index]);
+    T *tag = new T();
+    addTag(tag);
     return tag;
 }
 
 template <typename T>
 inline T *TagSet::removeTag()
 {
+#ifdef __INET_SELFDOC_H
+    {
+        std::ostringstream os;
+        os << "=SelfDoc=" << getSimulation()->getContextModule()->getComponentType()->getFullName() << ": TAG: removeTag " << opp_typename(typeid(T));
+        globalSelfDoc.insert(os.str());
+    }
+#endif // __INET_SELFDOC_H
     int index = getTagIndex<T>();
     if (index == -1)
         throw cRuntimeError("Tag '%s' is absent", opp_typename(typeid(T)));
@@ -164,6 +199,13 @@ inline T *TagSet::removeTag()
 template <typename T>
 inline T *TagSet::removeTagIfPresent()
 {
+#ifdef __INET_SELFDOC_H
+    {
+        std::ostringstream os;
+        os << "=SelfDoc=" << getSimulation()->getContextModule()->getComponentType()->getFullName() << ": TAG: removeTagIfPresent " << opp_typename(typeid(T));
+
+    }
+#endif // __INET_SELFDOC_H
     int index = getTagIndex<T>();
     return index == -1 ? nullptr : static_cast<T *>(removeTag(index));
 }
