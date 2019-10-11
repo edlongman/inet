@@ -1,0 +1,5 @@
+inet_dbg -u Cmdenv -r 0 --record-eventlog=true --cmdenv-redirect-output=true --cmdenv-express-mode=false 2>xxxx
+
+grep -v 'initialize' xxxx | sort -u >xxxxx
+grep -v handleRegister <xxxxx >xxxxxx
+grep -v MessageDispatcher <xxxxxx >xxxxxxx
