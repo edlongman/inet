@@ -20,6 +20,9 @@
 #include "inet/common/ObjectPrinter.h"
 #include "inet/linklayer/ethernet/EtherFrame_m.h"
 #include "inet/transportlayer/common/TransportPseudoHeader_m.h"
+#include "inet/applications/base/ApplicationPacket_m.h"
+#include "inet/networklayer/ted/LinkStatePacket_m.h"
+#include "inet/networklayer/rsvpte/RsvpHelloMsg_m.h"
 
 namespace inet {
 
@@ -162,12 +165,15 @@ void Chunk::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk,
 #if CHUNK_CHECK_IMPLEMENTATION_ENABLED
     auto startPosition = stream.getLength();
 #endif
+    // FIXME & TODO: HACK
+    if(auto asd = dynamic_cast<const FieldsChunk*>(chunkPointer))
+        asd->setSerializedBytes(nullptr);
     serializer->serialize(stream, chunk, offset, length);
 #if CHUNK_CHECK_IMPLEMENTATION_ENABLED
     auto endPosition = stream.getLength();
     auto expectedChunkLength = length == b(-1) ? chunk->getChunkLength() - offset : length;
     CHUNK_CHECK_IMPLEMENTATION(expectedChunkLength == endPosition - startPosition);
-    if (dynamic_cast<const FieldsChunk*>(chunkPointer) != nullptr && dynamic_cast<const EthernetPadding*>(chunkPointer) == nullptr && dynamic_cast<const TransportPseudoHeader*>(chunkPointer) == nullptr){
+    if (dynamic_cast<const FieldsChunk*>(chunkPointer) != nullptr && dynamic_cast<const EthernetPadding*>(chunkPointer) == nullptr && dynamic_cast<const TransportPseudoHeader*>(chunkPointer) == nullptr && dynamic_cast<const ApplicationPacket*>(chunkPointer) == nullptr && dynamic_cast<const LinkStateMsg*>(chunkPointer) == nullptr && dynamic_cast<const RsvpHelloMsg*>(chunkPointer) == nullptr){
         ObjectPrinter p(nullptr, "*: not mutable and not className and not fullName and not fullPath and not info and not rawBin and not rawHex and not tags and not payloadProtocol and not id and not treeId and not *Tag and not creationTime");
         std::string orig = p.printObjectToString(const_cast<Chunk*>(chunk.get()));
 

@@ -23,14 +23,18 @@ Register_Serializer(RsvpHelloMsg, RsvpHelloMsgSerializer);
 
 void RsvpHelloMsgSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const
 {
-    throw cRuntimeError("LinkStatePacketSerializer not fully implemented yet.");
+    //throw cRuntimeError("RsvpHelloMsgSerializer not fully implemented yet.");
     const auto& rsvpHelloMsg = staticPtrCast<const RsvpHelloMsg>(chunk);
-    std::cout << "B(rsvpHelloMsg->getChunkLength()): " << B(rsvpHelloMsg->getChunkLength()) << endl;
+    B startPos = stream.getLength();
+    while (stream.getLength() - startPos < rsvpHelloMsg->getChunkLength())
+        stream.writeByte('?');
 }
 
 const Ptr<Chunk> RsvpHelloMsgSerializer::deserialize(MemoryInputStream& stream) const
 {
     auto rsvpHelloMsg = makeShared<RsvpHelloMsg>();
+    while (stream.getRemainingLength() > B(0))
+        stream.readByte();
     return rsvpHelloMsg;
 }
 
