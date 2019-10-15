@@ -474,9 +474,13 @@ void Ldp::sendHelloTo(Ipv4Address dest)
     hello->setType(HELLO);
     hello->setSenderAddress(rt->getRouterId());
     //hello->setReceiverAddress(...);
-    hello->setHoldTime(SIMTIME_DBL(holdTime));
+    CommonHelloParmsTlv *commonHelloParmsTlv = new CommonHelloParmsTlv();
+    commonHelloParmsTlv->setHoldTime(holdTime.inUnit(SIMTIME_S));
+    //commonHelloParmsTlv->setR(...);
+    //commonHelloParmsTlv->setT(...);
     //hello->setRbit(...);
     //hello->setTbit(...);
+    hello->setCommonHelloParmsTlv(*commonHelloParmsTlv);
     pk->insertAtBack(hello);
     pk->addPar("color") = LDP_HELLO_TRAFFIC;
 
@@ -585,7 +589,7 @@ void Ldp::processLDPHello(Packet *msg)
         announceLinkChange(index);
     }
 
-    // peer already in table?
+    // if it has a Hello adjacency for the Hello source, it restarts the hold timer for the Hello adjacency
     int i = findPeer(peerAddr);
     if (i != -1) {
         EV_DETAIL << "already in my peer table, rescheduling timeout" << endl;
@@ -595,7 +599,7 @@ void Ldp::processLDPHello(Packet *msg)
         return;
     }
 
-    // not in table, add it
+    // if not, it creates a Hello adjacency for the Hello source and starts its hold timer
     peer_info info;
     info.peerIP = peerAddr;
     info.linkInterface = ift->getInterfaceById(interfaceId)->getInterfaceName();
@@ -881,6 +885,8 @@ void Ldp::sendNotify(int status, Ipv4Address dest, Ipv4Address addr, int length)
     const auto& lnMessage = makeShared<LdpNotify>();
     lnMessage->setChunkLength(LDP_HEADER_BYTES);    // FIXME find out actual length
     lnMessage->setType(NOTIFICATION);
+    //StatusTlv *statusTlv = new StatusTlv();
+    //statusTlv->setStatusData(NO_ROUTE);
     lnMessage->setStatus(NO_ROUTE);
     lnMessage->setReceiverAddress(dest);
     lnMessage->setSenderAddress(rt->getRouterId());
