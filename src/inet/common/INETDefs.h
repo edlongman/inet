@@ -115,45 +115,9 @@ inline void printElapsedTime(const char *name, long startTime)
 
 #define TIME(CODE)    { long startTime = clock(); CODE; printElapsedTime( #CODE, startTime); }
 
-inline bool __notInitialize()
-{
-    return true;
-}
-
-inline bool __notInitialize(const char *methodFmt, ...)
-{
-    return methodFmt != nullptr && (0 != strcmp(methodFmt, "initialize(%d)"));
-}
-
-inline const char *__enterMethodInfo()
-{
-    return "<nullptr>";
-}
-
-inline const char *__enterMethodInfo(const char *methodFmt, ...)
-{
-    return methodFmt != nullptr ? methodFmt : "<nullptr>";
-}
-
-#undef Enter_Method
-#define Enter_Method(...) \
-        auto __from = getSimulation()->getContext(); \
-        omnetpp::cMethodCallContextSwitcher __ctx(this); \
-        __ctx.methodCall(__VA_ARGS__); \
-        if (__notInitialize(__VA_ARGS__)) { \
-            std::cerr << "=SelfDoc=" << (__from ? __from->getComponentType()->getFullName() : "<unknown>") << ": CALL: " << this->getComponentType()->getFullName() << "::" << __enterMethodInfo(__VA_ARGS__) << std::endl; \
-        }
-
-#undef Enter_Method_Silent
-#define Enter_Method_Silent(...) \
-    auto __from = getSimulation()->getContext(); \
-    omnetpp::cMethodCallContextSwitcher __ctx(this); \
-    __ctx.methodCallSilent(__VA_ARGS__); \
-    if (__notInitialize(__VA_ARGS__)) { \
-        std::cerr << "=SelfDoc=" << (__from ? __from->getComponentType()->getFullName() : "<unknown>") << ": CALL: " << this->getComponentType()->getFullName() << "::" << __enterMethodInfo(__VA_ARGS__) << std::endl; \
-    }
-
 } // namespace inet
+
+#include "inet/common/SelfDoc.h"
 
 #endif // ifndef __INET_INETDEFS_H
 
