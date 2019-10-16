@@ -133,6 +133,14 @@ void Packet::insertAtBack(const Ptr<const Chunk>& chunk)
 {
     CHUNK_CHECK_USAGE(chunk != nullptr, "chunk is nullptr");
     CHUNK_CHECK_USAGE(backIterator.getPosition() == b(0) && (backIterator.getIndex() == 0 || backIterator.getIndex() == -1), "popped trailer length is non-zero");
+#ifdef __INET_SELFDOC_H
+    {
+        std::ostringstream os;
+        auto p = chunk.get();
+        os << "=SelfDoc=" << getSimulation()->getContextModule()->getComponentType()->getFullName() << ": PACKET: insertAtBack " << opp_typename(typeid(*p));
+        globalSelfDoc.insert(os.str());
+    }
+#endif // __INET_SELFDOC_H
     constPtrCast<Chunk>(chunk)->markImmutable();
     if (content == EmptyChunk::singleton) {
         CHUNK_CHECK_USAGE(chunk->getChunkLength() > b(0), "chunk is empty");
@@ -163,6 +171,14 @@ void Packet::insertAtFront(const Ptr<const Chunk>& chunk)
 {
     CHUNK_CHECK_USAGE(chunk != nullptr, "chunk is nullptr");
     CHUNK_CHECK_USAGE(frontIterator.getPosition() == b(0) && (frontIterator.getIndex() == 0 || frontIterator.getIndex() == -1), "popped header length is non-zero");
+#ifdef __INET_SELFDOC_H
+    {
+        std::ostringstream os;
+        auto p = chunk.get();
+        os << "=SelfDoc=" << getSimulation()->getContextModule()->getComponentType()->getFullName() << ": PACKET: insertAtFront " << opp_typename(typeid(*p));
+        globalSelfDoc.insert(os.str());
+    }
+#endif // __INET_SELFDOC_H
     constPtrCast<Chunk>(chunk)->markImmutable();
     if (content == EmptyChunk::singleton) {
         CHUNK_CHECK_USAGE(chunk->getChunkLength() > b(0), "chunk is empty");
