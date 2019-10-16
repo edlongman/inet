@@ -1,0 +1,1 @@
+grep '^=SelfDoc=' /tmp/SelfDoc.txt | cut -c 10- | sort -u  >SelfDoc_step01.txt

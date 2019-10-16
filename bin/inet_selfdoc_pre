@@ -1,0 +1,3 @@
+./fingerprinttest -d \
+    -a --fingerprintcalculator-class='inet::SelfDocumenterFingerprintCalculator' \
+    --record-eventlog=false --vector-recording=false --scalar-recording=false
