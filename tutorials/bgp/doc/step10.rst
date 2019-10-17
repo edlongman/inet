@@ -1,0 +1,44 @@
+Step 10. LOCAL_PREF Attribute
+=============================
+
+Goals
+-----
+
+TODO
+
+Configuration
+~~~~~~~~~~~~~
+
+This step uses the following network:
+
+.. literalinclude:: ../BGP_LOCAL_PREF.ned
+   :start-at: network BGP
+   :language: ned
+
+The configuration in ``omnetpp.ini`` is the following:
+
+.. literalinclude:: ../omnetpp.ini
+   :language: ini
+   :start-at: Step10
+   :end-before: ------
+
+The BGP configuration:
+
+.. literalinclude:: ../BGPConfig_LOCAL_PREF.xml
+   :language: xml
+
+Results
+~~~~~~~
+
+TODO
+
+Sources: :download:`BGP_LOCAL_PREF.ned <../BGP_LOCAL_PREF.ned>`,
+:download:`omnetpp.ini <../omnetpp.ini>`,
+:download:`OSPFConfig_LOCAL_PREF.xml <../OSPFConfig_LOCAL_PREF.xml>`,
+:download:`BGPConfig_LOCAL_PREF.xml <../BGPConfig_LOCAL_PREF.xml>`
+
+Discussion
+----------
+
+Use `this page <https://github.com/inet-framework/inet-tutorials/issues/??>`__ in
+the GitHub issue tracker for commenting on this tutorial.
