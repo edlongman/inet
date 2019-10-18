@@ -41,6 +41,23 @@
 /tutorials/rip/,                     -f omnetpp.ini -c Step9NoNetmaskRoutes -r 0,               100s,           e46c-f1bd/tplx, PASS,
 /tutorials/rip/,                     -f omnetpp.ini -c Step10 -r 0,                             100s,           b994-198e/tplx, PASS,
 
+/tutorials/bgp/,                     -f omnetpp.ini -c Step1 -r 0,                              500s,           f33e-cdaa/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step2 -r 0,                              500s,           0112-e606/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step3 -r 0,                              500s,           0000-0000/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step4 -r 0,                              500s,           853c-7c1b/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step4a -r 0,                             500s,           c9ff-3c18/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step5 -r 0,                              500s,           0260-3bf7/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step5a -r 0,                             500s,           9321-800c/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step5b -r 0,                             500s,           0a5c-3b01/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step6 -r 0,                              500s,           2793-c3a7/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step7 -r 0,                              500s,           348d-30bc/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step8 -r 0,                              500s,           ed00-412c/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step9 -r 0,                              500s,           c41e-bfce/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step10 -r 0,                             500s,           3b22-388d/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step11 -r 0,                             500s,           0000-0000/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step12 -r 0,                             500s,           b8b5-d4ce/tplx, PASS,
+/tutorials/bgp/,                     -f omnetpp.ini -c Step100 -r 0,                            500s,           0000-0000/tplx, PASS,
+
 # /tutorials/visualization/,           -f oldomnetpp.ini -c VisualizationTutorial01 -r 0,         500s,           0000-0000/tplx, PASS,   # old omnetpp.ini
 # /tutorials/visualization/,           -f oldomnetpp.ini -c VisualizationTutorial02 -r 0,         500s,           0000-0000/tplx, PASS,
 # /tutorials/visualization/,           -f oldomnetpp.ini -c VisualizationTutorial03 -r 0,         500s,           0000-0000/tplx, PASS,   # VisualizationTutorial03 extended
