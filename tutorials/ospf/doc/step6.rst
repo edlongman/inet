@@ -1,5 +1,5 @@
 Step 6. OSPF DR/BDR election in a multi-access network (Ethernet)
-==================================
+=================================================================
 
 Goals
 -----

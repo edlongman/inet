@@ -1,5 +1,5 @@
 Step 18c. AS-External LSAs of 'type 2 metric' with the same advertised destination
-==================================
+==================================================================================
 
 Goals
 -----

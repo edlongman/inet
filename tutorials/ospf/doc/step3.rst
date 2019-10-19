@@ -1,5 +1,5 @@
 Step 3. OSPF full adjacency establishment and LSDB sync
-==================================
+=======================================================
 
 Goals
 -----

@@ -1,5 +1,5 @@
 Step 23. OSPF Path Selection
-==================================
+============================
 
 Goals
 -----
@@ -30,7 +30,7 @@ The OSPF configuration:
 This step uses the following network:
 
 .. literalinclude:: ../.ned
-   :start-at: network 
+   :start-at: network
    :language: ned
 
 Results

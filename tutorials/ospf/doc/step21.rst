@@ -1,5 +1,5 @@
 Step 21. Virtual link - connect two separate parts of a discontinuous backbone
-==================================
+==============================================================================
 
 Goals
 -----

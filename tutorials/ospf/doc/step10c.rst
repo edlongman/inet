@@ -1,5 +1,5 @@
 Step 10c. Router R5 (BDR) goes down
-==================================
+===================================
 
 Goals
 -----
@@ -14,7 +14,7 @@ This configuration is based on step 10.
 This step uses the following network:
 
 .. literalinclude:: ../.ned
-   :start-at: network 
+   :start-at: network
    :language: ned
 
 The configuration in ``omnetpp.ini`` is the following:

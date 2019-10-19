@@ -1,5 +1,5 @@
 Step 9. High-priority OSPF router joins after OSPF DR/BDR election
-==================================
+==================================================================
 
 Goals
 -----
