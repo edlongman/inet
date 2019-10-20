@@ -17,3 +17,8 @@ The configuration in ``omnetpp.ini`` is the following:
    :language: ini
    :start-at: Step25
    :end-before: ------
+
+
+Sources:
+:download:`omnetpp.ini <../omnetpp.ini>`,
+:download:`OspfNetwork.ned <../OspfNetwork.ned>`,

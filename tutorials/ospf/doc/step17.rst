@@ -32,7 +32,11 @@ Results
 
 TODO
 
-Sources: TODO
+Sources:
+:download:`omnetpp.ini <../omnetpp.ini>`,
+:download:`OSPF_LoopAvoidance.ned <../OSPF_LoopAvoidance.ned>`,
+:download:`ASConfig_Area_Loop.xml <../ASConfig_Area_Loop.xml>`
+
 
 Discussion
 ----------

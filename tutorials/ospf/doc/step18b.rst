@@ -28,7 +28,10 @@ Results
 
 TODO
 
-Sources: TODO
+Sources:
+:download:`omnetpp.ini <../omnetpp.ini>`,
+:download:`OSPF_Area_External.ned <../OSPF_Area_External.ned>`,
+:download:`ASConfig_Area_ExternalRoute_Type2.xml <../ASConfig_Area_ExternalRoute_Type2.xml>`
 
 Discussion
 ----------
