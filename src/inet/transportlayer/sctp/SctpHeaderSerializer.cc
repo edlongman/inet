@@ -44,6 +44,399 @@ namespace sctp {
 
 Register_Serializer(SctpHeader, SctpHeaderSerializer);
 
+namespace {
+
+// TODO: chunks must be padded to 4 bytes boundary, padding should not be included in the length field
+
+void serializeDataChunk(MemoryOutputStream& stream, const Ptr<SctpDataChunk> dataChunk) {
+    stream.writeByte(dataChunk->getSctpChunkType());
+    stream.writeNBitsOfUint64Be(0, 4);
+    stream.writeBit(dataChunk->getIBit());
+    stream.writeBit(dataChunk->getUBit());
+    stream.writeBit(dataChunk->getBBit());
+    stream.writeBit(dataChunk->getEBit());
+    stream.writeUint16Be(dataChunk->getByteLength());
+    stream.writeUint32Be(dataChunk->getTsn());
+    stream.writeUint16Be(dataChunk->getSid());
+    stream.writeUint16Be(dataChunk->getSsn());
+    stream.writeUint64Be(dataChunk->getPpid());
+    SctpSimpleMessage *smsg = check_and_cast<SctpSimpleMessage *>(dataChunk->getEncapsulatedPacket());
+    const uint32_t datalen = smsg->getDataLen();
+    if (smsg->getDataArraySize() >= datalen) {
+        for (uint32_t i = 0; i < datalen; ++i) {
+            stream.writeByte(smsg->getData(i));
+        }
+    }
+    // TODO: padding to 4 bytes boundary
+}
+
+void deserializeDataChunk(MemoryInputStream& stream, const Ptr<SctpDataChunk> dataChunk) {
+    B startPos = stream.getRemainingLength();
+    dataChunk->setSctpChunkType(stream.readByte());
+    stream.readNBitsToUint64Be(4);
+    dataChunk->setIBit(stream.readBit());
+    dataChunk->setUBit(stream.readBit());
+    dataChunk->setBBit(stream.readBit());
+    dataChunk->setEBit(stream.readBit());
+    dataChunk->setByteLength(stream.readUint16Be());
+    dataChunk->setTsn(stream.readUint32Be());
+    dataChunk->setSid(stream.readUint16Be());
+    dataChunk->setSsn(stream.readUint16Be());
+    dataChunk->setPpid(stream.readUint64Be());
+    const uint32_t datalen = B(startPos - stream.getRemainingLength()).get();
+    if (datalen > 0) {
+        SctpSimpleMessage *smsg = new SctpSimpleMessage("data");
+        smsg->setBitLength(datalen * 8);
+        smsg->setDataLen(datalen);
+        smsg->setDataArraySize(datalen);
+        for (uint32_t i = 0; i < datalen; ++i) {
+            smsg->setData(i, stream.readByte());
+        }
+    }
+    // TODO: padding??
+}
+
+void serializeInitChunk(MemoryOutputStream& stream, const Ptr<SctpInitChunk> initChunk) {
+    stream.writeByte(initChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(initChunk->getByteLength());
+    stream.writeUint32Be(initChunk->getInitTag());
+    stream.writeUint32Be(initChunk->getA_rwnd());
+    stream.writeUint16Be(initChunk->getNoOutStreams());
+    stream.writeUint16Be(initChunk->getNoInStreams());
+    stream.writeUint32Be(initChunk->getInitTsn());
+    // Supported Address Types Parameter
+    if (initChunk->getIpv4Supported() || initChunk->getIpv6Supported()) {
+        stream.writeUint16Be(INIT_SUPPORTED_ADDRESS);
+        stream.writeUint16Be(8);
+        if (initChunk->getIpv4Supported() && initChunk->getIpv6Supported()) {
+            stream.writeUint16Be(INIT_PARAM_IPV4);
+            stream.writeUint16Be(INIT_PARAM_IPV6);
+        }
+        else if (initChunk->getIpv4Supported()) {
+            stream.writeUint16Be(INIT_PARAM_IPV4);
+            stream.writeUint16Be(0);
+        }
+        else {
+            stream.writeUint16Be(INIT_PARAM_IPV6);
+            stream.writeUint16Be(0);
+        }
+    }
+    // Forward-TSN-Supported Parameter
+    if (initChunk->getForwardTsn() == true) {
+        stream.writeUint16Be(FORWARD_TSN_SUPPORTED_PARAMETER);
+        stream.writeUint16Be(4);
+    }
+    // IPv4 Address Parameter & IPv6 Address Parameter
+    int32_t numaddr = initChunk->getAddressesArraySize();
+    for (int32_t i = 0; i < numaddr; i++) {
+        if (initChunk->getAddresses(i).getType() == L3Address::IPv4) {
+            stream.writeUint16Be(INIT_PARAM_IPV4);
+            stream.writeUint16Be(8);
+            stream.writeIpv4Address(initChunk->getAddresses(i).toIpv4());
+        }
+        else if (initChunk->getAddresses(i).getType() == L3Address::IPv6) {
+            stream.writeUint16Be(INIT_PARAM_IPV6);
+            stream.writeUint16Be(20);
+            stream.writeIpv6Address(initChunk->getAddresses(i).toIpv6());
+        }
+    }
+    // Supported Extensions Parameter
+    uint64_t chunkCount = initChunk->getSepChunksArraySize();
+    if (chunkCount > 0) {
+        stream.writeUint16Be(SUPPORTED_EXTENSIONS);
+        stream.writeUint16Be(4 + chunkCount);
+        for (uint64_t i = 0; i < chunkCount; ++i) {
+            stream.writeByte(initChunk->getSepChunks(i));
+        }
+    }
+    // Random Parameter
+    uint64_t randomCount = initChunk->getRandomArraySize();
+    if (randomCount > 0) {
+        stream.writeUint16Be(RANDOM);
+        stream.writeUint16Be(4 + randomCount);
+        for (uint64_t i = 0; i < randomCount; ++i) {
+            stream.writeByte(initChunk->getRandom(i));
+        }
+    }
+    // Chunk List Parameter
+    uint64_t chunkTypeCount = initChunk->getSctpChunkTypesArraySize();
+    if (chunkTypeCount > 0) {
+        stream.writeUint16Be(CHUNKS);
+        stream.writeUint16Be(4 + chunkTypeCount);
+        for (uint64_t i = 0; i < chunkTypeCount; ++i) {
+            stream.writeByte(initChunk->getSctpChunkTypes(i));
+        }
+    }
+    // Requested HMAC Algorithm Parameter
+    uint64_t hmacCount = initChunk->getHmacTypesArraySize();
+    if (hmacCount > 0) {
+        stream.writeUint16Be(HMAC_ALGO);
+        stream.writeUint16Be(4 + 2 * hmacCount);
+        for (uint64_t i = 0; i < hmacCount; ++i) {
+            stream.writeUint16Be(initChunk->getHmacTypes(i));
+        }
+    }
+}
+
+void deserializeInitChunk(MemoryInputStream& stream, const Ptr<SctpInitChunk> initChunk) {
+    initChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    initChunk->setByteLength(stream.readUint16Be());
+    initChunk->setInitTag(stream.readUint32Be());
+    initChunk->setA_rwnd(stream.readUint32Be());
+    initChunk->setNoOutStreams(stream.readUint16Be());
+    initChunk->setNoInStreams(stream.readUint16Be());
+    initChunk->setInitTsn(stream.readUint32Be());
+    uint64_t readBytes = 20;
+    while (readBytes < uint64_t(initChunk->getByteLength())) {
+        uint16_t chunkType = stream.readUint16Be();
+        uint16_t length = stream.readUint16Be();
+        readBytes += length;
+        switch (chunkType) {
+            case INIT_SUPPORTED_ADDRESS: {
+                uint16_t firstEntry = stream.readUint16Be();
+                uint16_t secondEntry = stream.readUint16Be();
+                if (firstEntry == INIT_PARAM_IPV4) {
+                    initChunk->setIpv4Supported(true);
+                }
+                if (firstEntry == INIT_PARAM_IPV6 || secondEntry == INIT_PARAM_IPV6) {
+                    initChunk->setIpv6Supported(true);
+                }
+                break;
+            }
+            case FORWARD_TSN_SUPPORTED_PARAMETER: {
+                initChunk->setSepChunksArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initChunk->setSepChunks(i, stream.readByte());
+                }
+                break;
+            }
+            case INIT_PARAM_IPV4: {
+                initChunk->setAddressesArraySize(initChunk->getAddressesArraySize() + 1);
+                initChunk->setAddresses(initChunk->getAddressesArraySize() - 1, stream.readIpv4Address());
+                break;
+            }
+            case INIT_PARAM_IPV6: {
+                initChunk->setAddressesArraySize(initChunk->getAddressesArraySize() + 1);
+                initChunk->setAddresses(initChunk->getAddressesArraySize() - 1, stream.readIpv6Address());
+                break;
+            }
+            case SUPPORTED_EXTENSIONS: {
+                initChunk->setSepChunksArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initChunk->setSepChunks(i, stream.readByte());
+                }
+                break;
+            }
+            case RANDOM: {
+                initChunk->setRandomArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initChunk->setRandom(i, stream.readByte());
+                }
+                break;
+            }
+            case CHUNKS: {
+                initChunk->setSctpChunkTypesArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initChunk->setSctpChunkTypes(i, stream.readByte());
+                }
+                break;
+            }
+            case HMAC_ALGO: {
+                initChunk->setHmacTypesArraySize((length - 4) / 2);
+                for (uint64_t i = 0; i < uint64_t((length - 4) / 2); ++i) {
+                    initChunk->setHmacTypes(i, stream.readUint16Be());
+                }
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+}
+
+void serializeInitAckChunk(MemoryOutputStream& stream, const Ptr<SctpInitAckChunk> initAckChunk) {
+    stream.writeByte(initAckChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(initAckChunk->getByteLength());
+    stream.writeUint32Be(initAckChunk->getInitTag());
+    stream.writeUint32Be(initAckChunk->getA_rwnd());
+    stream.writeUint16Be(initAckChunk->getNoOutStreams());
+    stream.writeUint16Be(initAckChunk->getNoInStreams());
+    stream.writeUint32Be(initAckChunk->getInitTsn());
+    // Supported Address Types Parameter
+    if (initAckChunk->getIpv4Supported() || initAckChunk->getIpv6Supported()) {
+        stream.writeUint16Be(INIT_SUPPORTED_ADDRESS);
+        stream.writeUint16Be(8);
+        if (initAckChunk->getIpv4Supported() && initAckChunk->getIpv6Supported()) {
+            stream.writeUint16Be(INIT_PARAM_IPV4);
+            stream.writeUint16Be(INIT_PARAM_IPV6);
+        }
+        else if (initAckChunk->getIpv4Supported()) {
+            stream.writeUint16Be(INIT_PARAM_IPV4);
+            stream.writeUint16Be(0);
+        }
+        else {
+            stream.writeUint16Be(INIT_PARAM_IPV6);
+            stream.writeUint16Be(0);
+        }
+    }
+    // Forward-TSN-Supported Parameter
+    if (initAckChunk->getForwardTsn() == true) {
+        stream.writeUint16Be(FORWARD_TSN_SUPPORTED_PARAMETER);
+        stream.writeUint16Be(4);
+    }
+    // IPv4 Address Parameter & IPv6 Address Parameter
+    int32_t numaddr = initAckChunk->getAddressesArraySize();
+    for (int32_t i = 0; i < numaddr; i++) {
+        if (initAckChunk->getAddresses(i).getType() == L3Address::IPv4) {
+            stream.writeUint16Be(INIT_PARAM_IPV4);
+            stream.writeUint16Be(8);
+            stream.writeIpv4Address(initAckChunk->getAddresses(i).toIpv4());
+        }
+        else if (initAckChunk->getAddresses(i).getType() == L3Address::IPv6) {
+            stream.writeUint16Be(INIT_PARAM_IPV6);
+            stream.writeUint16Be(20);
+            stream.writeIpv6Address(initAckChunk->getAddresses(i).toIpv6());
+        }
+    }
+    // Supported Extensions Parameter
+    uint64_t chunkCount = initAckChunk->getSepChunksArraySize();
+    if (chunkCount > 0) {
+        stream.writeUint16Be(SUPPORTED_EXTENSIONS);
+        stream.writeUint16Be(4 + chunkCount);
+        for (uint64_t i = 0; i < chunkCount; ++i) {
+            stream.writeByte(initAckChunk->getSepChunks(i));
+        }
+    }
+    // Unrecognized Parameters
+    uint64_t unrecognizedCount = initAckChunk->getUnrecognizedParametersArraySize();
+    if (unrecognizedCount > 0) {
+        stream.writeUint16Be(UNRECOGNIZED_PARAMETER);
+        stream.writeUint16Be(4 + unrecognizedCount);
+        for (uint64_t i = 0; i < unrecognizedCount; ++i) {
+            stream.writeByte(initAckChunk->getUnrecognizedParameters(i));
+        }
+    }
+    // Random Parameter
+    uint64_t randomCount = initAckChunk->getRandomArraySize();
+    if (randomCount > 0) {
+        stream.writeUint16Be(RANDOM);
+        stream.writeUint16Be(4 + randomCount);
+        for (uint64_t i = 0; i < randomCount; ++i) {
+            stream.writeByte(initAckChunk->getRandom(i));
+        }
+    }
+    // Chunk List Parameter
+    uint64_t chunkTypeCount = initAckChunk->getSctpChunkTypesArraySize();
+    if (chunkTypeCount > 0) {
+        stream.writeUint16Be(CHUNKS);
+        stream.writeUint16Be(4 + chunkTypeCount);
+        for (uint64_t i = 0; i < chunkTypeCount; ++i) {
+            stream.writeByte(initAckChunk->getSctpChunkTypes(i));
+        }
+    }
+    // Requested HMAC Algorithm Parameter
+    uint64_t hmacCount = initAckChunk->getHmacTypesArraySize();
+    if (hmacCount > 0) {
+        stream.writeUint16Be(HMAC_ALGO);
+        stream.writeUint16Be(4 + 2 * hmacCount);
+        for (uint64_t i = 0; i < hmacCount; ++i) {
+            stream.writeUint16Be(initAckChunk->getHmacTypes(i));
+        }
+    }
+    // State Cookie Parameter: FIXME
+}
+
+void deserializeInitAckChunk(MemoryInputStream& stream, const Ptr<SctpInitAckChunk> initAckChunk) {
+    initAckChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    initAckChunk->setByteLength(stream.readUint16Be());
+    initAckChunk->setInitTag(stream.readUint32Be());
+    initAckChunk->setA_rwnd(stream.readUint32Be());
+    initAckChunk->setNoOutStreams(stream.readUint16Be());
+    initAckChunk->setNoInStreams(stream.readUint16Be());
+    initAckChunk->setInitTsn(stream.readUint32Be());
+    uint64_t readBytes = 20;
+    while (readBytes < uint64_t(initAckChunk->getByteLength())) {
+        uint16_t chunkType = stream.readUint16Be();
+        uint16_t length = stream.readUint16Be();
+        readBytes += length;
+        switch (chunkType) {
+            case INIT_SUPPORTED_ADDRESS: {
+                uint16_t firstEntry = stream.readUint16Be();
+                uint16_t secondEntry = stream.readUint16Be();
+                if (firstEntry == INIT_PARAM_IPV4) {
+                    initAckChunk->setIpv4Supported(true);
+                }
+                if (firstEntry == INIT_PARAM_IPV6 || secondEntry == INIT_PARAM_IPV6) {
+                    initAckChunk->setIpv6Supported(true);
+                }
+                break;
+            }
+            case FORWARD_TSN_SUPPORTED_PARAMETER: {
+                initAckChunk->setSepChunksArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initAckChunk->setSepChunks(i, stream.readByte());
+                }
+                break;
+            }
+            case INIT_PARAM_IPV4: {
+                initAckChunk->setAddressesArraySize(initAckChunk->getAddressesArraySize() + 1);
+                initAckChunk->setAddresses(initAckChunk->getAddressesArraySize() - 1, stream.readIpv4Address());
+                break;
+            }
+            case INIT_PARAM_IPV6: {
+                initAckChunk->setAddressesArraySize(initAckChunk->getAddressesArraySize() + 1);
+                initAckChunk->setAddresses(initAckChunk->getAddressesArraySize() - 1, stream.readIpv6Address());
+                break;
+            }
+            case UNRECOGNIZED_PARAMETER: {
+                initAckChunk->setUnrecognizedParametersArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initAckChunk->setUnrecognizedParameters(i, stream.readByte());
+                }
+                break;
+            }
+            case SUPPORTED_EXTENSIONS: {
+                initAckChunk->setSepChunksArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initAckChunk->setSepChunks(i, stream.readByte());
+                }
+                break;
+            }
+            case RANDOM: {
+                initAckChunk->setRandomArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initAckChunk->setRandom(i, stream.readByte());
+                }
+                break;
+            }
+            case CHUNKS: {
+                initAckChunk->setSctpChunkTypesArraySize(length - 4);
+                for (uint64_t i = 0; i < uint64_t(length - 4); ++i) {
+                    initAckChunk->setSctpChunkTypes(i, stream.readByte());
+                }
+                break;
+            }
+            case HMAC_ALGO: {
+                initAckChunk->setHmacTypesArraySize((length - 4) / 2);
+                for (uint64_t i = 0; i < uint64_t((length - 4) / 2); ++i) {
+                    initAckChunk->setHmacTypes(i, stream.readUint16Be());
+                }
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+}
+
+}
+
 unsigned char SctpHeaderSerializer::keyVector[512];
 unsigned int SctpHeaderSerializer::sizeKeyVector = 0;
 unsigned char SctpHeaderSerializer::peerKeyVector[512];
