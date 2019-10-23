@@ -428,10 +428,222 @@ void deserializeInitAckChunk(MemoryInputStream& stream, const Ptr<SctpInitAckChu
                 }
                 break;
             }
+            // State Cookie Parameter: FIXME
             default: {
                 break;
             }
         }
+    }
+}
+
+void serializeSackChunk(MemoryOutputStream& stream, const Ptr<SctpSackChunk> sackChunk) {
+    stream.writeByte(sackChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(sackChunk->getByteLength());
+    uint32_t cumtsnack = sackChunk->getCumTsnAck();
+    stream.writeUint32Be(cumtsnack);
+    stream.writeUint32Be(sackChunk->getA_rwnd());
+    uint16_t numgaps = sackChunk->getNumGaps();
+    stream.writeUint16Be(numgaps);
+    uint16_t numdups = sackChunk->getNumDupTsns();
+    stream.writeUint16Be(numdups);
+    for (uint16_t i = 0; i < numgaps; ++i) {
+        stream.writeUint16Be(sackChunk->getGapStart(i) - cumtsnack);
+        stream.writeUint16Be(sackChunk->getGapStop(i) - cumtsnack);
+    }
+    for (uint16_t i = 0; i < numdups; ++i) {
+        stream.writeUint32Be(sackChunk->getDupTsns(i));
+    }
+}
+
+void deserializeSackChunk(MemoryInputStream& stream, const Ptr<SctpSackChunk> sackChunk) {
+    sackChunk->setIsNrSack(false);
+    sackChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    sackChunk->setByteLength(stream.readUint16Be());
+    uint32_t cumtsnack = stream.readUint32Be();
+    sackChunk->setCumTsnAck(cumtsnack);
+    sackChunk->setA_rwnd(stream.readUint32Be());
+    uint16_t numgaps = stream.readUint16Be();
+    sackChunk->setNumGaps(numgaps);
+    uint16_t numdups = stream.readUint16Be();
+    sackChunk->setNumDupTsns(numdups);
+    sackChunk->setGapStartArraySize(numgaps);
+    sackChunk->setGapStopArraySize(numgaps);
+    for (uint16_t i = 0; i < numgaps; ++i) {
+        sackChunk->setGapStart(i, stream.readUint16Be() + cumtsnack);
+        sackChunk->setGapStop(i, stream.readUint16Be() + cumtsnack);
+    }
+    sackChunk->setDupTsnsArraySize(numdups);
+    for (uint16_t i = 0; i < numdups; ++i) {
+        sackChunk->setDupTsns(i, stream.readUint32Be());
+    }
+}
+
+void serializeNrSackChunk(MemoryOutputStream& stream, const Ptr<SctpSackChunk> sackChunk) {
+    stream.writeByte(sackChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(sackChunk->getByteLength());
+    uint32_t cumtsnack = sackChunk->getCumTsnAck();
+    stream.writeUint32Be(cumtsnack);
+    stream.writeUint32Be(sackChunk->getA_rwnd());
+    uint16_t numgaps = sackChunk->getNumGaps();
+    stream.writeUint16Be(numgaps);
+    uint16_t numnrgaps = sackChunk->getNumNrGaps();
+    stream.writeUint16Be(numnrgaps);
+    uint16_t numdups = sackChunk->getNumDupTsns();
+    stream.writeUint16Be(numdups);
+    stream.writeUint16Be(0);
+    for (uint16_t i = 0; i < numgaps; ++i) {
+        stream.writeUint16Be(sackChunk->getGapStart(i) - cumtsnack);
+        stream.writeUint16Be(sackChunk->getGapStop(i) - cumtsnack);
+    }
+    for (uint16_t i = 0; i < numnrgaps; ++i) {
+        stream.writeUint16Be(sackChunk->getNrGapStart(i) - cumtsnack);
+        stream.writeUint16Be(sackChunk->getNrGapStop(i) - cumtsnack);
+    }
+    for (uint16_t i = 0; i < numdups; ++i) {
+        stream.writeUint32Be(sackChunk->getDupTsns(i));
+    }
+}
+
+void deserializeNrSackChunk(MemoryInputStream& stream, const Ptr<SctpSackChunk> sackChunk) {
+    sackChunk->setIsNrSack(true);
+    sackChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    sackChunk->setByteLength(stream.readUint16Be());
+    uint32_t cumtsnack = stream.readUint32Be();
+    sackChunk->setCumTsnAck(cumtsnack);
+    sackChunk->setA_rwnd(stream.readUint32Be());
+    uint16_t numgaps = stream.readUint16Be();
+    sackChunk->setNumGaps(numgaps);
+    uint16_t numnrgaps = stream.readUint16Be();
+    sackChunk->setNumNrGaps(numnrgaps);
+    uint16_t numdups = stream.readUint16Be();
+    sackChunk->setNumDupTsns(numdups);
+    sackChunk->setGapStartArraySize(numgaps);
+    sackChunk->setGapStopArraySize(numgaps);
+    for (uint16_t i = 0; i < numgaps; ++i) {
+        sackChunk->setGapStart(i, stream.readUint16Be() + cumtsnack);
+        sackChunk->setGapStop(i, stream.readUint16Be() + cumtsnack);
+    }
+    sackChunk->setNrGapStartArraySize(numnrgaps);
+    sackChunk->setNrGapStopArraySize(numnrgaps);
+    for (uint16_t i = 0; i < numnrgaps; ++i) {
+        sackChunk->setNrGapStart(i, stream.readUint16Be() + cumtsnack);
+        sackChunk->setNrGapStop(i, stream.readUint16Be() + cumtsnack);
+    }
+    sackChunk->setDupTsnsArraySize(numdups);
+    for (uint16_t i = 0; i < numdups; ++i) {
+        sackChunk->setDupTsns(i, stream.readUint32Be());
+    }
+}
+
+void serializeHeartbeatChunk(MemoryOutputStream& stream, const Ptr<SctpHeartbeatChunk> heartbeatChunk) {
+    stream.writeByte(heartbeatChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(heartbeatChunk->getByteLength());
+    L3Address addr = heartbeatChunk->getRemoteAddr();
+    //simtime_t time = heartbeatChunk->getTimeField();  ?? FIXME
+    if (addr.getType() == L3Address::IPv4) {
+        stream.writeUint16Be(1);
+        uint32_t infolen = sizeof(addr.toIpv4().getInt()) + sizeof(uint32_t);
+        stream.writeUint16Be(infolen + 4);
+        stream.writeUint16Be(INIT_PARAM_IPV4);
+        stream.writeUint16Be(8);
+        stream.writeIpv4Address(addr.toIpv4());
+    }
+    if (addr.getType() == L3Address::IPv6) {
+        stream.writeUint16Be(1);
+        uint32_t infolen = 20 + sizeof(uint32_t);
+        stream.writeUint16Be(infolen + 4);
+        stream.writeUint16Be(INIT_PARAM_IPV6);
+        stream.writeUint16Be(20);
+        stream.writeIpv6Address(addr.toIpv6());
+    }
+}
+
+void deserializeHeartbeatChunk(MemoryInputStream& stream, const Ptr<SctpHeartbeatChunk> heartbeatChunk) {
+    heartbeatChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    heartbeatChunk->setByteLength(stream.readUint16Be());
+    stream.readUint16Be();
+    uint16_t infolen = stream.readUint16Be();
+    uint16_t paramType = stream.readUint16Be();
+    switch (paramType) {
+        case INIT_PARAM_IPV4: {
+            heartbeatChunk->setRemoteAddr(stream.readIpv4Address());
+            break;
+        }
+        case INIT_PARAM_IPV6: {
+            heartbeatChunk->setRemoteAddr(stream.readIpv6Address());
+            break;
+        }
+        default:
+            stream.readByteRepeatedly(0, infolen - 4);
+    }
+}
+
+void serializeHeartbeatAckChunk(MemoryOutputStream& stream, const Ptr<SctpHeartbeatAckChunk> heartbeatAckChunk) {
+    stream.writeByte(heartbeatAckChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(heartbeatAckChunk->getByteLength());
+    uint32_t infolen = heartbeatAckChunk->getInfoArraySize();
+    stream.writeUint16Be(1);
+    if (infolen > 0) {
+        stream.writeUint16Be(infolen + 4);
+        for (uint32_t i = 0; i < infolen; ++i) {
+            stream.writeByte(heartbeatAckChunk->getInfo(i));
+        }
+    }
+    else {
+        stream.writeUint16Be(0);  // FIXME: writing 0 as length to mandatory field above
+        L3Address addr = heartbeatAckChunk->getRemoteAddr();
+        //simtime_t time = heartbeatAckChunk->getTimeField();   // FIXME: ??
+        if (addr.getType() == L3Address::IPv4) {
+            stream.writeUint16Be(1);
+            uint32_t infolen = sizeof(addr.toIpv4().getInt()) + sizeof(uint32_t);
+            stream.writeUint16Be(infolen + 4);
+            stream.writeUint16Be(INIT_PARAM_IPV4);
+            stream.writeUint16Be(8);
+            stream.writeIpv4Address(addr.toIpv4());
+        }
+        if (addr.getType() == L3Address::IPv6) {
+            stream.writeUint16Be(1);
+            uint32_t infolen = 20 + sizeof(uint32_t);
+            stream.writeUint16Be(infolen + 4);
+            stream.writeUint16Be(INIT_PARAM_IPV6);
+            stream.writeUint16Be(20);
+            stream.writeIpv6Address(addr.toIpv6());
+        }
+    }
+}
+
+void deserializeHeartbeatAckChunk(MemoryInputStream& stream, const Ptr<SctpHeartbeatAckChunk> heartbeatAckChunk) {
+    heartbeatAckChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    heartbeatAckChunk->setByteLength(stream.readUint16Be());
+    stream.readUint16Be();
+    uint16_t infolen = stream.readUint16Be();
+    uint16_t paramType = stream.readUint16Be();
+    switch (paramType) {
+        case 1: {
+            heartbeatAckChunk->setInfoArraySize(infolen - 4);
+            for (uint32_t i = 0; i < infolen - 4; ++i) {
+                heartbeatAckChunk->setInfo(i, stream.readByte());
+            }
+            break;
+        }
+        case INIT_PARAM_IPV4: {
+            heartbeatAckChunk->setRemoteAddr(stream.readIpv4Address());
+            break;
+        }
+        case INIT_PARAM_IPV6: {
+            heartbeatAckChunk->setRemoteAddr(stream.readIpv6Address());
+            break;
+        }
+        default:
+            stream.readByteRepeatedly(0, infolen - 4);
     }
 }
 
