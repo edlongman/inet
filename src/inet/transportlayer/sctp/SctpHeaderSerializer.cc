@@ -1106,6 +1106,82 @@ void deserializeErrorChunk(MemoryInputStream& stream, const Ptr<SctpErrorChunk> 
     }
 }
 
+void serializeReConfigurationChunk(MemoryOutputStream& stream, const Ptr<SctpStreamResetChunk> streamReset) {
+    stream.writeByte(streamReset->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(streamReset->getByteLength());
+    uint16_t numParameters = streamReset->getParametersArraySize();
+    for (uint16_t i = 0; i < numParameters; ++i) {
+        SctpParameter *parameter = (SctpParameter *)(streamReset->getParameters(i));
+        switch (parameter->getParameterType()) {
+            case OUTGOING_RESET_REQUEST_PARAMETER: {
+                SctpOutgoingSsnResetRequestParameter *outparam = check_and_cast<SctpOutgoingSsnResetRequestParameter *>(parameter);
+                stream.writeUint16Be(outparam->getParameterType());
+                stream.writeUint16Be(16 + 2 * outparam->getStreamNumbersArraySize());
+                stream.writeUint32Be(outparam->getSrReqSn());
+                stream.writeUint32Be(outparam->getSrResSn());
+                stream.writeUint32Be(outparam->getLastTsn());
+                for (uint32_t i = 0; i < outparam->getStreamNumbersArraySize(); ++i) {
+                    stream.writeUint16Be(outparam->getStreamNumbers(i));
+                }
+                break;
+            }
+            case INCOMING_RESET_REQUEST_PARAMETER: {
+                SctpIncomingSsnResetRequestParameter *inparam = check_and_cast<SctpIncomingSsnResetRequestParameter *>(parameter);
+                stream.writeUint16Be(inparam->getParameterType());
+                stream.writeUint16Be(8 + 2 * inparam->getStreamNumbersArraySize());
+                stream.writeUint32Be(inparam->getSrReqSn());
+                for (uint32_t i = 0; i < inparam->getStreamNumbersArraySize(); ++i) {
+                    stream.writeUint16Be(inparam->getStreamNumbers(i));
+                }
+                break;
+            }
+            case SSN_TSN_RESET_REQUEST_PARAMETER: {
+                SctpSsnTsnResetRequestParameter *ssnparam = check_and_cast<SctpSsnTsnResetRequestParameter *>(parameter);
+                stream.writeUint16Be(ssnparam->getParameterType());
+                stream.writeUint16Be(8);
+                stream.writeUint32Be(ssnparam->getSrReqSn());
+                break;
+            }
+            case STREAM_RESET_RESPONSE_PARAMETER: {
+                SctpStreamResetResponseParameter *response = check_and_cast<SctpStreamResetResponseParameter *>(parameter);
+                stream.writeUint16Be(response->getParameterType());
+                if (response->getSendersNextTsn() != 0)
+                    stream.writeUint16Be(20);
+                else
+                    stream.writeUint16Be(12);
+                stream.writeUint32Be(response->getSrResSn());
+                stream.writeUint32Be(response->getResult());
+                if (response->getSendersNextTsn() != 0) {
+                    stream.writeUint32Be(response->getSendersNextTsn());
+                    stream.writeUint32Be(response->getReceiversNextTsn());
+                }
+                break;
+            }
+            case ADD_OUTGOING_STREAMS_REQUEST_PARAMETER: {
+                SctpAddStreamsRequestParameter *outstreams = check_and_cast<SctpAddStreamsRequestParameter *>(parameter);
+                stream.writeUint16Be(outstreams->getParameterType());
+                stream.writeUint16Be(12);
+                stream.writeUint32Be(outstreams->getSrReqSn());
+                stream.writeUint16Be(outstreams->getNumberOfStreams());
+                stream.writeUint16Be(0);
+                break;
+            }
+            case ADD_INCOMING_STREAMS_REQUEST_PARAMETER: {
+                SctpAddStreamsRequestParameter *instreams = check_and_cast<SctpAddStreamsRequestParameter *>(parameter);
+                stream.writeUint16Be(instreams->getParameterType());
+                stream.writeUint16Be(12);
+                stream.writeUint32Be(instreams->getSrReqSn());
+                stream.writeUint16Be(instreams->getNumberOfStreams());
+                stream.writeUint16Be(0);
+                break;
+            }
+            default:
+                throw cRuntimeError("Parameter Type %d not supported", parameter->getParameterType());
+        }
+    }
+}
+
 }
 
 unsigned char SctpHeaderSerializer::keyVector[512];
