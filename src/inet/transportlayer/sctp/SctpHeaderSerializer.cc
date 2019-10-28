@@ -1045,6 +1045,67 @@ void deserializeAsconfAckChunk(MemoryInputStream& stream, const Ptr<SctpAsconfAc
     }
 }
 
+void serializeErrorChunk(MemoryOutputStream& stream, const Ptr<SctpErrorChunk> errorchunk) {
+    stream.writeByte(errorchunk->getSctpChunkType());
+    stream.writeNBitsOfUint64Be(0, 6);
+    stream.writeBit(errorchunk->getMBit());
+    stream.writeBit(errorchunk->getTBit());
+    stream.writeUint16Be(errorchunk->getByteLength());
+    if (errorchunk->getParametersArraySize() > 0) {
+        SctpParameter *parameter = check_and_cast<SctpParameter *>(errorchunk->getParameters(0));
+        switch (parameter->getParameterType()) {
+            case MISSING_NAT_ENTRY: {
+                SctpSimpleErrorCauseParameter *ecp = check_and_cast<SctpSimpleErrorCauseParameter *>(parameter);
+                stream.writeUint16Be(ecp->getParameterType());
+                stream.writeUint16Be(ecp->getByteLength());
+                stream.writeByteRepeatedly(ecp->getValue(), ecp->getByteLength() - 4);
+                break;
+            }
+            case INVALID_STREAM_IDENTIFIER: {
+                SctpSimpleErrorCauseParameter *ecp = check_and_cast<SctpSimpleErrorCauseParameter *>(parameter);
+                stream.writeUint16Be(ecp->getParameterType());
+                stream.writeUint16Be(ecp->getByteLength());
+                stream.writeUint16Be(ecp->getValue());
+                stream.writeUint16Be(0);
+                break;
+            }
+            default:
+                throw cRuntimeError("Parameter Type %d not supported", parameter->getParameterType());
+        }
+    }
+}
+
+void deserializeErrorChunk(MemoryInputStream& stream, const Ptr<SctpErrorChunk> errorchunk) {
+    errorchunk->setSctpChunkType(stream.readByte());
+    stream.readNBitsToUint64Be(6);
+    errorchunk->setMBit(stream.readBit());
+    errorchunk->setTBit(stream.readBit());
+    errorchunk->setByteLength(stream.readUint16Be());
+    if (errorchunk->getByteLength() > 4) {
+        errorchunk->setParametersArraySize(1);
+        uint8_t type = stream.readByte();
+        switch (type) {
+            case MISSING_NAT_ENTRY: {
+                SctpSimpleErrorCauseParameter *ecp = new SctpSimpleErrorCauseParameter();
+                ecp->setParameterType(MISSING_NAT_ENTRY);
+                ecp->setByteLength(stream.readUint16Be());
+                ecp->setValue(stream.readByteRepeatedly(0, ecp->getByteLength() - 4));
+                break;
+            }
+            case INVALID_STREAM_IDENTIFIER: {
+                SctpSimpleErrorCauseParameter *ecp = new SctpSimpleErrorCauseParameter();
+                ecp->setParameterType(INVALID_STREAM_IDENTIFIER);
+                ecp->setByteLength(stream.readUint16Be());
+                ecp->setValue(stream.readUint16Be());
+                stream.readUint16Be();
+                break;
+            }
+            default:
+                break;
+        }
+    }
+}
+
 }
 
 unsigned char SctpHeaderSerializer::keyVector[512];
