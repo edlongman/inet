@@ -37,7 +37,7 @@
 
 #include <sys/types.h>
 #define MAXBUFLEN 1<<16
-//#define PAD_LEN(x) ((4 - (x & 3)) & 3)
+#define PAD_LEN(x) ((4 - (x & 3)) & 3)
 
 namespace inet {
 
@@ -710,6 +710,71 @@ void serializeCookieEchoChunk(MemoryOutputStream& stream, const Ptr<SctpCookieEc
         }
     }
     uint32 uLen = cookieChunk->getUnrecognizedParametersArraySize();
+    if (uLen > 0) {
+        // FIXME
+        stream.writeByte(ERRORTYPE);
+        stream.writeByte(0);
+        stream.writeByte(uLen + 8);
+        stream.writeByte(UNRECOGNIZED_PARAMETER);
+        stream.writeByte(0);
+        stream.writeByte(uLen + 4);
+        for (uint32_t i = 0; i < uLen; ++i) {
+            stream.writeByte(cookieChunk->getUnrecognizedParameters(i));
+        }
+    }
+}
+
+void deserializeCookieEchoChunk(MemoryInputStream& stream, const Ptr<SctpCookieEchoChunk> cookieChunk) {
+    // TODO FIXME
+}
+
+void serializeCookieAckChunk(MemoryOutputStream& stream, const Ptr<SctpCookieAckChunk> cookieAckChunk) {
+    stream.writeByte(cookieAckChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(cookieAckChunk->getByteLength());  // must be 4
+}
+
+void deserializeCookieAckChunk(MemoryInputStream& stream, const Ptr<SctpCookieAckChunk> cookieAckChunk) {
+    cookieAckChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    cookieAckChunk->setByteLength(stream.readUint16Be());  // must be 4
+}
+
+void serializeShutdownCompleteChunk(MemoryOutputStream& stream, const Ptr<SctpShutdownCompleteChunk> shutdownCompleteChunk) {
+    stream.writeByte(shutdownCompleteChunk->getSctpChunkType());
+    stream.writeNBitsOfUint64Be(0, 7);
+    stream.writeBit(shutdownCompleteChunk->getTBit());
+    stream.writeUint16Be(shutdownCompleteChunk->getByteLength());  // must be 4
+}
+
+void deserializeShutdownCompleteChunk(MemoryInputStream& stream, const Ptr<SctpShutdownCompleteChunk> shutdownCompleteChunk) {
+    shutdownCompleteChunk->setSctpChunkType(stream.readByte());
+    stream.readNBitsToUint64Be(7);
+    shutdownCompleteChunk->setTBit(stream.readBit());
+    shutdownCompleteChunk->setByteLength(stream.readUint16Be());  // must be 4
+}
+
+void serializeAuthenticationChunk(MemoryOutputStream& stream, const Ptr<SctpAuthenticationChunk> authChunk) {
+    stream.writeByte(authChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(SCTP_AUTH_CHUNK_LENGTH + SHA_LENGTH);
+    stream.writeUint16Be(authChunk->getSharedKey());
+    stream.writeUint16Be(authChunk->getHMacIdentifier());
+    for (uint8_t i = 0; i < SHA_LENGTH; ++i) {
+        stream.writeByte(0);
+    }
+}
+
+void deserializeAuthenticationChunk(MemoryInputStream& stream, const Ptr<SctpAuthenticationChunk> authChunk) {
+    authChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    uint16_t len = stream.readUint16Be();
+    authChunk->setByteLength(len);
+    authChunk->setSharedKey(stream.readUint16Be());
+    authChunk->setHMacIdentifier(stream.readUint16Be());
+    for (uint8_t i = 0; i < len - SCTP_AUTH_CHUNK_LENGTH; ++i) {
+        stream.readByte();
+    }
 }
 
 }
