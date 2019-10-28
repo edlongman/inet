@@ -777,6 +777,137 @@ void deserializeAuthenticationChunk(MemoryInputStream& stream, const Ptr<SctpAut
     }
 }
 
+void serializeForwardTsnChunk(MemoryOutputStream& stream, const Ptr<SctpForwardTsnChunk> forward) {
+    stream.writeByte(forward->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(forward->getByteLength());
+    stream.writeUint32Be(forward->getNewCumTsn());
+    ASSERT(forward->getSidArraySize() == forward->getSsnArraySize());
+    for (uint32_t i = 0; i < forward->getSidArraySize(); ++i) {
+        stream.writeUint16Be(forward->getSid(i));
+        stream.writeUint16Be(forward->getSsn(i));
+    }
+}
+
+void deserializeForwardTsnChunk(MemoryInputStream& stream, const Ptr<SctpForwardTsnChunk> forward) {
+    forward->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    forward->setByteLength(stream.readUint16Be());
+    forward->setNewCumTsn(stream.readUint32Be());
+    uint32_t num = (forward->getByteLength() - 8) / 4;
+    forward->setSidArraySize(num);
+    forward->setSsnArraySize(num);
+    for (uint32_t i = 0; i < num; ++i) {
+        forward->setSid(i, stream.readUint16Be());
+        forward->setSsn(i, stream.readUint16Be());
+    }
+}
+
+void serializeAddressConfigurationChangeChunk(MemoryOutputStream& stream, const Ptr<SctpAsconfChunk> asconfChunk) {
+    stream.writeByte(asconfChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(asconfChunk->getByteLength());
+    stream.writeUint32Be(asconfChunk->getSerialNumber());
+
+    stream.writeByte(INIT_PARAM_IPV4);
+    stream.writeByte(0);
+    stream.writeUint16Be(8);
+    stream.writeIpv4Address(asconfChunk->getAddressParam().toIpv4());
+
+    for (uint32_t i = 0; i < asconfChunk->getAsconfParamsArraySize(); ++i) {
+        SctpParameter *parameter = (SctpParameter *)(asconfChunk->getAsconfParams(i));
+        switch (parameter->getParameterType()) {
+            case ADD_IP_ADDRESS: {
+                SctpAddIPParameter *addip = check_and_cast<SctpAddIPParameter *>(parameter);
+                stream.writeByte(ADD_IP_ADDRESS);
+                stream.writeByte(addip->getByteLength());
+                stream.writeUint32Be(addip->getRequestCorrelationId());
+                stream.writeByte(INIT_PARAM_IPV4);
+                stream.writeByte(8);
+                stream.writeIpv4Address(addip->getAddressParam().toIpv4());
+                break;
+            }
+            case DELETE_IP_ADDRESS: {
+                SctpDeleteIPParameter *deleteip = check_and_cast<SctpDeleteIPParameter *>(parameter);
+                stream.writeByte(DELETE_IP_ADDRESS);
+                stream.writeByte(deleteip->getByteLength());
+                stream.writeUint32Be(deleteip->getRequestCorrelationId());
+                stream.writeByte(INIT_PARAM_IPV4);
+                stream.writeByte(8);
+                stream.writeIpv4Address(deleteip->getAddressParam().toIpv4());
+                break;
+            }
+            case SET_PRIMARY_ADDRESS: {
+                SctpSetPrimaryIPParameter *setip = check_and_cast<SctpSetPrimaryIPParameter *>(parameter);
+                stream.writeByte(SET_PRIMARY_ADDRESS);
+                stream.writeByte(setip->getByteLength());
+                stream.writeUint32Be(setip->getRequestCorrelationId());
+                stream.writeByte(INIT_PARAM_IPV4);
+                stream.writeByte(8);
+                stream.writeIpv4Address(setip->getAddressParam().toIpv4());
+                break;
+            }
+            default:
+                throw cRuntimeError("Parameter Type %d not supported", parameter->getParameterType());
+        }
+    }
+}
+
+void deserializeAddressConfigurationChangeChunk(MemoryInputStream& stream, const Ptr<SctpAsconfChunk> asconfChunk) {
+    asconfChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    asconfChunk->setByteLength(stream.readUint16Be());
+    asconfChunk->setSerialNumber(stream.readUint32Be());
+
+    stream.readByte();
+    stream.readByte();
+    stream.readUint16Be();
+    asconfChunk->setAddressParam(stream.readIpv4Address());
+
+    uint8_t arrsize = (asconfChunk->getByteLength() - 16) / 12;
+    asconfChunk->setAsconfParamsArraySize(arrsize);
+    for (uint32_t i = 0; i < arrsize; ++i) {
+        uint8_t type = stream.readByte();
+        switch (type) {
+            case ADD_IP_ADDRESS: {
+                SctpAddIPParameter *addip = new SctpAddIPParameter();
+                stream.readByte();
+                stream.readByte();
+                addip->setRequestCorrelationId(stream.readUint32Be());
+                stream.readByte();
+                stream.readByte();
+                addip->setAddressParam(stream.readIpv4Address());
+                asconfChunk->setAsconfParams(i, addip);
+                break;
+            }
+            case DELETE_IP_ADDRESS: {
+                SctpDeleteIPParameter *deleteip = new SctpDeleteIPParameter();
+                stream.readByte();
+                stream.readByte();
+                deleteip->setRequestCorrelationId(stream.readUint32Be());
+                stream.readByte();
+                stream.readByte();
+                deleteip->setAddressParam(stream.readIpv4Address());
+                asconfChunk->setAsconfParams(i, deleteip);
+                break;
+            }
+            case SET_PRIMARY_ADDRESS: {
+                SctpSetPrimaryIPParameter *setip = new SctpSetPrimaryIPParameter();
+                stream.readByte();
+                stream.readByte();
+                setip->setRequestCorrelationId(stream.readUint32Be());
+                stream.readByte();
+                stream.readByte();
+                setip->setAddressParam(stream.readIpv4Address());
+                asconfChunk->setAsconfParams(i, setip);
+                break;
+            }
+            default:
+                throw cRuntimeError("Parameter Type %d not supported", type);
+        }
+    }
+}
+
 }
 
 unsigned char SctpHeaderSerializer::keyVector[512];
