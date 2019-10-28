@@ -93,6 +93,7 @@ void deserializeDataChunk(MemoryInputStream& stream, const Ptr<SctpDataChunk> da
         for (uint32_t i = 0; i < datalen; ++i) {
             smsg->setData(i, stream.readByte());
         }
+        dataChunk->encapsulate(smsg);
     }
     // TODO: padding??
 }
@@ -803,7 +804,7 @@ void deserializeForwardTsnChunk(MemoryInputStream& stream, const Ptr<SctpForward
     }
 }
 
-void serializeAddressConfigurationChangeChunk(MemoryOutputStream& stream, const Ptr<SctpAsconfChunk> asconfChunk) {
+void serializeAsconfChangeChangeChunk(MemoryOutputStream& stream, const Ptr<SctpAsconfChunk> asconfChunk) {
     stream.writeByte(asconfChunk->getSctpChunkType());
     stream.writeByte(0);
     stream.writeUint16Be(asconfChunk->getByteLength());
@@ -853,7 +854,7 @@ void serializeAddressConfigurationChangeChunk(MemoryOutputStream& stream, const 
     }
 }
 
-void deserializeAddressConfigurationChangeChunk(MemoryInputStream& stream, const Ptr<SctpAsconfChunk> asconfChunk) {
+void deserializeAsconfChangeChunk(MemoryInputStream& stream, const Ptr<SctpAsconfChunk> asconfChunk) {
     asconfChunk->setSctpChunkType(stream.readByte());
     stream.readByte();
     asconfChunk->setByteLength(stream.readUint16Be());
@@ -904,6 +905,142 @@ void deserializeAddressConfigurationChangeChunk(MemoryInputStream& stream, const
             }
             default:
                 throw cRuntimeError("Parameter Type %d not supported", type);
+        }
+    }
+}
+
+void serializeAsconfAckChunk(MemoryOutputStream& stream, const Ptr<SctpAsconfAckChunk> asconfAckChunk) {
+    stream.writeByte(asconfAckChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(asconfAckChunk->getByteLength());
+    stream.writeUint32Be(asconfAckChunk->getSerialNumber());
+
+    for (uint32_t i = 0; i < asconfAckChunk->getAsconfResponseArraySize(); ++i) {
+        SctpParameter *parameter = check_and_cast<SctpParameter *>(asconfAckChunk->getAsconfResponse(i));
+        switch (parameter->getParameterType()) {
+            case ERROR_CAUSE_INDICATION: {
+                SctpErrorCauseParameter *error = check_and_cast<SctpErrorCauseParameter *>(parameter);
+                stream.writeByte(error->getParameterType());
+                stream.writeByte(error->getByteLength());
+                stream.writeUint32Be(error->getResponseCorrelationId());
+
+                if (check_and_cast<SctpParameter *>(error->getEncapsulatedPacket()) != nullptr) {
+                    SctpParameter *encParameter = check_and_cast<SctpParameter *>(error->getEncapsulatedPacket());
+                    switch (encParameter->getParameterType()) {
+                        case ADD_IP_ADDRESS: {
+                            SctpAddIPParameter *addip = check_and_cast<SctpAddIPParameter *>(encParameter);
+                            stream.writeByte(ADD_IP_ADDRESS);
+                            stream.writeByte(addip->getByteLength());
+                            stream.writeUint32Be(addip->getRequestCorrelationId());
+                            stream.writeByte(INIT_PARAM_IPV4);
+                            stream.writeByte(8);
+                            stream.writeIpv4Address(addip->getAddressParam().toIpv4());
+                            break;
+                        }
+                        case DELETE_IP_ADDRESS: {
+                            SctpDeleteIPParameter *deleteip = check_and_cast<SctpDeleteIPParameter *>(encParameter);
+                            stream.writeByte(DELETE_IP_ADDRESS);
+                            stream.writeByte(deleteip->getByteLength());
+                            stream.writeUint32Be(deleteip->getRequestCorrelationId());
+                            stream.writeByte(INIT_PARAM_IPV4);
+                            stream.writeByte(8);
+                            stream.writeIpv4Address(deleteip->getAddressParam().toIpv4());
+                            break;
+                        }
+                        case SET_PRIMARY_ADDRESS: {
+                            SctpSetPrimaryIPParameter *setip = check_and_cast<SctpSetPrimaryIPParameter *>(encParameter);
+                            stream.writeByte(SET_PRIMARY_ADDRESS);
+                            stream.writeByte(setip->getByteLength());
+                            stream.writeUint32Be(setip->getRequestCorrelationId());
+                            stream.writeByte(INIT_PARAM_IPV4);
+                            stream.writeByte(8);
+                            stream.writeIpv4Address(setip->getAddressParam().toIpv4());
+                            break;
+                        }
+                        throw cRuntimeError("Parameter Type %d not supported", encParameter->getParameterType());
+                    }
+                }
+                break;
+            }
+            case SUCCESS_INDICATION: {
+                SctpSuccessIndication *success = check_and_cast<SctpSuccessIndication *>(parameter);
+                stream.writeByte(success->getParameterType());
+                stream.writeByte(8);
+                stream.writeUint32Be(success->getResponseCorrelationId());
+                break;
+            }
+            default:
+                throw cRuntimeError("Parameter Type %d not supported", parameter->getParameterType());
+        }
+    }
+}
+
+void deserializeAsconfAckChunk(MemoryInputStream& stream, const Ptr<SctpAsconfAckChunk> asconfAckChunk) {
+    asconfAckChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    asconfAckChunk->setByteLength(stream.readUint16Be());
+    asconfAckChunk->setSerialNumber(stream.readUint32Be());
+
+    uint32_t bytes_to_read = asconfAckChunk->getByteLength() - 8;
+    while (bytes_to_read > 0) {
+        uint8_t type = stream.readByte();
+        switch (type) {
+            case ERROR_CAUSE_INDICATION: {
+                SctpErrorCauseParameter *error = new SctpErrorCauseParameter("ERROR_CAUSE");
+                error->setParameterType(stream.readByte());
+                error->setByteLength(stream.readByte());
+                error->setResponseCorrelationId(stream.readUint32Be());
+                uint8_t paramType = stream.readByte();
+                //chunk->encapsulate(smsg);
+                switch (paramType) {
+                    case ADD_IP_ADDRESS: {
+                        SctpAddIPParameter *addip = new SctpAddIPParameter();
+                        stream.readByte();
+                        addip->setByteLength(stream.readByte());
+                        addip->setRequestCorrelationId(stream.readUint32Be());
+                        stream.readByte();
+                        stream.readByte();
+                        addip->setAddressParam(stream.readIpv4Address());
+                        error->encapsulate(addip);
+                        break;
+                    }
+                    case DELETE_IP_ADDRESS: {
+                        SctpDeleteIPParameter *deleteip = new SctpDeleteIPParameter();
+                        stream.readByte();
+                        deleteip->setByteLength(stream.readByte());
+                        deleteip->setRequestCorrelationId(stream.readUint32Be());
+                        stream.readByte();
+                        stream.readByte();
+                        deleteip->setAddressParam(stream.readIpv4Address());
+                        error->encapsulate(deleteip);
+                        break;
+                    }
+                    case SET_PRIMARY_ADDRESS: {
+                        SctpSetPrimaryIPParameter *setip = new SctpSetPrimaryIPParameter();
+                        stream.readByte();
+                        setip->setByteLength(stream.readByte());
+                        setip->setRequestCorrelationId(stream.readUint32Be());
+                        stream.readByte();
+                        stream.readByte();
+                        setip->setAddressParam(stream.readIpv4Address());
+                        error->encapsulate(setip);
+                        break;
+                    }
+                }
+                asconfAckChunk->addAsconfResponse(error);
+                break;
+            }
+            case SUCCESS_INDICATION: {
+                SctpSuccessIndication *success = new SctpSuccessIndication();
+                success->setParameterType(stream.readByte());
+                stream.readByte();
+                success->setResponseCorrelationId(stream.readUint32Be());
+                break;
+            }
+            default: {
+                stream.readByteRepeatedly(0, bytes_to_read);
+                break;
+            }
         }
     }
 }
