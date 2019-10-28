@@ -37,6 +37,7 @@
 
 #include <sys/types.h>
 #define MAXBUFLEN 1<<16
+//#define PAD_LEN(x) ((4 - (x & 3)) & 3)
 
 namespace inet {
 
@@ -629,7 +630,7 @@ void deserializeHeartbeatAckChunk(MemoryInputStream& stream, const Ptr<SctpHeart
     switch (paramType) {
         case 1: {
             heartbeatAckChunk->setInfoArraySize(infolen - 4);
-            for (uint32_t i = 0; i < infolen - 4; ++i) {
+            for (uint16_t i = 0; i < infolen - 4; ++i) {
                 heartbeatAckChunk->setInfo(i, stream.readByte());
             }
             break;
@@ -645,6 +646,70 @@ void deserializeHeartbeatAckChunk(MemoryInputStream& stream, const Ptr<SctpHeart
         default:
             stream.readByteRepeatedly(0, infolen - 4);
     }
+}
+
+void serializeAbortChunk(MemoryOutputStream& stream, const Ptr<SctpAbortChunk> abortChunk) {
+    stream.writeByte(abortChunk->getSctpChunkType());
+    stream.writeNBitsOfUint64Be(0, 7);
+    stream.writeBit(abortChunk->getT_Bit());
+    stream.writeUint16Be(abortChunk->getByteLength());
+}
+
+void deserializeAbortChunk(MemoryInputStream& stream, const Ptr<SctpAbortChunk> abortChunk) {
+    abortChunk->setSctpChunkType(stream.readByte());
+    stream.readNBitsToUint64Be(7);
+    abortChunk->setT_Bit(stream.readBit());
+    abortChunk->setByteLength(stream.readUint16Be());
+}
+
+void serializeShutdownChunk(MemoryOutputStream& stream, const Ptr<SctpShutdownChunk> shutdownChunk) {
+    stream.writeByte(shutdownChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(shutdownChunk->getByteLength());   // must be 8
+    stream.writeUint32Be(shutdownChunk->getCumTsnAck());
+}
+
+void deserializeShutdownChunk(MemoryInputStream& stream, const Ptr<SctpShutdownChunk> shutdownChunk) {
+    shutdownChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    shutdownChunk->setByteLength(stream.readUint16Be());
+    shutdownChunk->setCumTsnAck(stream.readUint32Be());
+}
+
+void serializeShutdownAckChunk(MemoryOutputStream& stream, const Ptr<SctpShutdownAckChunk> shutdownAckChunk) {
+    stream.writeByte(shutdownAckChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(shutdownAckChunk->getByteLength());   // must be 4
+}
+
+void deserializeShutdownAckChunk(MemoryInputStream& stream, const Ptr<SctpShutdownAckChunk> shutdownAckChunk) {
+    shutdownAckChunk->setSctpChunkType(stream.readByte());
+    stream.readByte();
+    shutdownAckChunk->setByteLength(stream.readUint16Be());
+}
+
+void serializeCookieEchoChunk(MemoryOutputStream& stream, const Ptr<SctpCookieEchoChunk> cookieChunk) {
+    stream.writeByte(cookieChunk->getSctpChunkType());
+    stream.writeByte(0);
+    stream.writeUint16Be(cookieChunk->getByteLength());
+    uint32_t cookielen = cookieChunk->getCookieArraySize();
+    if (cookielen > 0) {
+        for (uint32_t i = 0; i < cookielen; ++i)
+            stream.writeByte(cookieChunk->getCookie(i));
+    }
+    else {
+        SctpCookie *stateCookie = (SctpCookie *)(cookieChunk->getStateCookie());
+        stream.writeUint32Be(stateCookie->getCreationTime().inUnit(SIMTIME_MS));    // FIXME: ms?
+        stream.writeUint32Be(stateCookie->getLocalTag());
+        stream.writeUint32Be(stateCookie->getPeerTag());
+        for (uint32_t i = 0; i < 32; ++i) {
+            stream.writeByte(stateCookie->getLocalTieTag(i));
+        }
+        for (uint32_t i = 0; i < 32; ++i) {
+            stream.writeByte(stateCookie->getPeerTieTag(i));
+        }
+    }
+    uint32 uLen = cookieChunk->getUnrecognizedParametersArraySize();
 }
 
 }
