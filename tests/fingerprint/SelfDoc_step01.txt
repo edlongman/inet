@@ -32,6 +32,7 @@ inet.applications.dhcp.DhcpClient: TAG: addTagIfAbsent inet::L4PortReq
 inet.applications.dhcp.DhcpClient: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.dhcp.DhcpClient: TAG: findTag inet::SocketInd
 inet.applications.dhcp.DhcpClient: TAG: getTag inet::Ipv4InterfaceData
+
 inet.applications.dhcp.DhcpServer: CALL: module=inet.applications.dhcp.DhcpServer func=inet::DhcpServer::handleOperationStage info=handleOperationStage
 inet.applications.dhcp.DhcpServer: CALL: module=inet.common.lifecycle.NodeStatus func=inet::NodeStatus::handleOperationStage info=<nullptr>
 inet.applications.dhcp.DhcpServer: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
@@ -63,6 +64,7 @@ inet.applications.dhcp.DhcpServer: TAG: findTag inet::Ipv4InterfaceData
 inet.applications.dhcp.DhcpServer: TAG: findTag inet::SocketInd
 inet.applications.dhcp.DhcpServer: TAG: getTag inet::InterfaceInd
 inet.applications.dhcp.DhcpServer: TAG: getTag inet::Ipv4InterfaceData
+
 inet.applications.ethernet.EtherAppClient: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.ethernet.EtherAppClient: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::SocketInd
 inet.applications.ethernet.EtherAppClient: OUTPUT: gate=out msg=inet::Packet kind=2003 ctrl=<null> tags=inet::DispatchProtocolReq,inet::Ieee802SapReq,inet::MacAddressReq,inet::SocketReq
@@ -76,6 +78,7 @@ inet.applications.ethernet.EtherAppClient: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.ethernet.EtherAppClient: TAG: addTag inet::Ieee802SapReq
 inet.applications.ethernet.EtherAppClient: TAG: addTag inet::MacAddressReq
 inet.applications.ethernet.EtherAppClient: TAG: getTag inet::SocketInd
+
 inet.applications.ethernet.EtherAppServer: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.ethernet.EtherAppServer: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::ErrorRateInd,inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd,inet::SocketInd,inet::physicallayer::Ieee80211ChannelInd,inet::physicallayer::Ieee80211ModeInd
 inet.applications.ethernet.EtherAppServer: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::SocketInd
@@ -89,6 +92,7 @@ inet.applications.ethernet.EtherAppServer: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.ethernet.EtherAppServer: TAG: getTag inet::Ieee802SapInd
 inet.applications.ethernet.EtherAppServer: TAG: getTag inet::MacAddressInd
 inet.applications.ethernet.EtherAppServer: TAG: getTag inet::SocketInd
+
 inet.applications.ethernet.EtherTrafGen: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::SocketInd
 inet.applications.ethernet.EtherTrafGen: OUTPUT: gate=out msg=inet::Packet kind=2003 ctrl=<null> tags=inet::DispatchProtocolReq,inet::Ieee802SapReq,inet::MacAddressReq
 inet.applications.ethernet.EtherTrafGen: OUTPUT: gate=out msg=inet::Request kind=1 ctrl=inet::Ieee8022LlcSocketOpenCommand tags=inet::DispatchProtocolReq,inet::Ieee802SapReq,inet::SocketReq
@@ -101,6 +105,7 @@ inet.applications.ethernet.EtherTrafGen: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.ethernet.EtherTrafGen: TAG: addTag inet::DispatchProtocolReq
 inet.applications.ethernet.EtherTrafGen: TAG: addTag inet::Ieee802SapReq
 inet.applications.ethernet.EtherTrafGen: TAG: addTag inet::MacAddressReq
+
 inet.applications.generic.IpvxTrafGen: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.generic.IpvxTrafGen: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterProtocol info=handleRegisterProtocol
 inet.applications.generic.IpvxTrafGen: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterService info=handleRegisterService
@@ -113,15 +118,18 @@ inet.applications.generic.IpvxTrafGen: TAG: addTag inet::L3AddressReq
 inet.applications.generic.IpvxTrafGen: TAG: addTag inet::PacketProtocolTag
 inet.applications.generic.IpvxTrafGen: TAG: findTag inet::Ipv4InterfaceData
 inet.applications.generic.IpvxTrafGen: TAG: findTag inet::L3AddressReq
+
 inet.applications.generic.IpvxTrafSink: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterProtocol info=handleRegisterProtocol
 inet.applications.generic.IpvxTrafSink: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterService info=handleRegisterService
 inet.applications.generic.IpvxTrafSink: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.applications.generic.IpvxTrafSink: TAG: findTag inet::L3AddressInd
 inet.applications.generic.IpvxTrafSink: TAG: findTag inet::L3AddressReq
+
 inet.applications.httptools.browser.HttpBrowser: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getAnyServerInfo info=<nullptr>
 inet.applications.httptools.browser.HttpBrowser: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getServerInfo info=<nullptr>
 inet.applications.httptools.browser.HttpBrowser: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getServerModule info=<nullptr>
 inet.applications.httptools.browser.HttpBrowser: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
+
 inet.applications.httptools.browser.HttpBrowserDirect: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getAnyServerModule info=<nullptr>
 inet.applications.httptools.browser.HttpBrowserDirect: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getServerModule info=<nullptr>
 inet.applications.httptools.browser.HttpBrowserDirect: INPUT: gate=httpIn msg=inet::Packet kind=10010 ctrl=<null> tags=
@@ -131,6 +139,7 @@ inet.applications.httptools.browser.HttpBrowserDirect: SCHEDULE:  msg=omnetpp::c
 inet.applications.httptools.browser.HttpBrowserDirect: SCHEDULE:  msg=omnetpp::cMessage kind=1 ctrl=<null> tags= msgname=eventTimer
 inet.applications.httptools.browser.HttpBrowserDirect: SCHEDULE:  msg=omnetpp::cMessage kind=2 ctrl=<null> tags= msgname=eventTimer
 inet.applications.httptools.browser.HttpBrowserDirect: SCHEDULE:  msg=omnetpp::cMessage kind=3 ctrl=<null> tags= msgname=eventTimer
+
 inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
 inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
 inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
@@ -147,23 +156,29 @@ inet.applications.httptools.browser.HttpBrowser: TAG: addTagIfAbsent inet::Socke
 inet.applications.httptools.browser.HttpBrowser: TAG: findTag inet::Ipv4InterfaceData
 inet.applications.httptools.browser.HttpBrowser: TAG: findTag inet::SocketInd
 inet.applications.httptools.browser.HttpBrowser: TAG: getTag inet::SocketInd
+
 inet.applications.httptools.configurator.HttpController: SCHEDULE:  msg=inet::httptools::HttpServerStatusUpdateMsg kind=0 ctrl=<null> tags= msgname=
+
 inet.applications.httptools.server.HttpServer: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::registerServer info=<nullptr>
 inet.applications.httptools.server.HttpServer: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
+
 inet.applications.httptools.server.HttpServerDirect: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::registerServer info=<nullptr>
 inet.applications.httptools.server.HttpServerDirect: INPUT: gate=httpIn msg=inet::Packet kind=10000 ctrl=<null> tags=
 inet.applications.httptools.server.HttpServerDirect: OUTPUTDIRECT: msg=inet::Packet kind=10010 ctrl=<null> tags=
 inet.applications.httptools.server.HttpServerDirect: PACKET: insertAtBack inet::httptools::HttpReplyMessage
+
 inet.applications.httptools.server.HttpServerEvilA: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::registerServer info=<nullptr>
 inet.applications.httptools.server.HttpServerEvilA: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.httptools.server.HttpServerEvilA: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.httptools.server.HttpServerEvilA: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.applications.httptools.server.HttpServerEvilA: TAG: addTagIfAbsent inet::SocketReq
+
 inet.applications.httptools.server.HttpServerEvilB: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::registerServer info=<nullptr>
 inet.applications.httptools.server.HttpServerEvilB: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.httptools.server.HttpServerEvilB: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.httptools.server.HttpServerEvilB: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.applications.httptools.server.HttpServerEvilB: TAG: addTagIfAbsent inet::SocketReq
+
 inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
 inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
 inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::SocketInd
@@ -178,6 +193,7 @@ inet.applications.httptools.server.HttpServer: TAG: addTagIfAbsent inet::Dispatc
 inet.applications.httptools.server.HttpServer: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.httptools.server.HttpServer: TAG: findTag inet::SocketInd
 inet.applications.httptools.server.HttpServer: TAG: getTag inet::SocketInd
+
 inet.applications.netperfmeter.NetPerfMeter: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.netperfmeter.NetPerfMeter: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::getInterfaceByName info=<nullptr>
 inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=14 ctrl=<null> tags=inet::SctpCommandReq,inet::SocketInd
@@ -227,6 +243,7 @@ inet.applications.netperfmeter.NetPerfMeter: TAG: getTag inet::SctpCommandReq
 inet.applications.netperfmeter.NetPerfMeter: TAG: getTag inet::SctpConnectReq
 inet.applications.netperfmeter.NetPerfMeter: TAG: getTag inet::SctpSendQueueAbatedReq
 inet.applications.netperfmeter.NetPerfMeter: TAG: getTag inet::SocketInd
+
 inet.applications.pingapp.PingApp: CALL: module=inet.applications.pingapp.PingApp func=inet::PingApp::handleOperationStage info=handleOperationStage
 inet.applications.pingapp.PingApp: CALL: module=inet.common.lifecycle.NodeStatus func=inet::NodeStatus::handleOperationStage info=<nullptr>
 inet.applications.pingapp.PingApp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
@@ -286,6 +303,7 @@ inet.applications.pingapp.PingApp: TAG: findTag inet::Ipv6InterfaceData
 inet.applications.pingapp.PingApp: TAG: getTag inet::L3AddressInd
 inet.applications.pingapp.PingApp: TAG: getTag inet::PacketProtocolTag
 inet.applications.pingapp.PingApp: TAG: getTag inet::SocketInd
+
 inet.applications.rtpapp.RtpApplication: INPUT: gate=rtpIn msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiSenderModuleCreated tags=
 inet.applications.rtpapp.RtpApplication: INPUT: gate=rtpIn msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiSenderStatus tags=
 inet.applications.rtpapp.RtpApplication: INPUT: gate=rtpIn msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiSessionEntered tags=
@@ -299,6 +317,7 @@ inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=1
 inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=2 ctrl=<null> tags= msgname=stopTransmission
 inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=3 ctrl=<null> tags= msgname=leaveSession
 inet.applications.rtpapp.RtpApplication: TAG: findTag inet::Ipv4InterfaceData
+
 inet.applications.sctpapp.SctpClient: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.sctpapp.SctpClient: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::getInterfaceByName info=<nullptr>
 inet.applications.sctpapp.SctpClient: INPUT: gate=socketIn msg=inet::Indication kind=12 ctrl=<null> tags=inet::SctpCommandReq,inet::SocketInd
@@ -824,6 +843,16 @@ inet.common.scenario.ScenarioManager: CALL: module=inet.transportlayer.tcp.Tcp f
 inet.common.scenario.ScenarioManager: CALL: module=inet.transportlayer.udp.Udp func=inet::Udp::handleOperationStage info=handleOperationStage
 inet.common.scenario.ScenarioManager: SCHEDULE:  msg=inet::ScenarioTimer kind=0 ctrl=<null> tags= msgname=scenario-event
 inet.common.scenario.ScenarioManager: TAG: findTag inet::Ipv4InterfaceData
+inet.examples.diffserv.onedomain.DSQueue1: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
+inet.examples.diffserv.onedomain.DSQueue1: CALL: module=inet.queueing.scheduler.PriorityScheduler func=inet::queueing::PriorityScheduler::popPacket info=popPacket
+inet.examples.diffserv.onedomain.DSQueue1: PACKET: popAtFront inet::Ipv4Header
+inet.examples.diffserv.onedomain.DSQueue1: TAG: findTag inet::PacketProtocolTag
+inet.examples.diffserv.onedomain.DSQueue2: CALL: module=inet.queueing.filter.RedDropper func=inet::queueing::RedDropper::pushPacket info=pushPacket
+inet.examples.diffserv.onedomain.DSQueue2: CALL: module=inet.queueing.scheduler.WrrScheduler func=inet::queueing::WrrScheduler::popPacket info=popPacket
+inet.examples.diffserv.onedomain.DSQueue2: PACKET: popAtFront inet::Ipv4Header
+inet.examples.diffserv.onedomain.DSQueue2: TAG: findTag inet::PacketProtocolTag
+inet.examples.inet.netperfmeter.REDQueue: CALL: module=inet.queueing.filter.RedDropper func=inet::queueing::RedDropper::pushPacket info=pushPacket
+inet.examples.inet.netperfmeter.REDQueue: CALL: module=inet.queueing.queue.PacketQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
 inet.linklayer.acking.AckingMac: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.linklayer.acking.AckingMac: CALL: module=inet.common.packet.recorder.PcapRecorder func=inet::PcapRecorder::receiveSignal info=<nullptr>
 inet.linklayer.acking.AckingMac: CALL: module=inet.linklayer.acking.AckingMac func=inet::AckingMac::acked info=<nullptr>
@@ -832,6 +861,8 @@ inet.linklayer.acking.AckingMac: CALL: module=inet.physicallayer.apskradio.packe
 inet.linklayer.acking.AckingMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.acking.AckingMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskScalarRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.acking.AckingMac: CALL: module=inet.physicallayer.unitdisk.UnitDiskRadio func=inet::physicallayer::UnitDiskRadio::setRadioMode info=<nullptr>
+inet.linklayer.acking.AckingMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.acking.AckingMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.acking.AckingMac: CALL: module=inet.routing.aodv.Aodv func=inet::aodv::Aodv::receiveSignal info=receiveChangeNotification
 inet.linklayer.acking.AckingMac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressInd,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.linklayer.acking.AckingMac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressInd,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::SocketReq
@@ -869,6 +900,8 @@ inet.linklayer.bmac.BMac: CALL: module=inet.networklayer.common.InterfaceTable f
 inet.linklayer.bmac.BMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskDimensionalRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.bmac.BMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskScalarRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.bmac.BMac: CALL: module=inet.physicallayer.unitdisk.UnitDiskRadio func=inet::physicallayer::UnitDiskRadio::setRadioMode info=<nullptr>
+inet.linklayer.bmac.BMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.bmac.BMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.bmac.BMac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd
 inet.linklayer.bmac.BMac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::MulticastReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::TransportProtocolInd
 inet.linklayer.bmac.BMac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag
@@ -927,6 +960,8 @@ inet.linklayer.csmaca.CsmaCaMac: CALL: module=inet.networklayer.common.Interface
 inet.linklayer.csmaca.CsmaCaMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskDimensionalRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.csmaca.CsmaCaMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskScalarRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.csmaca.CsmaCaMac: CALL: module=inet.physicallayer.unitdisk.UnitDiskRadio func=inet::physicallayer::UnitDiskRadio::setRadioMode info=<nullptr>
+inet.linklayer.csmaca.CsmaCaMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.csmaca.CsmaCaMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.csmaca.CsmaCaMac: CALL: module=inet.routing.aodv.Aodv func=inet::aodv::Aodv::receiveSignal info=receiveChangeNotification
 inet.linklayer.csmaca.CsmaCaMac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd
 inet.linklayer.csmaca.CsmaCaMac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::ErrorRateInd,inet::InterfaceInd,inet::InterfaceReq,inet::MacAddressInd,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd,inet::UserPriorityInd
@@ -1111,6 +1146,7 @@ inet.linklayer.ethernet.EtherEncap: TAG: getTag inet::SocketReq
 inet.linklayer.ethernet.EtherEncap: TAG: getTag inet::VlanInd
 inet.linklayer.ethernet.EtherFrameClassifier: CALL: module=inet.linklayer.ethernet.EtherMacFullDuplex func=inet::EtherMacFullDuplex::receiveSignal info=<nullptr>
 inet.linklayer.ethernet.EtherFrameClassifier: CALL: module=inet.linklayer.ethernet.EtherMac func=inet::EtherMac::receiveSignal info=<nullptr>
+inet.linklayer.ethernet.EtherFrameClassifier: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ethernet.EtherHub: INPUT: gate=ethg$i[] msg=inet::EthernetFilledIfgSignal kind=0 ctrl=<null> tags=
 inet.linklayer.ethernet.EtherHub: INPUT: gate=ethg$i[] msg=inet::EthernetJamSignal kind=0 ctrl=<null> tags=
 inet.linklayer.ethernet.EtherHub: INPUT: gate=ethg$i[] msg=inet::EthernetSignal kind=0 ctrl=<null> tags=
@@ -1121,17 +1157,25 @@ inet.linklayer.ethernet.EtherHub: OUTPUT: gate=ethg$o[] msg=inet::EthernetSignal
 inet.linklayer.ethernet.EtherHub: OUTPUT: gate=ethg$o[] msg=inet::EthernetSignal kind=1 ctrl=<null> tags=
 inet.linklayer.ethernet.EtherMac: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.linklayer.ethernet.EtherMac: CALL: module=inet.common.packet.recorder.PcapRecorder func=inet::PcapRecorder::receiveSignal info=<nullptr>
-inet.linklayer.ethernet.EtherMac: CALL: module=inet.linklayer.ethernet.EtherMac func=inet::EtherMac::receiveSignal info=<nullptr>
 inet.linklayer.ethernet.EtherMac: CALL: module=inet.linklayer.ethernet.EtherMac func=inet::EtherMac::refreshConnection info=<nullptr>
+inet.linklayer.ethernet.EtherMac: CALL: module=inet.linklayer.ethernet.EtherQosQueue func=inet::queueing::CompoundPacketQueue::popPacket info=popPacket
+inet.linklayer.ethernet.EtherMac: CALL: module=inet.linklayer.ethernet.EtherQosQueue func=inet::queueing::CompoundPacketQueue::pushPacket info=pushPacket
+inet.linklayer.ethernet.EtherMac: CALL: module=inet.linklayer.ethernet.EtherQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ethernet.EtherMac: CALL: module=inet.linklayer.ethernet.EtherQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ethernet.EtherMac: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::interfaceChanged info=<nullptr>
+inet.linklayer.ethernet.EtherMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ethernet.EtherMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.applications.tcpapp.TelnetApp func=inet::TelnetApp::handleOperationStage info=handleOperationStage
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.common.lifecycle.NodeStatus func=inet::NodeStatus::handleOperationStage info=<nullptr>
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.common.packet.recorder.PcapRecorder func=inet::PcapRecorder::receiveSignal info=<nullptr>
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.ethernet.EtherEncap func=inet::EtherEncap::handleOperationStage info=handleOperationStage
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.ethernet.EtherMacFullDuplex func=inet::EtherMacFullDuplex::handleOperationStage info=handleOperationStage
-inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.ethernet.EtherMacFullDuplex func=inet::EtherMacFullDuplex::receiveSignal info=<nullptr>
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.ethernet.EtherMacFullDuplex func=inet::EtherMacFullDuplex::refreshConnection info=<nullptr>
+inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.ethernet.EtherQosQueue func=inet::queueing::CompoundPacketQueue::popPacket info=popPacket
+inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.ethernet.EtherQosQueue func=inet::queueing::CompoundPacketQueue::pushPacket info=pushPacket
+inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.ethernet.EtherQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.ethernet.EtherQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.linklayer.loopback.Loopback func=inet::Loopback::handleOperationStage info=handleOperationStage
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.networklayer.arp.ipv4.Arp func=inet::Arp::handleOperationStage info=handleOperationStage
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::handleOperationStage info=handleOperationStage
@@ -1139,6 +1183,8 @@ inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.networklayer.commo
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.networklayer.configurator.ipv4.Ipv4NodeConfigurator func=inet::Ipv4NodeConfigurator::handleOperationStage info=<nullptr>
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.networklayer.ipv4.Ipv4 func=inet::Ipv4::handleOperationStage info=handleOperationStage
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.networklayer.ipv4.Ipv4RoutingTable func=inet::Ipv4RoutingTable::handleOperationStage info=<nullptr>
+inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.transportlayer.tcp.Tcp func=inet::tcp::Tcp::handleOperationStage info=handleOperationStage
 inet.linklayer.ethernet.EtherMacFullDuplex: CALL: module=inet.transportlayer.udp.Udp func=inet::Udp::handleOperationStage info=handleOperationStage
 inet.linklayer.ethernet.EtherMacFullDuplex: INPUT: gate=phys$i msg=inet::EthernetSignal kind=0 ctrl=<null> tags=
@@ -1227,8 +1273,10 @@ inet.linklayer.ethernet.EthernetInterface: CALL: module=inet.networklayer.common
 inet.linklayer.ethernet.EthernetInterface: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::interfaceChanged info=<nullptr>
 inet.linklayer.ethernet.EthernetInterface: TAG: addTag inet::Ieee8021dInterfaceData
 inet.linklayer.ethernet.EthernetInterface: TAG: getTag inet::Ieee8021dInterfaceData
+inet.linklayer.ethernet.EtherQosQueue: CALL: module=inet.linklayer.ethernet.EtherFrameClassifier func=inet::EtherFrameClassifier::pushPacket info=pushPacket
 inet.linklayer.ethernet.EtherQosQueue: CALL: module=inet.linklayer.ethernet.EtherMacFullDuplex func=inet::EtherMacFullDuplex::receiveSignal info=<nullptr>
 inet.linklayer.ethernet.EtherQosQueue: CALL: module=inet.linklayer.ethernet.EtherMac func=inet::EtherMac::receiveSignal info=<nullptr>
+inet.linklayer.ethernet.EtherQosQueue: CALL: module=inet.queueing.scheduler.PriorityScheduler func=inet::queueing::PriorityScheduler::popPacket info=popPacket
 inet.linklayer.ethernet.EtherQueue: CALL: module=inet.linklayer.ethernet.EtherMacFullDuplex func=inet::EtherMacFullDuplex::receiveSignal info=<nullptr>
 inet.linklayer.ethernet.EtherQueue: CALL: module=inet.linklayer.ethernet.EtherMac func=inet::EtherMac::receiveSignal info=<nullptr>
 inet.linklayer.ethernet.switch.MacAddressTable: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::getInterfaceByName info=<nullptr>
@@ -1313,7 +1361,6 @@ inet.linklayer.ieee80211.mac.channelaccess.Dcaf: CALL: module=inet.linklayer.iee
 inet.linklayer.ieee80211.mac.channelaccess.Dcaf: CALL: module=inet.linklayer.ieee80211.mac.contention.Contention func=inet::ieee80211::Contention::mediumStateChanged info=medium FREE
 inet.linklayer.ieee80211.mac.channelaccess.Dcaf: CALL: module=inet.linklayer.ieee80211.mac.contention.Contention func=inet::ieee80211::Contention::startContention info=startContention
 inet.linklayer.ieee80211.mac.channelaccess.Dcaf: CALL: module=inet.linklayer.ieee80211.mac.coordinationfunction.Dcf func=inet::ieee80211::Dcf::channelGranted info=channelGranted
-inet.linklayer.ieee80211.mac.channelaccess.Edcaf: CALL: module=inet.linklayer.ieee80211.mac.contention.Contention func=inet::ieee80211::Contention::mediumStateChanged info=medium BUSY
 inet.linklayer.ieee80211.mac.channelaccess.Edcaf: CALL: module=inet.linklayer.ieee80211.mac.contention.Contention func=inet::ieee80211::Contention::mediumStateChanged info=medium FREE
 inet.linklayer.ieee80211.mac.channelaccess.Edcaf: CALL: module=inet.linklayer.ieee80211.mac.contention.Contention func=inet::ieee80211::Contention::startContention info=startContention
 inet.linklayer.ieee80211.mac.channelaccess.Edcaf: CALL: module=inet.linklayer.ieee80211.mac.coordinationfunction.Hcf func=inet::ieee80211::Hcf::channelGranted info=channelGranted
@@ -1335,6 +1382,8 @@ inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.linklay
 inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.linklayer.ieee80211.mac.coordinationfunction.Dcf func=inet::ieee80211::Dcf::transmitFrame info=transmitFrame
 inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.linklayer.ieee80211.mac.fragmentation.BasicFragmentationPolicy func=inet::ieee80211::BasicFragmentationPolicy::computeFragmentSizes info=computeFragmentSizes
 inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.linklayer.ieee80211.mac.Ieee80211Mac func=inet::ieee80211::Ieee80211Mac::sendUpFrame info=sendUpFrame("%s")
+inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.linklayer.ieee80211.mac.queue.PendingQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.linklayer.ieee80211.mac.queue.PendingQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.linklayer.ieee80211.mac.ratecontrol.AarfRateControl func=inet::ieee80211::AarfRateControl::getRate info=getRate
 inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.linklayer.ieee80211.mac.Tx func=inet::ieee80211::Tx::transmitFrame info=transmitFrame("%s")
 inet.linklayer.ieee80211.mac.coordinationfunction.Dcf: CALL: module=inet.routing.aodv.Aodv func=inet::aodv::Aodv::receiveSignal info=receiveChangeNotification
@@ -1374,6 +1423,9 @@ inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: CALL: module=inet.linklay
 inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: CALL: module=inet.linklayer.ieee80211.mac.Ieee80211Mac func=inet::ieee80211::Ieee80211Mac::sendUpFrame info=sendUpFrame("%s")
 inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: CALL: module=inet.linklayer.ieee80211.mac.originator.TxopProcedure func=inet::ieee80211::TxopProcedure::endTxop info=endTxop
 inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: CALL: module=inet.linklayer.ieee80211.mac.originator.TxopProcedure func=inet::ieee80211::TxopProcedure::startTxop info=startTxop
+inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: CALL: module=inet.linklayer.ieee80211.mac.queue.PendingQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: CALL: module=inet.linklayer.ieee80211.mac.queue.PendingQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
+inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: CALL: module=inet.linklayer.ieee80211.mac.queue.PendingQueue func=inet::queueing::PacketQueue::removePacket info=removePacket
 inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: CALL: module=inet.linklayer.ieee80211.mac.Tx func=inet::ieee80211::Tx::transmitFrame info=transmitFrame("%s")
 inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: PACKET: insertAtBack inet::ByteCountChunk
 inet.linklayer.ieee80211.mac.coordinationfunction.Hcf: PACKET: insertAtBack inet::ieee80211::Ieee80211MacTrailer
@@ -1505,6 +1557,7 @@ inet.linklayer.ieee80211.mac.Ieee80211Mac: TAG: findTag inet::ErrorRateInd
 inet.linklayer.ieee80211.mac.Ieee80211Mac: TAG: findTag inet::UserPriorityReq
 inet.linklayer.ieee80211.mac.Ieee80211Mac: TAG: getTag inet::Ieee80211SubtypeReq
 inet.linklayer.ieee80211.mac.Ieee80211Mac: TAG: getTag inet::MacAddressReq
+inet.linklayer.ieee80211.mac.queue.PendingQueue: CALL: module=inet.linklayer.ieee80211.mac.queue.PendingQueue func=inet::queueing::PacketQueue::removePacket info=removePacket
 inet.linklayer.ieee80211.mac.Rx: CALL: module=inet.linklayer.ieee80211.mac.contention.Contention func=inet::ieee80211::Contention::corruptedFrameReceived info=corruptedFrameReceived
 inet.linklayer.ieee80211.mac.Rx: CALL: module=inet.linklayer.ieee80211.mac.contention.Contention func=inet::ieee80211::Contention::mediumStateChanged info=medium BUSY
 inet.linklayer.ieee80211.mac.Rx: CALL: module=inet.linklayer.ieee80211.mac.contention.Contention func=inet::ieee80211::Contention::mediumStateChanged info=medium FREE
@@ -1592,6 +1645,8 @@ inet.linklayer.ieee802154.Ieee802154Mac: CALL: module=inet.networklayer.common.I
 inet.linklayer.ieee802154.Ieee802154Mac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskDimensionalRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.ieee802154.Ieee802154Mac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskScalarRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.ieee802154.Ieee802154Mac: CALL: module=inet.physicallayer.unitdisk.UnitDiskRadio func=inet::physicallayer::UnitDiskRadio::setRadioMode info=<nullptr>
+inet.linklayer.ieee802154.Ieee802154Mac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ieee802154.Ieee802154Mac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ieee802154.Ieee802154Mac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd
 inet.linklayer.ieee802154.Ieee802154Mac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.linklayer.ieee802154.Ieee802154Mac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::SocketReq
@@ -1617,6 +1672,8 @@ inet.linklayer.ieee802154.Ieee802154NarrowbandMac: CALL: module=inet.common.Mess
 inet.linklayer.ieee802154.Ieee802154NarrowbandMac: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::interfaceChanged info=<nullptr>
 inet.linklayer.ieee802154.Ieee802154NarrowbandMac: CALL: module=inet.physicallayer.ieee802154.packetlevel.Ieee802154NarrowbandDimensionalRadio func=inet::physicallayer::FlatRadioBase::setRadioMode info=<nullptr>
 inet.linklayer.ieee802154.Ieee802154NarrowbandMac: CALL: module=inet.physicallayer.ieee802154.packetlevel.Ieee802154NarrowbandScalarRadio func=inet::physicallayer::FlatRadioBase::setRadioMode info=<nullptr>
+inet.linklayer.ieee802154.Ieee802154NarrowbandMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ieee802154.Ieee802154NarrowbandMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ieee802154.Ieee802154NarrowbandMac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd
 inet.linklayer.ieee802154.Ieee802154NarrowbandMac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::MulticastReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::TransportProtocolInd
 inet.linklayer.ieee802154.Ieee802154NarrowbandMac: OUTPUT: gate=lowerLayerOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::MulticastReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::TransportProtocolInd
@@ -1664,7 +1721,8 @@ inet.linklayer.ieee8021d.rstp.Rstp: CALL: module=inet.common.MessageDispatcher f
 inet.linklayer.ieee8021d.rstp.Rstp: CALL: module=inet.linklayer.ethernet.switch.MacAddressTable func=inet::MacAddressTable::flush info=MacAddressTable::flush():  Clearing interfaceId %d cache
 inet.linklayer.ieee8021d.rstp.Rstp: INPUT: gate=relayIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::PacketProtocolTag
 inet.linklayer.ieee8021d.rstp.Rstp: OUTPUT: gate=relayOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::InterfaceReq,inet::MacAddressReq,inet::PacketProtocolTag
-inet.linklayer.ieee8021d.rstp.Rstp: PACKET: insertAtBack inet::Bpdu
+inet.linklayer.ieee8021d.rstp.Rstp: PACKET: insertAtBack inet::BpduCfg
+inet.linklayer.ieee8021d.rstp.Rstp: PACKET: insertAtBack inet::ByteCountChunk
 inet.linklayer.ieee8021d.rstp.Rstp: SCHEDULE:  msg=omnetpp::cMessage kind=1 ctrl=<null> tags= msgname=itshellotime
 inet.linklayer.ieee8021d.rstp.Rstp: SCHEDULE:  msg=omnetpp::cMessage kind=2 ctrl=<null> tags= msgname=upgrade
 inet.linklayer.ieee8021d.rstp.Rstp: TAG: addTag inet::DispatchProtocolReq
@@ -1679,7 +1737,8 @@ inet.linklayer.ieee8021d.stp.Stp: CALL: module=inet.common.MessageDispatcher fun
 inet.linklayer.ieee8021d.stp.Stp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterService info=handleRegisterService
 inet.linklayer.ieee8021d.stp.Stp: INPUT: gate=relayIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::PacketProtocolTag
 inet.linklayer.ieee8021d.stp.Stp: OUTPUT: gate=relayOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::InterfaceReq,inet::MacAddressReq,inet::PacketProtocolTag
-inet.linklayer.ieee8021d.stp.Stp: PACKET: insertAtBack inet::Bpdu
+inet.linklayer.ieee8021d.stp.Stp: PACKET: insertAtBack inet::BpduCfg
+inet.linklayer.ieee8021d.stp.Stp: PACKET: insertAtBack inet::BpduTcn
 inet.linklayer.ieee8021d.stp.Stp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=STP_TICK
 inet.linklayer.ieee8021d.stp.Stp: TAG: addTag inet::DispatchProtocolReq
 inet.linklayer.ieee8021d.stp.Stp: TAG: addTag inet::InterfaceReq
@@ -1713,6 +1772,8 @@ inet.linklayer.lmac.LMac: CALL: module=inet.networklayer.common.InterfaceTable f
 inet.linklayer.lmac.LMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskDimensionalRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.lmac.LMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskScalarRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.lmac.LMac: CALL: module=inet.physicallayer.unitdisk.UnitDiskRadio func=inet::physicallayer::UnitDiskRadio::setRadioMode info=<nullptr>
+inet.linklayer.lmac.LMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.lmac.LMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.lmac.LMac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd
 inet.linklayer.lmac.LMac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::MulticastReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::TransportProtocolInd
 inet.linklayer.lmac.LMac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag
@@ -1755,7 +1816,17 @@ inet.linklayer.loopback.Loopback: TAG: addTag inet::PacketProtocolTag
 inet.linklayer.loopback.Loopback: TAG: getTag inet::PacketProtocolTag
 inet.linklayer.ppp.Ppp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.linklayer.ppp.Ppp: CALL: module=inet.common.packet.recorder.PcapRecorder func=inet::PcapRecorder::receiveSignal info=<nullptr>
+inet.linklayer.ppp.Ppp: CALL: module=inet.examples.diffserv.onedomain.DSQueue1 func=inet::queueing::CompoundPacketQueue::popPacket info=popPacket
+inet.linklayer.ppp.Ppp: CALL: module=inet.examples.diffserv.onedomain.DSQueue1 func=inet::queueing::CompoundPacketQueue::pushPacket info=pushPacket
+inet.linklayer.ppp.Ppp: CALL: module=inet.examples.diffserv.onedomain.DSQueue2 func=inet::queueing::CompoundPacketQueue::popPacket info=popPacket
+inet.linklayer.ppp.Ppp: CALL: module=inet.examples.diffserv.onedomain.DSQueue2 func=inet::queueing::CompoundPacketQueue::pushPacket info=pushPacket
+inet.linklayer.ppp.Ppp: CALL: module=inet.examples.inet.netperfmeter.REDQueue func=inet::queueing::CompoundPacketQueue::popPacket info=popPacket
+inet.linklayer.ppp.Ppp: CALL: module=inet.examples.inet.netperfmeter.REDQueue func=inet::queueing::CompoundPacketQueue::pushPacket info=pushPacket
 inet.linklayer.ppp.Ppp: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::interfaceChanged info=<nullptr>
+inet.linklayer.ppp.Ppp: CALL: module=inet.networklayer.diffserv.DiffservQueue func=inet::queueing::CompoundPacketQueue::popPacket info=popPacket
+inet.linklayer.ppp.Ppp: CALL: module=inet.networklayer.diffserv.DiffservQueue func=inet::queueing::CompoundPacketQueue::pushPacket info=pushPacket
+inet.linklayer.ppp.Ppp: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.ppp.Ppp: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.ppp.Ppp: INPUT: gate=phys$i msg=inet::Packet kind=0 ctrl=<null> tags=inet::PacketProtocolTag
 inet.linklayer.ppp.Ppp: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::InterfaceReq,inet::L3AddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.linklayer.ppp.Ppp: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceInd,inet::InterfaceReq,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
@@ -1779,14 +1850,12 @@ inet.linklayer.ppp.Ppp: OUTPUT: gate=upperLayerOut msg=inet::Packet kind=0 ctrl=
 inet.linklayer.ppp.Ppp: PACKET: insertAtBack inet::PppTrailer
 inet.linklayer.ppp.Ppp: PACKET: insertAtFront inet::PppHeader
 inet.linklayer.ppp.Ppp: PACKET: popAtBack inet::PppTrailer
-inet.linklayer.ppp.Ppp: PACKET: popAtFront inet::Ipv4Header
 inet.linklayer.ppp.Ppp: PACKET: popAtFront inet::PppHeader
 inet.linklayer.ppp.Ppp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=pppEndTxEvent
 inet.linklayer.ppp.Ppp: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.linklayer.ppp.Ppp: TAG: addTagIfAbsent inet::InterfaceInd
 inet.linklayer.ppp.Ppp: TAG: addTagIfAbsent inet::PacketProtocolTag
 inet.linklayer.ppp.Ppp: TAG: addTag inet::PacketProtocolTag
-inet.linklayer.ppp.Ppp: TAG: findTag inet::PacketProtocolTag
 inet.linklayer.ppp.Ppp: TAG: getTag inet::PacketProtocolTag
 inet.linklayer.ppp.Ppp: TAG: removeTag inet::PacketProtocolTag
 inet.linklayer.shortcut.ShortcutInterface: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterInterface info=handleRegisterInterface
@@ -1849,6 +1918,8 @@ inet.linklayer.xmac.XMac: CALL: module=inet.networklayer.common.InterfaceTable f
 inet.linklayer.xmac.XMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskDimensionalRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.xmac.XMac: CALL: module=inet.physicallayer.apskradio.packetlevel.ApskScalarRadio func=inet::physicallayer::ApskRadio::setRadioMode info=<nullptr>
 inet.linklayer.xmac.XMac: CALL: module=inet.physicallayer.unitdisk.UnitDiskRadio func=inet::physicallayer::UnitDiskRadio::setRadioMode info=<nullptr>
+inet.linklayer.xmac.XMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.linklayer.xmac.XMac: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
 inet.linklayer.xmac.XMac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd
 inet.linklayer.xmac.XMac: INPUT: gate=lowerLayerIn msg=inet::Packet kind=192 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd
 inet.linklayer.xmac.XMac: INPUT: gate=upperLayerIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceReq,inet::MacAddressReq,inet::MulticastReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::TransportProtocolInd
@@ -1999,10 +2070,14 @@ inet.networklayer.configurator.nexthop.NextHopNetworkConfigurator: CALL: module=
 inet.networklayer.configurator.nexthop.NextHopNetworkConfigurator: CALL: module=inet.networklayer.nexthop.NextHopRoutingTable func=inet::NextHopRoutingTable::addRoute info=addRoute(...)
 inet.networklayer.configurator.nexthop.NextHopNetworkConfigurator: TAG: findTag inet::NextHopInterfaceData
 inet.networklayer.configurator.nexthop.NextHopNetworkConfigurator: TAG: getTag inet::NextHopInterfaceData
-inet.networklayer.diffserv.DscpMarker: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
+inet.networklayer.diffserv.DiffservQueue: CALL: module=inet.queueing.filter.RedDropper func=inet::queueing::RedDropper::pushPacket info=pushPacket
+inet.networklayer.diffserv.DiffservQueue: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
+inet.networklayer.diffserv.DiffservQueue: CALL: module=inet.queueing.scheduler.PriorityScheduler func=inet::queueing::PriorityScheduler::popPacket info=popPacket
+inet.networklayer.diffserv.DiffservQueue: PACKET: popAtFront inet::Ipv4Header
+inet.networklayer.diffserv.DiffservQueue: TAG: findTag inet::PacketProtocolTag
 inet.networklayer.diffserv.DscpMarker: OUTPUT: gate=out msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::InterfaceInd,inet::MacAddressInd,inet::PacketProtocolTag
-inet.networklayer.diffserv.MultiFieldClassifier: CALL: module=inet.networklayer.diffserv.DscpMarker func=inet::DscpMarker::pushOrSendPacket info=<nullptr>
-inet.networklayer.diffserv.MultiFieldClassifier: CALL: module=inet.queueing.common.PacketMultiplexer func=inet::queueing::PacketMultiplexer::pushOrSendPacket info=<nullptr>
+inet.networklayer.diffserv.MultiFieldClassifier: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
+inet.networklayer.diffserv.MultiFieldClassifier: CALL: module=inet.queueing.common.PacketMultiplexer func=inet::queueing::PacketMultiplexer::pushPacket info=pushPacket
 inet.networklayer.diffserv.MultiFieldClassifier: INPUT: gate=in msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceInd,inet::InterfaceReq,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.networklayer.diffserv.MultiFieldClassifier: INPUT: gate=in msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::InterfaceInd,inet::MacAddressInd,inet::PacketProtocolTag
 inet.networklayer.diffserv.MultiFieldClassifier: PACKET: insertAtFront inet::Ipv4Header
@@ -2483,7 +2558,6 @@ inet.networklayer.mpls.Mpls: OUTPUT: gate=netwOut msg=inet::Packet kind=0 ctrl=<
 inet.networklayer.mpls.Mpls: PACKET: insertAtFront inet::MplsHeader
 inet.networklayer.mpls.Mpls: PACKET: popAtFront inet::MplsHeader
 inet.networklayer.mpls.Mpls: TAG: addTagIfAbsent inet::InterfaceReq
-inet.networklayer.mpls.Mpls: TAG: addTagIfAbsent inet::PacketProtocolTag
 inet.networklayer.mpls.Mpls: TAG: findTag inet::DispatchProtocolReq
 inet.networklayer.mpls.Mpls: TAG: findTag inet::InterfaceInd
 inet.networklayer.mpls.Mpls: TAG: findTag inet::InterfaceReq
@@ -2794,6 +2868,7 @@ inet.physicallayer.apskradio.packetlevel.ApskScalarRadioMedium: TAG: findTag ine
 inet.physicallayer.apskradio.packetlevel.ApskScalarRadioMedium: TAG: findTag inet::SignalBandReq
 inet.physicallayer.apskradio.packetlevel.ApskScalarRadioMedium: TAG: findTag inet::SignalBitrateReq
 inet.physicallayer.apskradio.packetlevel.ApskScalarRadioMedium: TAG: findTag inet::SignalPowerReq
+inet.physicallayer.apskradio.packetlevel.ApskScalarRadioMedium: TAG: getTag inet::PacketProtocolTag
 inet.physicallayer.apskradio.packetlevel.ApskScalarRadio: OUTPUTDIRECT: msg=inet::physicallayer::Signal kind=0 ctrl=<null> tags=
 inet.physicallayer.apskradio.packetlevel.ApskScalarRadio: OUTPUT: gate=upperLayerOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::ErrorRateInd,inet::InterfaceReq,inet::MacAddressInd,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::SnirInd,inet::ieee80211::LlcProtocolTag,inet::physicallayer::Ieee80211ModeReq
 inet.physicallayer.apskradio.packetlevel.ApskScalarRadio: OUTPUT: gate=upperLayerOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::ErrorRateInd,inet::InterfaceReq,inet::MacAddressInd,inet::MacAddressReq,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::SnirInd,inet::SocketReq,inet::ieee80211::LlcProtocolTag,inet::physicallayer::Ieee80211ModeReq
@@ -2829,6 +2904,7 @@ inet.physicallayer.common.packetlevel.RadioMedium: TAG: findTag inet::physicalla
 inet.physicallayer.common.packetlevel.RadioMedium: TAG: findTag inet::SignalBandReq
 inet.physicallayer.common.packetlevel.RadioMedium: TAG: findTag inet::SignalBitrateReq
 inet.physicallayer.common.packetlevel.RadioMedium: TAG: findTag inet::SignalPowerReq
+inet.physicallayer.common.packetlevel.RadioMedium: TAG: getTag inet::PacketProtocolTag
 inet.physicallayer.energyconsumer.SensorStateBasedEpEnergyConsumer: CALL: module=inet.power.storage.IdealEpEnergyStorage func=inet::power::IdealEpEnergyStorage::addEnergyConsumer info=addEnergyConsumer
 inet.physicallayer.energyconsumer.StateBasedEpEnergyConsumer: CALL: module=inet.power.storage.IdealEpEnergyStorage func=inet::power::IdealEpEnergyStorage::addEnergyConsumer info=addEnergyConsumer
 inet.physicallayer.energyconsumer.StateBasedEpEnergyConsumer: CALL: module=inet.power.storage.SimpleEpEnergyStorage func=inet::power::SimpleEpEnergyStorage::addEnergyConsumer info=addEnergyConsumer
@@ -2880,11 +2956,12 @@ inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadioMedium: TAG: f
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadioMedium: TAG: findTag inet::physicallayer::Ieee80211ModeReq
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadioMedium: TAG: findTag inet::SignalBitrateReq
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadioMedium: TAG: findTag inet::SignalPowerReq
+inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadioMedium: TAG: getTag inet::PacketProtocolTag
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: OUTPUTDIRECT: msg=inet::physicallayer::Signal kind=0 ctrl=<null> tags=
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: OUTPUT: gate=upperLayerOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd,inet::physicallayer::Ieee80211ChannelInd,inet::physicallayer::Ieee80211ModeInd
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: PACKET: insertAtBack inet::BitCountChunk
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: PACKET: insertAtFront inet::physicallayer::Ieee80211OfdmPhyHeader
-inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: PACKET: popAtFront inet::physicallayer::Ieee80211PhyHeader
+inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: PACKET: popAtFront inet::physicallayer::Ieee80211OfdmPhyHeader
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=inet::physicallayer::Signal tags= msgname=receptionTimer
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=transmissionTimer
 inet.physicallayer.ieee80211.packetlevel.Ieee80211DimensionalRadio: TAG: addTagIfAbsent inet::ErrorRateInd
@@ -2935,6 +3012,7 @@ inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium: TAG: findTa
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium: TAG: findTag inet::physicallayer::Ieee80211ModeReq
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium: TAG: findTag inet::SignalBitrateReq
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium: TAG: findTag inet::SignalPowerReq
+inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium: TAG: getTag inet::PacketProtocolTag
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: OUTPUTDIRECT: msg=inet::physicallayer::Signal kind=0 ctrl=<null> tags=
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: OUTPUT: gate=upperLayerOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd,inet::physicallayer::Ieee80211ChannelInd,inet::physicallayer::Ieee80211ModeInd
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: OUTPUT: gate=upperLayerOut msg=inet::Packet kind=2003 ctrl=<null> tags=inet::ErrorRateInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd,inet::physicallayer::Ieee80211ChannelInd,inet::physicallayer::Ieee80211ModeInd
@@ -2943,7 +3021,9 @@ inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: PACKET: insertAtF
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: PACKET: insertAtFront inet::physicallayer::Ieee80211HrDsssPhyHeader
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: PACKET: insertAtFront inet::physicallayer::Ieee80211HtPhyHeader
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: PACKET: insertAtFront inet::physicallayer::Ieee80211OfdmPhyHeader
-inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: PACKET: popAtFront inet::physicallayer::Ieee80211PhyHeader
+inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: PACKET: popAtFront inet::physicallayer::Ieee80211DsssPhyHeader
+inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: PACKET: popAtFront inet::physicallayer::Ieee80211HtPhyHeader
+inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: PACKET: popAtFront inet::physicallayer::Ieee80211OfdmPhyHeader
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=inet::physicallayer::Signal tags= msgname=receptionTimer
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=transmissionTimer
 inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadio: SCHEDULE:  msg=omnetpp::cMessage kind=1 ctrl=inet::physicallayer::Signal tags= msgname=receptionTimer
@@ -3136,12 +3216,40 @@ inet.power.storage.SimpleEpEnergyStorage: CALL: module=inet.transportlayer.tcp.T
 inet.power.storage.SimpleEpEnergyStorage: CALL: module=inet.transportlayer.udp.Udp func=inet::Udp::handleOperationStage info=handleOperationStage
 inet.power.storage.SimpleEpEnergyStorage: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=timer
 inet.queueing.common.PacketMultiplexer: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
+inet.queueing.common.PacketMultiplexer: CALL: module=inet.queueing.common.PacketMultiplexer func=inet::queueing::PacketMultiplexer::pushPacket info=pushPacket
+inet.queueing.common.PacketMultiplexer: CALL: module=inet.queueing.filter.RedDropper func=inet::queueing::RedDropper::handleCanPushPacket info=handleCanPushPacket
+inet.queueing.common.PacketMultiplexer: CALL: module=inet.queueing.queue.PacketQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
+inet.queueing.common.PacketMultiplexer: CALL: module=inet.queueing.sink.PassivePacketSink func=inet::queueing::PassivePacketSink::pushPacket info=pushPacket
 inet.queueing.common.PacketMultiplexer: OUTPUT: gate=out msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::InterfaceInd,inet::InterfaceReq,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.queueing.common.PacketMultiplexer: OUTPUT: gate=out msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::InterfaceInd,inet::MacAddressInd,inet::PacketProtocolTag
+inet.queueing.common.PacketMultiplexer: PACKET: insertAtFront inet::Ipv4Header
+inet.queueing.common.PacketMultiplexer: PACKET: popAtFront inet::Ipv4Header
+inet.queueing.common.PacketMultiplexer: TAG: findTag inet::PacketProtocolTag
+inet.queueing.common.PacketMultiplexer: TAG: getTag inet::PacketProtocolTag
+inet.queueing.filter.RedDropper: CALL: module=inet.networklayer.diffserv.BehaviorAggregateClassifier func=inet::BehaviorAggregateClassifier::handleCanPushPacket info=handleCanPushPacket
+inet.queueing.filter.RedDropper: CALL: module=inet.queueing.common.PacketMultiplexer func=inet::queueing::PacketMultiplexer::pushPacket info=pushPacket
+inet.queueing.filter.RedDropper: CALL: module=inet.queueing.queue.PacketQueue func=inet::queueing::PacketQueue::pushPacket info=pushPacket
+inet.queueing.queue.DropTailQueue: CALL: module=inet.linklayer.ethernet.EtherFrameClassifier func=inet::EtherFrameClassifier::handleCanPushPacket info=handleCanPushPacket
 inet.queueing.queue.DropTailQueue: CALL: module=inet.linklayer.ethernet.EtherMacFullDuplex func=inet::EtherMacFullDuplex::receiveSignal info=<nullptr>
 inet.queueing.queue.DropTailQueue: CALL: module=inet.linklayer.ethernet.EtherMac func=inet::EtherMac::receiveSignal info=<nullptr>
+inet.queueing.queue.DropTailQueue: CALL: module=inet.networklayer.diffserv.BehaviorAggregateClassifier func=inet::BehaviorAggregateClassifier::handleCanPushPacket info=handleCanPushPacket
+inet.queueing.queue.DropTailQueue: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::removePacket info=removePacket
+inet.queueing.queue.DropTailQueue: CALL: module=inet.queueing.scheduler.PriorityScheduler func=inet::queueing::PriorityScheduler::handleCanPopPacket info=handleCanPopPacket
+inet.queueing.queue.DropTailQueue: CALL: module=inet.queueing.scheduler.WrrScheduler func=inet::queueing::WrrScheduler::handleCanPopPacket info=handleCanPopPacket
+inet.queueing.queue.PacketQueue: CALL: module=inet.queueing.common.PacketMultiplexer func=inet::queueing::PacketMultiplexer::handleCanPushPacket info=handleCanPushPacket
+inet.queueing.queue.PacketQueue: CALL: module=inet.queueing.filter.RedDropper func=inet::queueing::RedDropper::handleCanPushPacket info=handleCanPushPacket
+inet.queueing.queue.PacketQueue: CALL: module=inet.queueing.scheduler.WrrScheduler func=inet::queueing::WrrScheduler::handleCanPopPacket info=handleCanPopPacket
 inet.queueing.scheduler.PriorityScheduler: CALL: module=inet.linklayer.ethernet.EtherMacFullDuplex func=inet::EtherMacFullDuplex::receiveSignal info=<nullptr>
 inet.queueing.scheduler.PriorityScheduler: CALL: module=inet.linklayer.ethernet.EtherMac func=inet::EtherMac::receiveSignal info=<nullptr>
+inet.queueing.scheduler.PriorityScheduler: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.queueing.scheduler.PriorityScheduler: CALL: module=inet.queueing.scheduler.WrrScheduler func=inet::queueing::WrrScheduler::popPacket info=popPacket
+inet.queueing.scheduler.WrrScheduler: CALL: module=inet.queueing.queue.DropTailQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.queueing.scheduler.WrrScheduler: CALL: module=inet.queueing.queue.PacketQueue func=inet::queueing::PacketQueue::popPacket info=popPacket
+inet.queueing.scheduler.WrrScheduler: CALL: module=inet.queueing.scheduler.PriorityScheduler func=inet::queueing::PriorityScheduler::handleCanPopPacket info=handleCanPopPacket
+inet.queueing.sink.PassivePacketSink: CALL: module=inet.networklayer.diffserv.BehaviorAggregateClassifier func=inet::BehaviorAggregateClassifier::handleCanPushPacket info=handleCanPushPacket
+inet.queueing.sink.PassivePacketSink: CALL: module=inet.networklayer.diffserv.MultiFieldClassifier func=inet::MultiFieldClassifier::handleCanPushPacket info=handleCanPushPacket
+inet.queueing.sink.PassivePacketSink: CALL: module=inet.queueing.common.PacketMultiplexer func=inet::queueing::PacketMultiplexer::handleCanPushPacket info=handleCanPushPacket
+inet.queueing.sink.PassivePacketSink: CALL: module=inet.queueing.sink.PassivePacketSink func=inet::queueing::PassivePacketSink::pushPacket info=pushPacket
 inet.queueing.sink.PassivePacketSink: INPUT: gate=in msg=inet::Packet kind=2003 ctrl=<null> tags=inet::DispatchProtocolReq,inet::ErrorRateInd,inet::InterfaceInd,inet::MacAddressInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd,inet::physicallayer::Ieee80211ChannelInd,inet::physicallayer::Ieee80211ModeInd
 inet.queueing.sink.PassivePacketSink: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=ConsumptionTimer
 inet.routing.aodv.Aodv: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
@@ -3745,8 +3853,40 @@ inet.transportlayer.tcp.Tcp: CALL: module=inet.physicallayer.unitdisk.UnitDiskRa
 inet.transportlayer.tcp.Tcp: CALL: module=inet.routing.aodv.Aodv func=inet::aodv::Aodv::handleOperationStage info=handleOperationStage
 inet.transportlayer.tcp.Tcp: CALL: module=inet.routing.dsdv.Dsdv func=inet::Dsdv::handleOperationStage info=handleOperationStage
 inet.transportlayer.tcp.Tcp: CALL: module=inet.routing.dymo.Dymo func=inet::dymo::Dymo::handleOperationStage info=handleOperationStage
+inet.transportlayer.tcp.Tcp: CALL: module=inet.transportlayer.tcp.TcpConnection func=inet::tcp::TcpConnection::initConnection info=<nullptr>
+inet.transportlayer.tcp.Tcp: CALL: module=inet.transportlayer.tcp.TcpConnection func=inet::tcp::TcpConnection::processAppCommand info=<nullptr>
+inet.transportlayer.tcp.Tcp: CALL: module=inet.transportlayer.tcp.TcpConnection func=inet::tcp::TcpConnection::processTCPSegment info=<nullptr>
 inet.transportlayer.tcp.Tcp: CALL: module=inet.transportlayer.tcp.Tcp func=inet::tcp::Tcp::handleOperationStage info=handleOperationStage
+inet.transportlayer.tcp.Tcp: CALL: module=inet.transportlayer.tcp.Tcp func=inet::tcp::Tcp::sendFromConn info=<nullptr>
 inet.transportlayer.tcp.Tcp: CALL: module=inet.transportlayer.udp.Udp func=inet::Udp::handleOperationStage info=handleOperationStage
+inet.transportlayer.tcp.TcpConnection: CALL: module=inet.transportlayer.tcp.TcpConnection func=inet::tcp::TcpConnection::initClonedConnection info=<nullptr>
+inet.transportlayer.tcp.TcpConnection: CALL: module=inet.transportlayer.tcp.TcpConnection func=inet::tcp::TcpConnection::initConnection info=<nullptr>
+inet.transportlayer.tcp.TcpConnection: CALL: module=inet.transportlayer.tcp.Tcp func=inet::tcp::Tcp::sendFromConn info=<nullptr>
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::bgp::BgpKeepAliveMessage
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::bgp::BgpOpenMessage
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::bgp::BgpUpdateMessage
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::ByteCountChunk
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::BytesChunk
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::GenericAppMsg
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::httptools::HttpReplyMessage
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::httptools::HttpRequestMessage
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::SequenceChunk
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtBack inet::SliceChunk
+inet.transportlayer.tcp.TcpConnection: PACKET: insertAtFront inet::tcp::TcpHeader
+inet.transportlayer.tcp.TcpConnection: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=DELAYEDACK
+inet.transportlayer.tcp.TcpConnection: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=NMSL
+inet.transportlayer.tcp.TcpConnection: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=REXMIT
+inet.transportlayer.tcp.TcpConnection: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=SYN-REXMIT
+inet.transportlayer.tcp.TcpConnection: TAG: addTagIfAbsent inet::DispatchProtocolReq
+inet.transportlayer.tcp.TcpConnection: TAG: addTagIfAbsent inet::L3AddressReq
+inet.transportlayer.tcp.TcpConnection: TAG: addTagIfAbsent inet::PacketProtocolTag
+inet.transportlayer.tcp.TcpConnection: TAG: addTagIfAbsent inet::TransportProtocolInd
+inet.transportlayer.tcp.TcpConnection: TAG: addTag inet::DscpReq
+inet.transportlayer.tcp.TcpConnection: TAG: addTag inet::HopLimitReq
+inet.transportlayer.tcp.TcpConnection: TAG: addTag inet::SocketInd
+inet.transportlayer.tcp.TcpConnection: TAG: findTag inet::DscpReq
+inet.transportlayer.tcp.TcpConnection: TAG: findTag inet::EcnInd
+inet.transportlayer.tcp.TcpConnection: TAG: findTag inet::HopLimitReq
 inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=11 ctrl=inet::TcpSetTimeToLiveCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
@@ -3771,32 +3911,14 @@ inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=8 ctr
 inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
 inet.transportlayer.tcp.Tcp: OUTPUT: gate=ipOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpReq,inet::HopLimitReq,inet::L3AddressReq,inet::PacketProtocolTag,inet::TransportProtocolInd
 inet.transportlayer.tcp.Tcp: OUTPUT: gate=ipOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpReq,inet::L3AddressReq,inet::PacketProtocolTag,inet::TransportProtocolInd
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::bgp::BgpKeepAliveMessage
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::bgp::BgpOpenMessage
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::bgp::BgpUpdateMessage
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::ByteCountChunk
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::BytesChunk
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::GenericAppMsg
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::httptools::HttpReplyMessage
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::httptools::HttpRequestMessage
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::SequenceChunk
-inet.transportlayer.tcp.Tcp: PACKET: insertAtBack inet::SliceChunk
 inet.transportlayer.tcp.Tcp: PACKET: insertAtFront inet::tcp::TcpHeader
 inet.transportlayer.tcp.Tcp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=ActiveOperationExtraTimer
-inet.transportlayer.tcp.Tcp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=DELAYEDACK
-inet.transportlayer.tcp.Tcp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=NMSL
-inet.transportlayer.tcp.Tcp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=REXMIT
-inet.transportlayer.tcp.Tcp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=SYN-REXMIT
 inet.transportlayer.tcp.Tcp: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.transportlayer.tcp.Tcp: TAG: addTagIfAbsent inet::L3AddressReq
 inet.transportlayer.tcp.Tcp: TAG: addTagIfAbsent inet::PacketProtocolTag
 inet.transportlayer.tcp.Tcp: TAG: addTagIfAbsent inet::TransportProtocolInd
 inet.transportlayer.tcp.Tcp: TAG: addTag inet::DscpReq
-inet.transportlayer.tcp.Tcp: TAG: addTag inet::HopLimitReq
-inet.transportlayer.tcp.Tcp: TAG: addTag inet::SocketInd
 inet.transportlayer.tcp.Tcp: TAG: findTag inet::DscpReq
-inet.transportlayer.tcp.Tcp: TAG: findTag inet::EcnInd
-inet.transportlayer.tcp.Tcp: TAG: findTag inet::HopLimitReq
 inet.transportlayer.tcp.Tcp: TAG: getTag inet::L3AddressInd
 inet.transportlayer.tcp.Tcp: TAG: getTag inet::NetworkProtocolInd
 inet.transportlayer.tcp.Tcp: TAG: getTag inet::PacketProtocolTag
