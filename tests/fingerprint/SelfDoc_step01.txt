@@ -32,7 +32,6 @@ inet.applications.dhcp.DhcpClient: TAG: addTagIfAbsent inet::L4PortReq
 inet.applications.dhcp.DhcpClient: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.dhcp.DhcpClient: TAG: findTag inet::SocketInd
 inet.applications.dhcp.DhcpClient: TAG: getTag inet::Ipv4InterfaceData
-
 inet.applications.dhcp.DhcpServer: CALL: module=inet.applications.dhcp.DhcpServer func=inet::DhcpServer::handleOperationStage info=handleOperationStage
 inet.applications.dhcp.DhcpServer: CALL: module=inet.common.lifecycle.NodeStatus func=inet::NodeStatus::handleOperationStage info=<nullptr>
 inet.applications.dhcp.DhcpServer: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
@@ -64,7 +63,6 @@ inet.applications.dhcp.DhcpServer: TAG: findTag inet::Ipv4InterfaceData
 inet.applications.dhcp.DhcpServer: TAG: findTag inet::SocketInd
 inet.applications.dhcp.DhcpServer: TAG: getTag inet::InterfaceInd
 inet.applications.dhcp.DhcpServer: TAG: getTag inet::Ipv4InterfaceData
-
 inet.applications.ethernet.EtherAppClient: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.ethernet.EtherAppClient: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::SocketInd
 inet.applications.ethernet.EtherAppClient: OUTPUT: gate=out msg=inet::Packet kind=2003 ctrl=<null> tags=inet::DispatchProtocolReq,inet::Ieee802SapReq,inet::MacAddressReq,inet::SocketReq
@@ -78,7 +76,6 @@ inet.applications.ethernet.EtherAppClient: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.ethernet.EtherAppClient: TAG: addTag inet::Ieee802SapReq
 inet.applications.ethernet.EtherAppClient: TAG: addTag inet::MacAddressReq
 inet.applications.ethernet.EtherAppClient: TAG: getTag inet::SocketInd
-
 inet.applications.ethernet.EtherAppServer: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.ethernet.EtherAppServer: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::ErrorRateInd,inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd,inet::SocketInd,inet::physicallayer::Ieee80211ChannelInd,inet::physicallayer::Ieee80211ModeInd
 inet.applications.ethernet.EtherAppServer: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::SocketInd
@@ -92,7 +89,6 @@ inet.applications.ethernet.EtherAppServer: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.ethernet.EtherAppServer: TAG: getTag inet::Ieee802SapInd
 inet.applications.ethernet.EtherAppServer: TAG: getTag inet::MacAddressInd
 inet.applications.ethernet.EtherAppServer: TAG: getTag inet::SocketInd
-
 inet.applications.ethernet.EtherTrafGen: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::Ieee802SapInd,inet::InterfaceInd,inet::MacAddressInd,inet::SocketInd
 inet.applications.ethernet.EtherTrafGen: OUTPUT: gate=out msg=inet::Packet kind=2003 ctrl=<null> tags=inet::DispatchProtocolReq,inet::Ieee802SapReq,inet::MacAddressReq
 inet.applications.ethernet.EtherTrafGen: OUTPUT: gate=out msg=inet::Request kind=1 ctrl=inet::Ieee8022LlcSocketOpenCommand tags=inet::DispatchProtocolReq,inet::Ieee802SapReq,inet::SocketReq
@@ -105,7 +101,6 @@ inet.applications.ethernet.EtherTrafGen: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.ethernet.EtherTrafGen: TAG: addTag inet::DispatchProtocolReq
 inet.applications.ethernet.EtherTrafGen: TAG: addTag inet::Ieee802SapReq
 inet.applications.ethernet.EtherTrafGen: TAG: addTag inet::MacAddressReq
-
 inet.applications.generic.IpvxTrafGen: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.generic.IpvxTrafGen: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterProtocol info=handleRegisterProtocol
 inet.applications.generic.IpvxTrafGen: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterService info=handleRegisterService
@@ -118,18 +113,15 @@ inet.applications.generic.IpvxTrafGen: TAG: addTag inet::L3AddressReq
 inet.applications.generic.IpvxTrafGen: TAG: addTag inet::PacketProtocolTag
 inet.applications.generic.IpvxTrafGen: TAG: findTag inet::Ipv4InterfaceData
 inet.applications.generic.IpvxTrafGen: TAG: findTag inet::L3AddressReq
-
 inet.applications.generic.IpvxTrafSink: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterProtocol info=handleRegisterProtocol
 inet.applications.generic.IpvxTrafSink: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterService info=handleRegisterService
 inet.applications.generic.IpvxTrafSink: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.applications.generic.IpvxTrafSink: TAG: findTag inet::L3AddressInd
 inet.applications.generic.IpvxTrafSink: TAG: findTag inet::L3AddressReq
-
 inet.applications.httptools.browser.HttpBrowser: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getAnyServerInfo info=<nullptr>
 inet.applications.httptools.browser.HttpBrowser: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getServerInfo info=<nullptr>
 inet.applications.httptools.browser.HttpBrowser: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getServerModule info=<nullptr>
 inet.applications.httptools.browser.HttpBrowser: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
-
 inet.applications.httptools.browser.HttpBrowserDirect: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getAnyServerModule info=<nullptr>
 inet.applications.httptools.browser.HttpBrowserDirect: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::getServerModule info=<nullptr>
 inet.applications.httptools.browser.HttpBrowserDirect: INPUT: gate=httpIn msg=inet::Packet kind=10010 ctrl=<null> tags=
@@ -139,13 +131,12 @@ inet.applications.httptools.browser.HttpBrowserDirect: SCHEDULE:  msg=omnetpp::c
 inet.applications.httptools.browser.HttpBrowserDirect: SCHEDULE:  msg=omnetpp::cMessage kind=1 ctrl=<null> tags= msgname=eventTimer
 inet.applications.httptools.browser.HttpBrowserDirect: SCHEDULE:  msg=omnetpp::cMessage kind=2 ctrl=<null> tags= msgname=eventTimer
 inet.applications.httptools.browser.HttpBrowserDirect: SCHEDULE:  msg=omnetpp::cMessage kind=3 ctrl=<null> tags= msgname=eventTimer
-
-inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.applications.httptools.browser.HttpBrowser: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.httptools.browser.HttpBrowser: OUTPUT: gate=socketOut msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.httptools.browser.HttpBrowser: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.httptools.browser.HttpBrowser: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
+inet.applications.httptools.browser.HttpBrowser: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.browser.HttpBrowser: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.browser.HttpBrowser: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.httptools.browser.HttpBrowser: PACKET: insertAtBack inet::httptools::HttpRequestMessage
 inet.applications.httptools.browser.HttpBrowser: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=eventTimer
 inet.applications.httptools.browser.HttpBrowser: SCHEDULE:  msg=omnetpp::cMessage kind=1 ctrl=<null> tags= msgname=eventTimer
@@ -156,44 +147,37 @@ inet.applications.httptools.browser.HttpBrowser: TAG: addTagIfAbsent inet::Socke
 inet.applications.httptools.browser.HttpBrowser: TAG: findTag inet::Ipv4InterfaceData
 inet.applications.httptools.browser.HttpBrowser: TAG: findTag inet::SocketInd
 inet.applications.httptools.browser.HttpBrowser: TAG: getTag inet::SocketInd
-
 inet.applications.httptools.configurator.HttpController: SCHEDULE:  msg=inet::httptools::HttpServerStatusUpdateMsg kind=0 ctrl=<null> tags= msgname=
-
 inet.applications.httptools.server.HttpServer: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::registerServer info=<nullptr>
 inet.applications.httptools.server.HttpServer: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
-
 inet.applications.httptools.server.HttpServerDirect: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::registerServer info=<nullptr>
 inet.applications.httptools.server.HttpServerDirect: INPUT: gate=httpIn msg=inet::Packet kind=10000 ctrl=<null> tags=
 inet.applications.httptools.server.HttpServerDirect: OUTPUTDIRECT: msg=inet::Packet kind=10010 ctrl=<null> tags=
 inet.applications.httptools.server.HttpServerDirect: PACKET: insertAtBack inet::httptools::HttpReplyMessage
-
 inet.applications.httptools.server.HttpServerEvilA: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::registerServer info=<nullptr>
 inet.applications.httptools.server.HttpServerEvilA: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
-inet.applications.httptools.server.HttpServerEvilA: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.server.HttpServerEvilA: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.httptools.server.HttpServerEvilA: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.applications.httptools.server.HttpServerEvilA: TAG: addTagIfAbsent inet::SocketReq
-
 inet.applications.httptools.server.HttpServerEvilB: CALL: module=inet.applications.httptools.configurator.HttpController func=inet::httptools::HttpController::registerServer info=<nullptr>
 inet.applications.httptools.server.HttpServerEvilB: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
-inet.applications.httptools.server.HttpServerEvilB: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.server.HttpServerEvilB: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.httptools.server.HttpServerEvilB: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.applications.httptools.server.HttpServerEvilB: TAG: addTagIfAbsent inet::SocketReq
-
-inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
-inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.applications.httptools.server.HttpServer: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.httptools.server.HttpServer: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.httptools.server.HttpServer: OUTPUT: gate=socketOut msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.httptools.server.HttpServer: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
+inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.httptools.server.HttpServer: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
+inet.applications.httptools.server.HttpServer: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.server.HttpServer: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.server.HttpServer: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.httptools.server.HttpServer: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.httptools.server.HttpServer: PACKET: insertAtBack inet::httptools::HttpReplyMessage
 inet.applications.httptools.server.HttpServer: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.applications.httptools.server.HttpServer: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.httptools.server.HttpServer: TAG: findTag inet::SocketInd
 inet.applications.httptools.server.HttpServer: TAG: getTag inet::SocketInd
-
 inet.applications.netperfmeter.NetPerfMeter: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.netperfmeter.NetPerfMeter: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::getInterfaceByName info=<nullptr>
 inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=14 ctrl=<null> tags=inet::SctpCommandReq,inet::SocketInd
@@ -201,25 +185,25 @@ inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indi
 inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=21 ctrl=<null> tags=inet::SctpCommandReq,inet::SocketInd
 inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=22 ctrl=<null> tags=inet::SctpAvailableReq,inet::SocketInd
 inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=2 ctrl=<null> tags=inet::SctpCommandReq,inet::SocketInd
-inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
 inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=<null> tags=inet::SctpConnectReq,inet::SocketInd
-inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
+inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
 inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SctpRcvReq,inet::SocketInd
-inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
+inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
 inet.applications.netperfmeter.NetPerfMeter: INPUT: gate=socketIn msg=inet::Packet kind=inet::UdpStatusInd::UDP_I_DATA ctrl=<null> tags=inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::L4PortInd,inet::NetworkProtocolInd,inet::SocketInd,inet::TransportProtocolInd
-inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Packet kind=8 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SctpSendReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Packet kind=9 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SctpSendReq,inet::SocketReq
+inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::UdpCommandCode::UDP_C_DATA ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=12 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SctpInfoReq,inet::SocketReq
-inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=1 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SctpOpenReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=22 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SctpSendReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=25 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SctpAvailableReq,inet::SocketReq
-inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SctpOpenReq,inet::SocketReq
-inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=8 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_QUEUE_BYTES_LIMIT ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=inet::UdpCommandCode::UDP_C_BIND ctrl=inet::UdpBindCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: OUTPUT: gate=socketOut msg=inet::Request kind=inet::UdpCommandCode::UDP_C_CONNECT ctrl=inet::UdpConnectCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.netperfmeter.NetPerfMeter: PACKET: insertAtBack inet::BytesChunk
@@ -243,7 +227,6 @@ inet.applications.netperfmeter.NetPerfMeter: TAG: getTag inet::SctpCommandReq
 inet.applications.netperfmeter.NetPerfMeter: TAG: getTag inet::SctpConnectReq
 inet.applications.netperfmeter.NetPerfMeter: TAG: getTag inet::SctpSendQueueAbatedReq
 inet.applications.netperfmeter.NetPerfMeter: TAG: getTag inet::SocketInd
-
 inet.applications.pingapp.PingApp: CALL: module=inet.applications.pingapp.PingApp func=inet::PingApp::handleOperationStage info=handleOperationStage
 inet.applications.pingapp.PingApp: CALL: module=inet.common.lifecycle.NodeStatus func=inet::NodeStatus::handleOperationStage info=<nullptr>
 inet.applications.pingapp.PingApp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
@@ -290,9 +273,9 @@ inet.applications.pingapp.PingApp: PACKET: insertAtFront inet::Icmpv6EchoRequest
 inet.applications.pingapp.PingApp: PACKET: popAtFront inet::EchoPacket
 inet.applications.pingapp.PingApp: PACKET: popAtFront inet::IcmpHeader
 inet.applications.pingapp.PingApp: PACKET: popAtFront inet::Icmpv6Header
-inet.applications.pingapp.PingApp: SCHEDULE:  msg=omnetpp::cMessage kind=1001 ctrl=<null> tags= msgname=sendPing
-inet.applications.pingapp.PingApp: SCHEDULE:  msg=omnetpp::cMessage kind=1002 ctrl=<null> tags= msgname=sendPing
-inet.applications.pingapp.PingApp: SCHEDULE:  msg=omnetpp::cMessage kind=1003 ctrl=<null> tags= msgname=sendPing
+inet.applications.pingapp.PingApp: SCHEDULE:  msg=omnetpp::cMessage kind=inet::PingSelfKinds::PING_CHANGE_ADDR ctrl=<null> tags= msgname=sendPing
+inet.applications.pingapp.PingApp: SCHEDULE:  msg=omnetpp::cMessage kind=inet::PingSelfKinds::PING_FIRST_ADDR ctrl=<null> tags= msgname=sendPing
+inet.applications.pingapp.PingApp: SCHEDULE:  msg=omnetpp::cMessage kind=inet::PingSelfKinds::PING_SEND ctrl=<null> tags= msgname=sendPing
 inet.applications.pingapp.PingApp: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.applications.pingapp.PingApp: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.pingapp.PingApp: TAG: addTag inet::L3AddressReq
@@ -303,7 +286,6 @@ inet.applications.pingapp.PingApp: TAG: findTag inet::Ipv6InterfaceData
 inet.applications.pingapp.PingApp: TAG: getTag inet::L3AddressInd
 inet.applications.pingapp.PingApp: TAG: getTag inet::PacketProtocolTag
 inet.applications.pingapp.PingApp: TAG: getTag inet::SocketInd
-
 inet.applications.rtpapp.RtpApplication: INPUT: gate=rtpIn msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiSenderModuleCreated tags=
 inet.applications.rtpapp.RtpApplication: INPUT: gate=rtpIn msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiSenderStatus tags=
 inet.applications.rtpapp.RtpApplication: INPUT: gate=rtpIn msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiSessionEntered tags=
@@ -312,12 +294,11 @@ inet.applications.rtpapp.RtpApplication: OUTPUT: gate=rtpOut msg=inet::rtp::RtpC
 inet.applications.rtpapp.RtpApplication: OUTPUT: gate=rtpOut msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiEnterSession tags=
 inet.applications.rtpapp.RtpApplication: OUTPUT: gate=rtpOut msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiLeaveSession tags=
 inet.applications.rtpapp.RtpApplication: OUTPUT: gate=rtpOut msg=inet::rtp::RtpControlMsg kind=0 ctrl=inet::rtp::RtpCiSenderControl tags=
-inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=enterSession
-inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=1 ctrl=<null> tags= msgname=startTransmission
-inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=2 ctrl=<null> tags= msgname=stopTransmission
-inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=3 ctrl=<null> tags= msgname=leaveSession
+inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=inet::RtpAppSelfMsgKinds::RTPAPP_ENTER_SESSION ctrl=<null> tags= msgname=enterSession
+inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=inet::RtpAppSelfMsgKinds::RTPAPP_LEAVE_SESSION ctrl=<null> tags= msgname=leaveSession
+inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=inet::RtpAppSelfMsgKinds::RTPAPP_START_TRANSMISSION ctrl=<null> tags= msgname=startTransmission
+inet.applications.rtpapp.RtpApplication: SCHEDULE:  msg=omnetpp::cMessage kind=inet::RtpAppSelfMsgKinds::RTPAPP_STOP_TRANSMISSION ctrl=<null> tags= msgname=stopTransmission
 inet.applications.rtpapp.RtpApplication: TAG: findTag inet::Ipv4InterfaceData
-
 inet.applications.sctpapp.SctpClient: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.sctpapp.SctpClient: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::getInterfaceByName info=<nullptr>
 inet.applications.sctpapp.SctpClient: INPUT: gate=socketIn msg=inet::Indication kind=12 ctrl=<null> tags=inet::SctpCommandReq,inet::SocketInd
@@ -376,12 +357,12 @@ inet.applications.sctpapp.SctpServer: TAG: getTag inet::SctpAvailableReq
 inet.applications.sctpapp.SctpServer: TAG: getTag inet::SctpConnectReq
 inet.applications.sctpapp.SctpServer: TAG: getTag inet::SocketInd
 inet.applications.tcpapp.TcpBasicClientApp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
-inet.applications.tcpapp.TcpBasicClientApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.applications.tcpapp.TcpBasicClientApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpBasicClientApp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.applications.tcpapp.TcpBasicClientApp: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpBasicClientApp: OUTPUT: gate=socketOut msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpBasicClientApp: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpBasicClientApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpBasicClientApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.tcpapp.TcpBasicClientApp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
+inet.applications.tcpapp.TcpBasicClientApp: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpBasicClientApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpBasicClientApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.tcpapp.TcpBasicClientApp: PACKET: insertAtBack inet::GenericAppMsg
 inet.applications.tcpapp.TcpBasicClientApp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=timer
 inet.applications.tcpapp.TcpBasicClientApp: SCHEDULE:  msg=omnetpp::cMessage kind=1 ctrl=<null> tags= msgname=timer
@@ -390,23 +371,23 @@ inet.applications.tcpapp.TcpBasicClientApp: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.tcpapp.TcpBasicClientApp: TAG: findTag inet::Ipv4InterfaceData
 inet.applications.tcpapp.TcpBasicClientApp: TAG: findTag inet::SocketInd
 inet.applications.tcpapp.TcpEchoApp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=8 ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=8 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpEchoApp: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpEchoApp: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpEchoApp: OUTPUT: gate=socketOut msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpEchoApp: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CONNECTION_RESET ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CONNECTION_RESET ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
+inet.applications.tcpapp.TcpEchoApp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpEchoApp: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpEchoApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpEchoApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpEchoApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.tcpapp.TcpEchoApp: PACKET: insertAtBack inet::ByteCountChunk
 inet.applications.tcpapp.TcpEchoApp: PACKET: insertAtBack inet::BytesChunk
 inet.applications.tcpapp.TcpEchoApp: PACKET: insertAtBack inet::SliceChunk
@@ -417,17 +398,17 @@ inet.applications.tcpapp.TcpEchoApp: TAG: findTag inet::SocketInd
 inet.applications.tcpapp.TcpEchoApp: TAG: getTag inet::SocketInd
 inet.applications.tcpapp.TcpEchoApp: TAG: getTag inet::SocketReq
 inet.applications.tcpapp.TcpGenericServerApp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
-inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
-inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.applications.tcpapp.TcpGenericServerApp: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpGenericServerApp: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpGenericServerApp: OUTPUT: gate=socketOut msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpGenericServerApp: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
+inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpGenericServerApp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
+inet.applications.tcpapp.TcpGenericServerApp: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpGenericServerApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpGenericServerApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpGenericServerApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.tcpapp.TcpGenericServerApp: PACKET: insertAtBack inet::GenericAppMsg
 inet.applications.tcpapp.TcpGenericServerApp: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.applications.tcpapp.TcpGenericServerApp: TAG: addTagIfAbsent inet::SocketReq
@@ -436,16 +417,16 @@ inet.applications.tcpapp.TcpGenericServerApp: TAG: findTag inet::SocketInd
 inet.applications.tcpapp.TcpGenericServerApp: TAG: getTag inet::SocketInd
 inet.applications.tcpapp.TcpSessionApp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
 inet.applications.tcpapp.TcpSessionApp: CALL: module=inet.networklayer.common.InterfaceTable func=inet::InterfaceTable::getInterfaceByName info=<nullptr>
-inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
-inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TcpSessionApp: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpSessionApp: OUTPUT: gate=socketOut msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpSessionApp: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
+inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
+inet.applications.tcpapp.TcpSessionApp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TcpSessionApp: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpSessionApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpSessionApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.tcpapp.TcpSessionApp: PACKET: insertAtBack inet::ApplicationPacket
 inet.applications.tcpapp.TcpSessionApp: PACKET: insertAtBack inet::ByteCountChunk
 inet.applications.tcpapp.TcpSessionApp: PACKET: insertAtBack inet::BytesChunk
@@ -458,14 +439,14 @@ inet.applications.tcpapp.TcpSessionApp: TAG: findTag inet::Ipv4InterfaceData
 inet.applications.tcpapp.TcpSessionApp: TAG: findTag inet::Ipv6InterfaceData
 inet.applications.tcpapp.TcpSessionApp: TAG: findTag inet::SocketInd
 inet.applications.tcpapp.TcpSinkApp: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::arrived info=<nullptr>
-inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
-inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.applications.tcpapp.TcpSinkApp: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpSinkApp: OUTPUT: gate=socketOut msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TcpSinkApp: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
+inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TcpSinkApp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
+inet.applications.tcpapp.TcpSinkApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpSinkApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TcpSinkApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.tcpapp.TcpSinkApp: TAG: addTagIfAbsent inet::DispatchProtocolReq
 inet.applications.tcpapp.TcpSinkApp: TAG: addTagIfAbsent inet::SocketReq
 inet.applications.tcpapp.TcpSinkApp: TAG: findTag inet::SocketInd
@@ -483,13 +464,13 @@ inet.applications.tcpapp.TelnetApp: CALL: module=inet.networklayer.ipv4.Ipv4 fun
 inet.applications.tcpapp.TelnetApp: CALL: module=inet.networklayer.ipv4.Ipv4RoutingTable func=inet::Ipv4RoutingTable::handleOperationStage info=<nullptr>
 inet.applications.tcpapp.TelnetApp: CALL: module=inet.transportlayer.tcp.Tcp func=inet::tcp::Tcp::handleOperationStage info=handleOperationStage
 inet.applications.tcpapp.TelnetApp: CALL: module=inet.transportlayer.udp.Udp func=inet::Udp::handleOperationStage info=handleOperationStage
-inet.applications.tcpapp.TelnetApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.applications.tcpapp.TelnetApp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.applications.tcpapp.TelnetApp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.applications.tcpapp.TelnetApp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.applications.tcpapp.TelnetApp: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TelnetApp: OUTPUT: gate=socketOut msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.applications.tcpapp.TelnetApp: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TelnetApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.applications.tcpapp.TelnetApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.applications.tcpapp.TelnetApp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.applications.tcpapp.TelnetApp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
+inet.applications.tcpapp.TelnetApp: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TelnetApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.applications.tcpapp.TelnetApp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.applications.tcpapp.TelnetApp: PACKET: insertAtBack inet::GenericAppMsg
 inet.applications.tcpapp.TelnetApp: SCHEDULE:  msg=omnetpp::cMessage kind=0 ctrl=<null> tags= msgname=timer
 inet.applications.tcpapp.TelnetApp: SCHEDULE:  msg=omnetpp::cMessage kind=1 ctrl=<null> tags= msgname=timer
@@ -741,12 +722,12 @@ inet.common.MessageDispatcher: TAG: findTag inet::InterfaceReq
 inet.common.MessageDispatcher: TAG: findTag inet::PacketProtocolTag
 inet.common.MessageDispatcher: TAG: findTag inet::SocketInd
 inet.common.MessageDispatcher: TAG: findTag inet::SocketReq
-inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
-inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Indication kind=8 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
+inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
+inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CONNECTION_RESET ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
 inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
 inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Request kind=11 ctrl=inet::TcpSetTimeToLiveCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.common.misc.MessageChecker: INPUT: gate=in msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
@@ -757,12 +738,12 @@ inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Indication kind=4 ct
 inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
 inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Indication kind=8 ctrl=inet::TcpCommand tags=inet::SocketInd
 inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
-inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=11 ctrl=inet::TcpSetTimeToLiveCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=6 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ABORT ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.common.misc.MessageChecker: OUTPUT: gate=out msg=inet::Request kind=inet::TcpCommandCode::TCP_C_SETOPTION ctrl=inet::TcpSetTimeToLiveCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.common.packet.recorder.PcapRecorder: PACKET: insertAtFront inet::EthernetMacHeader
 inet.common.packet.recorder.PcapRecorder: PACKET: popAtBack inet::CsmaCaMacTrailer
 inet.common.packet.recorder.PcapRecorder: PACKET: popAtBack inet::EthernetFcs
@@ -2522,11 +2503,11 @@ inet.networklayer.ldp.Ldp: CALL: module=inet.networklayer.ldp.Ldp func=inet::Ldp
 inet.networklayer.ldp.Ldp: CALL: module=inet.networklayer.ted.Ted func=inet::Ted::handleOperationStage info=handleOperationStage
 inet.networklayer.ldp.Ldp: CALL: module=inet.transportlayer.tcp.Tcp func=inet::tcp::Tcp::handleOperationStage info=handleOperationStage
 inet.networklayer.ldp.Ldp: CALL: module=inet.transportlayer.udp.Udp func=inet::Udp::handleOperationStage info=handleOperationStage
-inet.networklayer.ldp.Ldp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.networklayer.ldp.Ldp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
 inet.networklayer.ldp.Ldp: INPUT: gate=socketIn msg=inet::Indication kind=inet::UdpStatusInd::UDP_I_SOCKET_CLOSED ctrl=inet::UdpSocketClosedIndication tags=inet::SocketInd
 inet.networklayer.ldp.Ldp: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::UdpCommandCode::UDP_C_DATA ctrl=<null> tags=inet::DispatchProtocolReq,inet::L3AddressReq,inet::L4PortReq,inet::SocketReq
-inet.networklayer.ldp.Ldp: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.networklayer.ldp.Ldp: OUTPUT: gate=socketOut msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.networklayer.ldp.Ldp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.networklayer.ldp.Ldp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.networklayer.ldp.Ldp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::UdpCommandCode::UDP_C_BIND ctrl=inet::UdpBindCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.networklayer.ldp.Ldp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::UdpCommandCode::UDP_C_CLOSE ctrl=inet::UdpCloseCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.networklayer.ldp.Ldp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::UdpCommandCode::UDP_C_SETOPTION ctrl=inet::UdpSetMulticastInterfaceCommand tags=inet::DispatchProtocolReq,inet::SocketReq
@@ -3298,13 +3279,24 @@ inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Indication kind=3 ctrl=in
 inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
 inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
 inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Indication kind=8 ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
+inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CONNECTION_RESET ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
 inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
+inet.routing.bgpv4.Bgp: INPUT: gate=socketIn msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
 inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=11 ctrl=inet::TcpSetTimeToLiveCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=6 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ABORT ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.routing.bgpv4.Bgp: OUTPUT: gate=socketOut msg=inet::Request kind=inet::TcpCommandCode::TCP_C_SETOPTION ctrl=inet::TcpSetTimeToLiveCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.routing.bgpv4.Bgp: PACKET: insertAtFront inet::bgp::BgpKeepAliveMessage
 inet.routing.bgpv4.Bgp: PACKET: insertAtFront inet::bgp::BgpOpenMessage
 inet.routing.bgpv4.Bgp: PACKET: insertAtFront inet::bgp::BgpUpdateMessage
@@ -3758,18 +3750,18 @@ inet.transportlayer.tcp_lwip.TcpLwip: CALL: module=inet.common.MessageDispatcher
 inet.transportlayer.tcp_lwip.TcpLwip: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterProtocol info=handleRegisterProtocol
 inet.transportlayer.tcp_lwip.TcpLwip: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterService info=handleRegisterService
 inet.transportlayer.tcp_lwip.TcpLwip: CALL: module=inet.networklayer.ipv4.Ipv4 func=inet::Ipv4::registerHook info=registerHook()
-inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.transportlayer.tcp_lwip.TcpLwip: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
-inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::SocketInd,inet::TransportProtocolInd
-inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd,inet::TransportProtocolInd
-inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd,inet::TransportProtocolInd
+inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd,inet::TransportProtocolInd
+inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd,inet::TransportProtocolInd
+inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=appOut msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd,inet::TransportProtocolInd
 inet.transportlayer.tcp_lwip.TcpLwip: OUTPUT: gate=ipOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::L3AddressReq,inet::PacketProtocolTag,inet::TransportProtocolInd
 inet.transportlayer.tcp_lwip.TcpLwip: PACKET: insertAtBack inet::BytesChunk
 inet.transportlayer.tcp_lwip.TcpLwip: PACKET: insertAtFront inet::tcp::TcpHeader
@@ -3789,19 +3781,19 @@ inet.transportlayer.tcp_nsc.TcpNsc: CALL: module=inet.common.MessageDispatcher f
 inet.transportlayer.tcp_nsc.TcpNsc: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterProtocol info=handleRegisterProtocol
 inet.transportlayer.tcp_nsc.TcpNsc: CALL: module=inet.common.MessageDispatcher func=inet::MessageDispatcher::handleRegisterService info=handleRegisterService
 inet.transportlayer.tcp_nsc.TcpNsc: CALL: module=inet.networklayer.ipv4.Ipv4 func=inet::Ipv4::registerHook info=registerHook()
-inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.transportlayer.tcp_nsc.TcpNsc: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
-inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
-inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
-inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
-inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=8 ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
-inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
+inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
+inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CONNECTION_RESET ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
+inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd,inet::TransportProtocolInd
+inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::PacketProtocolTag,inet::SocketInd
+inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=appOut msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
 inet.transportlayer.tcp_nsc.TcpNsc: OUTPUT: gate=ipOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::L3AddressReq,inet::PacketProtocolTag,inet::TransportProtocolInd
 inet.transportlayer.tcp_nsc.TcpNsc: PACKET: insertAtBack inet::BytesChunk
 inet.transportlayer.tcp_nsc.TcpNsc: PACKET: insertAtFront inet::tcp::TcpHeader
@@ -3887,15 +3879,15 @@ inet.transportlayer.tcp.TcpConnection: TAG: addTag inet::SocketInd
 inet.transportlayer.tcp.TcpConnection: TAG: findTag inet::DscpReq
 inet.transportlayer.tcp.TcpConnection: TAG: findTag inet::EcnInd
 inet.transportlayer.tcp.TcpConnection: TAG: findTag inet::HopLimitReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=11 ctrl=inet::TcpSetTimeToLiveCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=1 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=2 ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=3 ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=5 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=5 ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=6 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
-inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=8 ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Packet kind=inet::TcpCommandCode::TCP_C_SEND ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ABORT ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_ACCEPT ctrl=inet::TcpAcceptCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_CLOSE ctrl=<null> tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_ACTIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_OPEN_PASSIVE ctrl=inet::TcpOpenCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_QUEUE_BYTES_LIMIT ctrl=inet::TcpCommand tags=inet::DispatchProtocolReq,inet::SocketReq
+inet.transportlayer.tcp.Tcp: INPUT: gate=appIn msg=inet::Request kind=inet::TcpCommandCode::TCP_C_SETOPTION ctrl=inet::TcpSetTimeToLiveCommand tags=inet::DispatchProtocolReq,inet::SocketReq
 inet.transportlayer.tcp.Tcp: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.transportlayer.tcp.Tcp: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolInd,inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.transportlayer.tcp.Tcp: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::ErrorRateInd,inet::HopLimitInd,inet::Ieee802SapInd,inet::InterfaceInd,inet::L3AddressInd,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::SignalPowerInd,inet::SignalTimeInd,inet::SnirInd,inet::physicallayer::Ieee80211ChannelInd,inet::physicallayer::Ieee80211ModeInd
@@ -3903,12 +3895,12 @@ inet.transportlayer.tcp.Tcp: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null
 inet.transportlayer.tcp.Tcp: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag,inet::VlanInd
 inet.transportlayer.tcp.Tcp: INPUT: gate=ipIn msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
 inet.transportlayer.tcp.Tcp: INPUT: gate=ipIn msg=inet::Packet kind=4 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpInd,inet::EcnInd,inet::HopLimitInd,inet::InterfaceInd,inet::L3AddressInd,inet::MacAddressInd,inet::NetworkProtocolInd,inet::PacketProtocolTag
-inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=3 ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
-inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=4 ctrl=inet::TcpConnectInfo tags=inet::SocketInd
-inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=5 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=6 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=8 ctrl=inet::TcpCommand tags=inet::SocketInd
-inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Packet kind=1 ctrl=<null> tags=inet::SocketInd
+inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_AVAILABLE ctrl=inet::TcpAvailableInfo tags=inet::SocketInd
+inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_CONNECTION_RESET ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_ESTABLISHED ctrl=inet::TcpConnectInfo tags=inet::SocketInd
+inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Indication kind=inet::TcpStatusInd::TCP_I_PEER_CLOSED ctrl=inet::TcpCommand tags=inet::SocketInd
+inet.transportlayer.tcp.Tcp: OUTPUT: gate=appOut msg=inet::Packet kind=inet::TcpStatusInd::TCP_I_DATA ctrl=<null> tags=inet::SocketInd
 inet.transportlayer.tcp.Tcp: OUTPUT: gate=ipOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpReq,inet::HopLimitReq,inet::L3AddressReq,inet::PacketProtocolTag,inet::TransportProtocolInd
 inet.transportlayer.tcp.Tcp: OUTPUT: gate=ipOut msg=inet::Packet kind=0 ctrl=<null> tags=inet::DispatchProtocolReq,inet::DscpReq,inet::L3AddressReq,inet::PacketProtocolTag,inet::TransportProtocolInd
 inet.transportlayer.tcp.Tcp: PACKET: insertAtFront inet::tcp::TcpHeader
