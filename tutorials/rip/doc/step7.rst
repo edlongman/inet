@@ -22,13 +22,10 @@ TODO: video
 RIP update messages are sent every 30 seconds (not visualized here). The
 route metrics increase incrementally (count-to-infinity):
 
+.. video:: media/step7.mp4
+   :width: 100%
 
-
-   .. video:: media/step7.mp4
-
-
-
-   <!--internal video recording, animation speed none, playback speed 2.138, zoom 0.77-->
+..   <!--internal video recording, animation speed none, playback speed 2.138, zoom 0.77-->
 
 TODO: what happens
 

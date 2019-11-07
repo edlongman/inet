@@ -24,19 +24,15 @@ Rip convergence takes 220 seconds (from link break at 50s to no routes
 to host3 at 270s). Note the incrementally increasing hop count
 (indicated on the route in parentheses), i.e. counting to infinity
 
+.. video:: media/step6_1.mp4
+   :width: 100%
 
-
-   .. video:: media/step6_1.mp4
-
-
-
-   <!--internal video recording, zoom 0.77, playback speed 1, no animation speed-->
+..   <!--internal video recording, zoom 0.77, playback speed 1, no animation speed-->
 
 Rip start, link break, counting to infinity, ping packets:
 
-
-
-   .. video:: media/step6_2.mp4
+.. video:: media/step6_2.mp4
+   :width: 100%
 
 Ping packets go back and forth between the two routers, indicating the
 presence of the routing loop. The ping packet times out after 8 hops,

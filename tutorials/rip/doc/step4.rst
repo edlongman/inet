@@ -20,9 +20,8 @@ Results
 
 TODO: video
 
-
-
-   .. video:: media/step4.mp4
+.. video:: media/step4.mp4
+   :width: 100%
 
 Here are two images of the RIP table of ``router1``.
 
@@ -47,4 +46,3 @@ TODO: screenshots or routing tables / RIP packets
 
 .. |image0| image:: media/step4_3.png
 .. |image1| image:: media/step4_4.png
-

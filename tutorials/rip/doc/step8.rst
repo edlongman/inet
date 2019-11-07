@@ -22,9 +22,8 @@ in holddown. (TODO: this is essentially the same as the paragraph below)
 
 Thus routing loops are prevented.
 
-
-
-   .. video:: media/step8.mp4
+.. video:: media/step8.mp4
+   :width: 100%
 
 On the following image, ``router2`` sends a RIP Response message to
 ``router3``. The message contains the route to the (currently
@@ -34,7 +33,6 @@ updated in ``router3``, as the route is in holddown. The details of the
 RIP Response message and ``router3``'s RIP table are highlighted (click
 on the image to enlarge):
 
-|image0|
-
-.. |image0| image:: media/step8_1.png
-
+.. figure:: media/step8_1.png
+   :width: 100%
+   :align: center

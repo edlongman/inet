@@ -23,9 +23,10 @@ use static routes assigned by :ned:`Ipv4NetworkConfigurator`.
 
 The configuration in is the following:
 
-
-
-   <p><pre class="include" src="omnetpp.ini" from="Step1" until="----"></pre></p>
+.. literalinclude:: ../omnetpp.ini
+   :start-at: Step1
+   :end-before: ----
+   :language: ini
 
 Results
 -------
@@ -37,14 +38,10 @@ and towards ``host6`` as blue arrows:
 
 Here is a video of ``host0`` pinging ``host6``:
 
+.. video:: media/step1_2.mp4
+   :width: 100%
 
-
-   .. video:: media/step1_2.mp4
-
-
-
-   <!--internal video recording, animation speed none, playback speed 2.138, zoom 0.77-->
+..   <!--internal video recording, animation speed none, playback speed 2.138, zoom 0.77-->
 
 .. |image0| image:: media/step1network.png
 .. |image1| image:: media/step1routes.png
-

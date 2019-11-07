@@ -20,13 +20,10 @@ Results
 
 TODO: video
 
+.. video:: media/step3_linkbreak.mp4
+   :width: 100%
 
-
-   .. video:: media/step3_linkbreak.mp4
-
-
-
-   <!--internal video recording, normal run from 31s to 71+s, animation speed none, playback speed 2.138-->
+..   <!--internal video recording, normal run from 31s to 71+s, animation speed none, playback speed 2.138-->
 
 TODO: what happens
 

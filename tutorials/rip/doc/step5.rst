@@ -24,13 +24,10 @@ Triggered updates are enabled, so other routers are notified of the
 broken link right after it breaks (around 52s), not after the next
 scheduled update (at 60s).
 
+.. video:: media/step5.mp4
+   :width: 100%
 
-
-   .. video:: media/step5.mp4
-
-
-
-   <!--internal video recording, zoom 0.77, animation speed none, playback speed 2.138, from 30s to 60s-->
+..   <!--internal video recording, zoom 0.77, animation speed none, playback speed 2.138, from 30s to 60s-->
 
 TODO: what happens
 
