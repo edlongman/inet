@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step12.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../Multihop_EBGP.ned
    :start-at: network Multihop_EBGP
    :language: ned

@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step1.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../BGP_Basic_Topology.ned
    :start-at: network BGP
    :language: ned
