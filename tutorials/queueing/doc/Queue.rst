@@ -1,5 +1,5 @@
-Queue
-=====
+Packet Queue
+============
 
 In this test, packets are produced periodically (randomly) by an active packet
 source (ActivePacketSource). The packets are collected periodically (randomly) by

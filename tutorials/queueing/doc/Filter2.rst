@@ -4,7 +4,7 @@ Filter 2
 In this test, packets are collected periodically by an active packet sink
 (ActivePacketSink). The packets are provided by a passive packet source
 (PassivePacketSource). Packets are passed through from the source to the sink by
-a filter (PacketFilter). Every second packet is dropped.
+a filter (ContentBasedFilter). Every second packet is dropped.
 
 The network contains ... TODO
 

@@ -1,7 +1,9 @@
 Active Source Passive Sink
 ==========================
 
-TODO
+In this test, packets are produced periodically by an active packet source
+(ActivePacketSource). The packets are consumed by a passive packet sink
+(PassivePacketSink).
 
 The network contains ... TODO
 
