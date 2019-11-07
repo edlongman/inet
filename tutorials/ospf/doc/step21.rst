@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step21.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../VirtualLink.ned
    :start-at: network VirtualLink
    :language: ned
@@ -42,4 +46,3 @@ Discussion
 
 Use `this page <https://github.com/inet-framework/inet-tutorials/issues/TODO>`__ in
 the GitHub issue tracker for commenting on this tutorial.
-

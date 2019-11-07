@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step4.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../RouterLSA.ned
    :start-at: network RouterLSA
    :language: ned

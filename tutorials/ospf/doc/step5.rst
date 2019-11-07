@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step5.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../InterfaceNetworkType.ned
    :start-at: network InterfaceNetworkType
    :language: ned

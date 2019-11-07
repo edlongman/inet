@@ -11,6 +11,10 @@ Configuration
 
 This configuration is based on step 3.
 
+.. figure:: media/step1-2-11-12.png
+   :width: 100%
+   :align: center
+
 The OSPF configuration:
 
 .. literalinclude:: ../ASConfig_NoOSPF.xml

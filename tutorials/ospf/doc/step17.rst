@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step17.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../OSPF_LoopAvoidance.ned
    :start-at: network OSPF_LoopAvoidance
    :language: ned
@@ -43,4 +47,3 @@ Discussion
 
 Use `this page <https://github.com/inet-framework/inet-tutorials/issues/TODO>`__ in
 the GitHub issue tracker for commenting on this tutorial.
-

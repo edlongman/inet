@@ -13,6 +13,10 @@ This configuration is based on step 10.
 
 This step uses the following network:
 
+.. figure:: media/step10.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../.ned
    :start-at: network
    :language: ned

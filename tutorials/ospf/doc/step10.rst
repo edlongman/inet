@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step10.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../TopologyChange.ned
    :start-at: network TopologyChange
    :language: ned

@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step141516.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../OSPF_AreaTest.ned
    :start-at: network OSPF_AreaTest
    :language: ned

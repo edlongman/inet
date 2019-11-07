@@ -13,6 +13,10 @@ R4 and R5 will not establish full adjacency because of mismatch OSPF network typ
 
 This step uses the following network:
 
+.. figure:: media/step5.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../InterfaceNetworkType.ned
    :start-at: network InterfaceNetworkType
    :language: ned

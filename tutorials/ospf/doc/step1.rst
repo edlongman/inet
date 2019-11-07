@@ -11,6 +11,10 @@ Configuration
 
 This step uses the following network:
 
+.. figure:: media/step1-2-11-12.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../OspfNetwork.ned
    :start-at: network OspfNetwork
    :language: ned

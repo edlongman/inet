@@ -13,8 +13,8 @@ This configuration is based on step 1.
 
 This step uses the following network:
 
-.. literalinclude:: ../.ned
-   :start-at: network
+.. literalinclude:: ../OspfNetwork.ned
+   :start-at: OspfNetwork
    :language: ned
 
 The configuration in ``omnetpp.ini`` is the following:
