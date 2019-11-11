@@ -79,24 +79,28 @@ network MobileAdhocNetworkExample
 module NetworkNodeExample
 {
     parameters:
+        @networkNode;
+        *.interfaceTableModule = default(absPath(".interfaceTable"));
+        wlan.**.mobilityModule = default(absPath(".mobility"));
     gates:
         inout ethg; // ethernet interface connector
-        input radioIn; // incoming radio frames from physical medium
+        input radioIn @directIn; // incoming radio frames from physical medium
     submodules:
         app: <> like IApp; // configurable application
         tcp: Tcp; // standard TCP protocol
-        ip: Ipv4; // standard IP protocol
+        ipv4: Ipv4NetworkLayer; // standard IP protocol
         md: MessageDispatcher; // connects multiple interfaces to IP
         wlan: Ieee80211Interface; // standard wifi interface
         eth: EthernetInterface; // standard ethernet interface
         interfaceTable: InterfaceTable;
-    connections: // network node internal connections
+        mobility: StationaryMobility;
+    connections allowunconnected: // network node internal connections
         app.socketOut --> tcp.appIn; // application sends data stream
         app.socketIn <-- tcp.appOut; // application receives data stream
-        tcp.ipOut --> ip.transportIn; // TCP sends segments
-        tcp.ipIn <-- ip.transportOut; // TCP receives segments
-        ip.queueOut --> md.in++; // IP sends datagrams
-        ip.queueIn <-- md.out++; // IP receives datagrams
+        tcp.ipOut --> ipv4.transportIn; // TCP sends segments
+        tcp.ipIn <-- ipv4.transportOut; // TCP receives segments
+        ipv4.ifOut --> md.in++; // IP sends datagrams
+        ipv4.ifIn <-- md.out++; // IP receives datagrams
         md.out++ --> wlan.upperLayerIn;
         md.in++ <-- wlan.upperLayerOut;
         md.out++ --> eth.upperLayerIn;
