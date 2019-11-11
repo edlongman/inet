@@ -7,9 +7,9 @@ import inet.queueing.source.ActivePacketSource;
 import inet.queueing.queue.PacketQueue;
 import inet.queueing.server.PacketServer;
 
-module TestMac
+module TestInterface
 {
-    @display("bgb=400,300");
+    @display("bgb=400,300;i=device/card");
     gates:
         input lowerIn;
         input upperIn;
@@ -31,6 +31,8 @@ module TestMac
 
 module TestHost
 {
+    parameters:
+        @display("i=device/pc");        
     gates:
         input lowerIn;
         output lowerOut;
@@ -41,18 +43,20 @@ module TestHost
         destinationApplication: PassivePacketSink {
             @display("p=300,100");
         }
-        mac: TestMac {
+        interface: TestInterface {
             @display("p=200,200");
         }
     connections:
-        sourceApplication.out --> mac.upperIn;
-        mac.lowerOut --> lowerOut;
-        lowerIn --> mac.lowerIn;
-        mac.upperOut --> destinationApplication.in;
+        sourceApplication.out --> interface.upperIn;
+        interface.lowerOut --> lowerOut;
+        lowerIn --> interface.lowerIn;
+        interface.upperOut --> destinationApplication.in;
 }
 
 module TestCable
 {
+    parameters:
+        @display("i=block/mac");        
     gates:
         input aIn;
         output aOut;
@@ -68,8 +72,8 @@ module TestCable
     connections:
         aIn --> { @display("m=w"); } --> aDelayer.in;
         aDelayer.out --> { @display("m=e"); } --> aOut;
-        bIn --> { @display("m=w"); } --> bDelayer.in;
-        bDelayer.out --> { @display("m=e"); } --> bOut;
+        bIn --> { @display("m=e"); } --> bDelayer.in;
+        bDelayer.out --> { @display("m=w"); } --> bOut;
 }
 
 network TestNetwork
