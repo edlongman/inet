@@ -16,7 +16,6 @@ The configuration in ``omnetpp.ini`` is the following:
 .. literalinclude:: ../omnetpp.ini
    :language: ini
    :start-at: Step25
-   :end-before: ------
 
 
 Sources:

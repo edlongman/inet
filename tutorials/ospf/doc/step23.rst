@@ -31,12 +31,6 @@ The OSPF configuration:
 .. literalinclude:: ../ASConfig_Route_Selection.xml
    :language: xml
 
-This step uses the following network:
-
-.. literalinclude:: ../.ned
-   :start-at: network
-   :language: ned
-
 Results
 ~~~~~~~
 

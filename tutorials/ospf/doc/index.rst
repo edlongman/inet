@@ -16,10 +16,10 @@ Contents:
    step2
    step2a
    step3
-   step4a
    step4
-   step5a
+   step4a
    step5
+   step5a
    step6
    step7
    step8
@@ -53,4 +53,3 @@ Contents:
    step24
    step25
    conclusion
-

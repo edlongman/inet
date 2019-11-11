@@ -13,6 +13,10 @@ This configuration is based on step 1.
 
 This step uses the following network:
 
+.. figure:: media/step1-2-11-12.png
+   :width: 100%
+   :align: center
+
 .. literalinclude:: ../OspfNetwork.ned
    :start-at: OspfNetwork
    :language: ned
@@ -39,4 +43,3 @@ Discussion
 
 Use `this page <https://github.com/inet-framework/inet-tutorials/issues/TODO>`__ in
 the GitHub issue tracker for commenting on this tutorial.
-
