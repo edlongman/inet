@@ -1,7 +1,7 @@
 Active Source Passive Sink
 ==========================
 
-In this test, packets are produced periodically by an active packet source
+In this step, packets are produced periodically by an active packet source
 (ActivePacketSource). The packets are consumed by a passive packet sink
 (PassivePacketSink).
 

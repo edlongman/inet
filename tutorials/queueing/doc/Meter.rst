@@ -1,7 +1,7 @@
 Meter
 =====
 
-In this test, packets are produced periodically by an active packet source
+In this step, packets are produced periodically by an active packet source
 (ActivePacketSource). The packets are consumed by a passive packet sink
 (PassivePacketSink). The packet rate is measured and if the rate of packets
 is higher than a predefined threshold, then packets are dropped.

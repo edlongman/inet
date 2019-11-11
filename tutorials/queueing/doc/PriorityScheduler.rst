@@ -1,7 +1,7 @@
 Priority Scheduler
 ==================
 
-In this test, packets are collected periodically by an active packet sink
+In this step, packets are collected periodically by an active packet sink
 (ActivePacketSink). The packets are produced by two active packet sources
 (ActivePacketSources). The sources are connected to FIFO queues (PacketQueue)
 where packets are stored temporarily. The single sink is connected to the

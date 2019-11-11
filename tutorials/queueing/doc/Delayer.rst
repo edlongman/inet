@@ -1,7 +1,7 @@
 Delayer
 =======
 
-In this test, packets are produced periodically by an active packet source
+In this step, packets are produced periodically by an active packet source
 (ActivePacketSource). The produced packets are delayed (PacketDelayer) for a random
 amount of time. Finally, the packets are sent into a passive packet sink (PassivePacketSink).
 

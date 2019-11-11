@@ -1,7 +1,7 @@
 Priority Buffer
 ===============
 
-In this test, packets are produced periodically (randomly) by two active packet
+In this step, packets are produced periodically (randomly) by two active packet
 sources (ActivePacketSource). The packets are collected periodically (randomly)
 by two active packet sinks (ActivePacketSink). The sources and the sinkes are
 connected by packet queues (PacketQueue) and packets are stored in shared packet

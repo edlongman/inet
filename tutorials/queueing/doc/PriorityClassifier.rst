@@ -1,7 +1,7 @@
 Priority Classifier
 ===================
 
-In this test, packets are produced periodically by an active packet source
+In this step, packets are produced periodically by an active packet source
 (ActivePacketSource). The packets are consumed by two active packet sinks
 (ActivePacketSinks). The sinks are connected to FIFO queues (PacketQueue) with
 limited capacity where packets are stored temporarily. The single source is

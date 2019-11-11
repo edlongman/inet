@@ -1,7 +1,7 @@
 Server
 ======
 
-In this test, packets are passed through from the source to the sink periodically
+In this step, packets are passed through from the source to the sink periodically
 (randomly) by an active packet processor (PacketServer). The packets are generated
 by a passive packet source (PassivePacketSource) and consumed by a passive packet sink
 (PassivePacketSink).

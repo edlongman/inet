@@ -1,7 +1,7 @@
 Priority Queue
 ==============
 
-In this test, packets are produced periodically (randomly) by an active packet
+In this step, packets are produced periodically (randomly) by an active packet
 source (ActivePacketSource). The packets are collected periodically (randomly) by
 an active packet sink (ActivePacketSink). The source and the sink is connected
 by a priority queue with two inner queues (PriorityQueue) where packets are

@@ -1,7 +1,7 @@
 Labeler
 =======
 
-In this test, packets are produced periodically by an active packet source
+In this step, packets are produced periodically by an active packet source
 (ActivePacketSource). The packets are consumed by two passive packet sinks
 (PassivePacketSinks). The single source is connected to the two sinks using a
 classifier (LabelClassifier). The classifier forwards packets alternately to

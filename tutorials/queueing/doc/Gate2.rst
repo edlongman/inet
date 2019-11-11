@@ -1,7 +1,7 @@
 Gate2
 =====
 
-In this test, packets are collected periodically by an active packet sink
+In this step, packets are collected periodically by an active packet sink
 (ActivePacketSink). The packets pass through a packet gate if it's open,
 otherwise packets are not generated. The packets are provided by a passive
 packet source (PassivePacketSource).

@@ -1,7 +1,7 @@
 Multiplexer
 ===========
 
-In this test, packets are produced periodically (randomly) by several active
+In this step, packets are produced periodically (randomly) by several active
 packet sources (ActivePacketSources). The packets are consumed by a single passive
 packet sink upon arrival (PassivePacketSink). The single sink is connected to the
 multiple sources using an intermediary component (PacketMultiplexer) which simply

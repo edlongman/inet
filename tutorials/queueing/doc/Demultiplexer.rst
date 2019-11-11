@@ -1,7 +1,7 @@
 Demultiplexer
 =============
 
-In this test, packets are collected periodically (randomly) by several active
+In this step, packets are collected periodically (randomly) by several active
 packet sinks (ActivePacketSinks). The packets are provided by a single passive
 packet source upon request (PassivePacketSource). The single source is connected to
 the multiple sinks using an intermediary component (PacketDemultiplexer) which
