@@ -1,14 +1,19 @@
 Queue Filler
 ============
 
-TODO
+In this step, an active packet sink (ActivePacketSink) periodically pops packets from a queue (PacketQueue).
+Whenever the queue becomes empty, a queue filler module (QueueFiller) pushes a packet into it.
 
 TODO
 
 The network contains ... TODO
 
-.. figure:: media/QueueFiller.png
+.. figure:: media/QueueFillerNetwork.png
    :width: 80%
+   :align: center
+
+.. figure:: media/QueueFiller.png
+   :width: 50%
    :align: center
 
 **TODO** Config

@@ -1,7 +1,9 @@
 Leaky Bucket
 ============
 
-TODO
+In this step, packets are produced by an active packet source (ActivePacketSource).
+The packet source pushes packets into a leaky bucket module, which pushes them into
+a passive packet sink (PassivePacketSink).
 
 The network contains ... TODO
 

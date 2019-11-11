@@ -15,10 +15,10 @@ network QueueFillerNetwork
         queue: PacketQueue {
             @display("p=300,100");
         }
-        consumer: ActivePacketSink {
+        collector: ActivePacketSink {
             @display("p=500,100");
         }
     connections allowunconnected:
         filler.out --> queue.in;
-        queue.out --> consumer.in;
+        queue.out --> collector.in;
 }
