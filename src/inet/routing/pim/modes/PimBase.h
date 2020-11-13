@@ -1,10 +1,10 @@
 //
 // Copyright (C) 2013 Brno University of Technology (http://nes.fit.vutbr.cz/ansa)
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 3
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 // Authors: Veronika Rybova, Vladimir Vesely (ivesely@fit.vutbr.cz),
 //          Tamas Borbely (tomi@omnetpp.org)
@@ -20,7 +20,6 @@
 #ifndef __INET_PIMBASE_H
 #define __INET_PIMBASE_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/packet/Packet.h"
 #include "inet/networklayer/contract/IInterfaceTable.h"
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
@@ -81,7 +80,7 @@ class INET_API PimBase : public RoutingProtocolBase
     struct Interface
     {
         RouteEntry *owner;
-        InterfaceEntry *ie;
+        NetworkInterface *ie;
         int flags;
 
         // assert winner state
@@ -90,7 +89,7 @@ class INET_API PimBase : public RoutingProtocolBase
         cMessage *assertTimer;
         AssertMetric winnerMetric;
 
-        Interface(RouteEntry *owner, InterfaceEntry *ie)
+        Interface(RouteEntry *owner, NetworkInterface *ie)
             : owner(owner), ie(ie), flags(0),
             assertState(NO_ASSERT_INFO), assertTimer(nullptr)
         { ASSERT(owner), ASSERT(ie); }
@@ -106,7 +105,7 @@ class INET_API PimBase : public RoutingProtocolBase
             ASSERT(assertTimer == nullptr);
             assertTimer = new cMessage("PimAssertTimer", AssertTimer);
             assertTimer->setContextPointer(this);
-            owner->owner->scheduleAt(simTime() + assertTime, assertTimer);
+            owner->owner->scheduleAfter(assertTime, assertTimer);
         }
 
         void deleteAssertInfo()
@@ -201,5 +200,5 @@ class INET_API PimBase : public RoutingProtocolBase
 
 }    // namespace inet
 
-#endif // ifndef __INET_PIMBASE_H
+#endif
 

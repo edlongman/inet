@@ -12,7 +12,8 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 #ifndef __INET_BGPSESSION_H
@@ -20,7 +21,6 @@
 
 #include <vector>
 
-#include "inet/common/INETDefs.h"
 #include "inet/routing/bgpv4/Bgp.h"
 #include "inet/routing/bgpv4/BgpCommon.h"
 #include "inet/routing/bgpv4/BgpFsm.h"
@@ -88,7 +88,7 @@ private:
     // setters for creating and editing the information in the Bgp session:
     void setInfo(SessionInfo info);
     void setTimers(simtime_t *delayTab);
-    void setlinkIntf(InterfaceEntry *intf) { _info.linkIntf = intf; }
+    void setlinkIntf(NetworkInterface *intf) { _info.linkIntf = intf; }
     void setNextHopSelf(bool nextHopSelf) { _info.nextHopSelf = nextHopSelf; }
     void setLocalPreference(int localPreference) { _info.localPreference = localPreference; }
     void setSocket(TcpSocket *socket) { delete _info.socket; _info.socket = socket; }
@@ -104,7 +104,7 @@ private:
     SessionId getSessionID() const { return _info.sessionID; }
     BgpSessionType getType() const { return _info.sessionType; }
     static const std::string getTypeString(BgpSessionType sessionType);
-    InterfaceEntry *getLinkIntf() const { return _info.linkIntf; }
+    NetworkInterface *getLinkIntf() const { return _info.linkIntf; }
     bool getCheckConnection() const { return _info.checkConnection; }
     Ipv4Address getPeerAddr() const { return _info.peerAddr; }
     bool getNextHopSelf() const { return _info.nextHopSelf; }
@@ -124,5 +124,5 @@ std::ostream& operator<<(std::ostream& out, const BgpSession& entry);
 } // namespace bgp
 } // namespace inet
 
-#endif // ifndef __INET_BGPSESSION_H
+#endif
 

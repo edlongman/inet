@@ -1,10 +1,10 @@
 //
 // Copyright (C) 2016 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,15 +12,16 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "inet/linklayer/ieee80211/mac/contract/IRateSelection.h"
 #include "inet/linklayer/ieee80211/mac/originator/TxopProcedure.h"
-#include "inet/physicallayer/ieee80211/mode/Ieee80211DsssMode.h"
-#include "inet/physicallayer/ieee80211/mode/Ieee80211HrDsssMode.h"
-#include "inet/physicallayer/ieee80211/mode/Ieee80211HtMode.h"
-#include "inet/physicallayer/ieee80211/mode/Ieee80211OfdmMode.h"
+
+#include "inet/linklayer/ieee80211/mac/contract/IRateSelection.h"
+#include "inet/physicallayer/wireless/ieee80211/mode/Ieee80211DsssMode.h"
+#include "inet/physicallayer/wireless/ieee80211/mode/Ieee80211HrDsssMode.h"
+#include "inet/physicallayer/wireless/ieee80211/mode/Ieee80211HtMode.h"
+#include "inet/physicallayer/wireless/ieee80211/mode/Ieee80211OfdmMode.h"
 
 namespace inet {
 namespace ieee80211 {
@@ -78,7 +79,7 @@ simtime_t TxopProcedure::getLimit() const
 
 void TxopProcedure::startTxop(AccessCategory ac)
 {
-    Enter_Method_Silent("startTxop");
+    Enter_Method("startTxop");
     if (start != -1)
         throw cRuntimeError("Txop is already running");
     if (limit == -1) {
@@ -96,7 +97,7 @@ void TxopProcedure::startTxop(AccessCategory ac)
 
 void TxopProcedure::endTxop()
 {
-    Enter_Method_Silent("endTxop");
+    Enter_Method("endTxop");
     emit(txopEndedSignal, this);
     start = -1;
     protectionMechanism = ProtectionMechanism::UNDEFINED_PROTECTION;

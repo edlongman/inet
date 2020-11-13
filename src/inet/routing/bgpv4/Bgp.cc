@@ -12,12 +12,14 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
+#include "inet/routing/bgpv4/Bgp.h"
 
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/lifecycle/NodeStatus.h"
-#include "inet/routing/bgpv4/Bgp.h"
 #include "inet/routing/bgpv4/BgpConfigReader.h"
 #include "inet/routing/bgpv4/BgpSession.h"
 
@@ -55,7 +57,7 @@ void Bgp::initialize(int stage)
             if (startupTime == 0)
                 createBgpRouter();
             else
-                scheduleAt(simTime() + startupTime, startupTimer);
+                scheduleAfter(startupTime, startupTimer);
         }
     }
 }

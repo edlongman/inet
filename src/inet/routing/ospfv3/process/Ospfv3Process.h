@@ -1,9 +1,8 @@
-#ifndef __INET_OSPFV3PROCESS_H_
-#define __INET_OSPFV3PROCESS_H_
+#ifndef __INET_OSPFV3PROCESS_H
+#define __INET_OSPFV3PROCESS_H
 
 #include <string>
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/Protocol.h"
 #include "inet/common/ProtocolTag_m.h"
@@ -15,10 +14,9 @@
 #include "inet/networklayer/contract/ipv4/Ipv4Address.h"
 #include "inet/networklayer/contract/ipv6/Ipv6Address.h"
 #include "inet/networklayer/icmpv6/Icmpv6Header_m.h"
-#include "inet/networklayer/ipv4/Ipv4InterfaceData.h"
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
+#include "inet/networklayer/ipv4/Ipv4InterfaceData.h"
 #include "inet/networklayer/ipv6/Ipv6InterfaceData.h"
-#include "inet/networklayer/ipv6/Ipv6RoutingTable.h"
 #include "inet/networklayer/ipv6/Ipv6Route.h"
 #include "inet/networklayer/ipv6/Ipv6RoutingTable.h"
 #include "inet/routing/ospfv3/Ospfv3Common.h"
@@ -104,5 +102,5 @@ class INET_API Ospfv3Process : protected cListener, public cSimpleModule
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3PROCESS_H_
+#endif
 

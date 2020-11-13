@@ -34,7 +34,7 @@
   </compound>
   <compound kind="class">
     <name>ApskPhyHeader</name>
-    <filename>src-inet-physicallayer-apskradio-packetlevel-ApskPhyHeader.html</filename>
+    <filename>src-inet-physicallayer-apsk-packetlevel-ApskPhyHeader.html</filename>
   </compound>
   <compound kind="class">
     <name>ArpOpcode</name>
@@ -1261,8 +1261,8 @@
     <filename>src-inet-linklayer-ieee80211-mac-queue-InProgressFrames.html</filename>
   </compound>
   <compound kind="class">
-    <name>InterfaceEntry</name>
-    <filename>src-inet-networklayer-common-InterfaceEntry.html</filename>
+    <name>NetworkInterface</name>
+    <filename>src-inet-networklayer-common-NetworkInterface.html</filename>
   </compound>
   <compound kind="class">
     <name>InterfaceInd</name>

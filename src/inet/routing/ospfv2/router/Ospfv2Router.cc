@@ -12,14 +12,16 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
+#include "inet/routing/ospfv2/router/Ospfv2Router.h"
 
 #include <algorithm>
 
 #include "inet/networklayer/ipv4/Ipv4InterfaceData.h"
 #include "inet/routing/ospfv2/router/Lsa.h"
-#include "inet/routing/ospfv2/router/Ospfv2Router.h"
 
 namespace inet {
 
@@ -498,7 +500,6 @@ AsExternalLsa *Router::originateASExternalLSA(AsExternalLsa *lsa)
     Ospfv2Options lsaOptions;
 
     lsaHeader.setLsAge(0);
-    memset(&lsaOptions, 0, sizeof(Ospfv2Options));
     lsaOptions.E_ExternalRoutingCapability = true;
     lsaHeader.setLsOptions(lsaOptions);
     lsaHeader.setLsSequenceNumber(INITIAL_SEQUENCE_NUMBER);
@@ -1417,7 +1418,6 @@ void Router::updateExternalRoute(Ipv4Address networkAddress, const Ospfv2AsExter
     Ospfv2Options lsaOptions;
 
     lsaHeader.setLsAge(0);
-    memset(&lsaOptions, 0, sizeof(Ospfv2Options));
     lsaOptions.E_ExternalRoutingCapability = true;
     lsaHeader.setLsOptions(lsaOptions);
     lsaHeader.setLsType(AS_EXTERNAL_LSA_TYPE);
@@ -1519,9 +1519,9 @@ bool Router::isDirectRoute(Ospfv2RoutingTableEntry &entry)
         return true;
 
     for(int i = 0; i < ift->getNumInterfaces(); i++) {
-        InterfaceEntry *intf = ift->getInterface(i);
+        NetworkInterface *intf = ift->getInterface(i);
         if(intf && !intf->isLoopback()) {
-            Ipv4InterfaceData *ipv4data = intf->findProtocolData<Ipv4InterfaceData>();
+            const auto& ipv4data = intf->findProtocolData<Ipv4InterfaceData>();
             if(ipv4data) {
                 if((entry.getDestination() & ipv4data->getNetmask()) == (ipv4data->getIPAddress() & ipv4data->getNetmask()))
                     return true;

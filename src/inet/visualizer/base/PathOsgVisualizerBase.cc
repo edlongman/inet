@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,15 +12,16 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/visualizer/base/PathOsgVisualizerBase.h"
 
 #include "inet/common/LayeredProtocolBase.h"
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/OsgScene.h"
 #include "inet/common/OsgUtils.h"
 #include "inet/mobility/contract/IMobility.h"
-#include "inet/visualizer/base/PathOsgVisualizerBase.h"
 
 #ifdef WITH_OSG
 #include <osg/LineWidth>
@@ -32,8 +33,8 @@ namespace visualizer {
 
 #ifdef WITH_OSG
 
-PathOsgVisualizerBase::PathOsgVisualization::PathOsgVisualization(const std::vector<int>& path, osg::Node *node) :
-    PathVisualization(path),
+PathOsgVisualizerBase::PathOsgVisualization::PathOsgVisualization(const char *label, const std::vector<int>& path, osg::Node *node) :
+    PathVisualization(label, path),
     node(node)
 {
 }
@@ -41,12 +42,6 @@ PathOsgVisualizerBase::PathOsgVisualization::PathOsgVisualization(const std::vec
 PathOsgVisualizerBase::PathOsgVisualization::~PathOsgVisualization()
 {
     // TODO: delete node;
-}
-
-PathOsgVisualizerBase::~PathOsgVisualizerBase()
-{
-    if (displayRoutes)
-        removeAllPathVisualizations();
 }
 
 void PathOsgVisualizerBase::initialize(int stage)
@@ -66,7 +61,7 @@ void PathOsgVisualizerBase::refreshDisplay() const
     visualizationTargetModule->getCanvas()->setAnimationSpeed(pathVisualizations.empty() ? 0 : fadeOutAnimationSpeed, this);
 }
 
-const PathVisualizerBase::PathVisualization *PathOsgVisualizerBase::createPathVisualization(const std::vector<int>& path, cPacket *packet) const
+const PathVisualizerBase::PathVisualization *PathOsgVisualizerBase::createPathVisualization(const char *label, const std::vector<int>& path, cPacket *packet) const
 {
     std::vector<Coord> points;
     for (auto id : path) {
@@ -75,7 +70,7 @@ const PathVisualizerBase::PathVisualization *PathOsgVisualizerBase::createPathVi
     }
     auto node = inet::osg::createPolyline(points, cFigure::ARROW_NONE, cFigure::ARROW_BARBED);
     node->setStateSet(inet::osg::createLineStateSet(lineColorSet.getColor(pathVisualizations.size()), lineStyle, lineWidth));
-    return new PathOsgVisualization(path, node);
+    return new PathOsgVisualization(label, path, node);
 }
 
 void PathOsgVisualizerBase::addPathVisualization(const PathVisualization *pathVisualization)

@@ -1,9 +1,8 @@
-#ifndef __INET_OSPFV3INTERFACESTATE_H_
-#define __INET_OSPFV3INTERFACESTATE_H_
+#ifndef __INET_OSPFV3INTERFACESTATE_H
+#define __INET_OSPFV3INTERFACESTATE_H
 
 #include <string>
 
-#include "inet/common/INETDefs.h"
 #include "inet/routing/ospfv3/interface/Ospfv3Interface.h"
 
 namespace inet {
@@ -25,5 +24,5 @@ class INET_API Ospfv3InterfaceState
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3INTERFACESTATE_H_
+#endif
 

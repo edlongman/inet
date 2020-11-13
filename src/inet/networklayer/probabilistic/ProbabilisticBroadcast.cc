@@ -5,6 +5,8 @@
  *      Author: Damien Piguet
  */
 
+#include "inet/networklayer/probabilistic/ProbabilisticBroadcast.h"
+
 #include <cassert>
 
 #include "inet/common/ProtocolGroup.h"
@@ -13,7 +15,6 @@
 #include "inet/linklayer/common/MacAddressTag_m.h"
 #include "inet/networklayer/common/L3AddressTag_m.h"
 #include "inet/networklayer/contract/IL3AddressType.h"
-#include "inet/networklayer/probabilistic/ProbabilisticBroadcast.h"
 
 namespace inet {
 
@@ -252,8 +253,7 @@ void ProbabilisticBroadcast::insertMessage(simtime_t_cref bcastDelay, tMsgDesc *
     // the broadcast timer to the message's broadcast instant.
     if (pos == msgQueue.begin()) {
         EV << "PBr: " << simTime() << " n" << myNetwAddr << "         message inserted in the front, reschedule it." << endl;
-        cancelEvent(broadcastTimer);
-        scheduleAt(bcastTime, broadcastTimer);
+        rescheduleAt(bcastTime, broadcastTimer);
     }
 }
 

@@ -12,7 +12,8 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 package inet.applications.ethernet;
@@ -20,7 +21,7 @@ package inet.applications.ethernet;
 //
 // Server side of the ~EtherAppClient model -- generates packets containing
 // ~EtherAppResp chunks with the number of bytes requested by the client in
-// corresponding ~EtherAppReq. It should be connected directly to ~EtherEncap/~Ieee8022Llc
+// corresponding ~EtherAppReq. It should be connected directly to ~EthernetEncapsulation/~Ieee8022Llc
 // module.
 //
 simple EtherAppServer

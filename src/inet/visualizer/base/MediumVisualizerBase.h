@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #ifndef __INET_MEDIUMVISUALIZERBASE_H
@@ -26,8 +26,8 @@
 #include "inet/visualizer/util/Placement.h"
 
 #ifdef WITH_RADIO
-#include "inet/physicallayer/common/packetlevel/PowerFunctions.h"
-#include "inet/physicallayer/contract/packetlevel/IRadioMedium.h"
+#include "inet/physicallayer/wireless/common/contract/packetlevel/IRadioMedium.h"
+#include "inet/physicallayer/wireless/common/signal/PowerFunctions.h"
 #endif // WITH_RADIO
 
 namespace inet {
@@ -143,6 +143,7 @@ class INET_API MediumVisualizerBase : public VisualizerBase, public cListener
   protected:
     virtual void initialize(int stage) override;
     virtual void handleParameterChange(const char *name) override;
+    virtual void preDelete(cComponent *root) override;
 
     virtual bool isSignalPropagationInProgress(const physicallayer::ITransmission *transmission) const;
     virtual bool isSignalTransmissionInProgress(const physicallayer::ITransmission *transmission) const;
@@ -161,8 +162,6 @@ class INET_API MediumVisualizerBase : public VisualizerBase, public cListener
     virtual void handleSignalArrivalEnded(const physicallayer::IReception *reception) = 0;
 
   public:
-    virtual ~MediumVisualizerBase();
-
     virtual void receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details) override;
 #endif // WITH_RADIO
 };
@@ -171,5 +170,5 @@ class INET_API MediumVisualizerBase : public VisualizerBase, public cListener
 
 } // namespace inet
 
-#endif // ifndef __INET_MEDIUMVISUALIZERBASE_H
+#endif
 

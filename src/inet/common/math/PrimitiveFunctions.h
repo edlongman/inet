@@ -1,4 +1,6 @@
 //
+// Copyright (C) 2020 OpenSim Ltd.
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -10,11 +12,11 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef __INET_MATH_PRIMITIVEFUNCTIONS_H_
-#define __INET_MATH_PRIMITIVEFUNCTIONS_H_
+#ifndef __INET_PRIMITIVEFUNCTIONS_H
+#define __INET_PRIMITIVEFUNCTIONS_H
 
 #include "inet/common/math/FunctionBase.h"
 #include "inet/common/math/Interpolators.h"
@@ -554,8 +556,8 @@ class INET_API PeriodicallyInterpolated1DFunction : public FunctionBase<R, Domai
         }
         const auto& i2 = i.getIntersected(Interval<X>(Point<X>(start), Point<X>(end), 0b1, 0b0, 0b0));
         if (!i2.isEmpty()) {
-            int startIndex = math::maxnan(0, (int)std::floor(toDouble(std::get<0>(i.getLower()) - start) / toDouble(step)));
-            int endIndex = math::minnan((int)rs.size() - 1, (int)std::ceil(toDouble(std::get<0>(i.getUpper()) - start) / toDouble(step)));
+            int startIndex = std::max(0, (int)std::floor(toDouble(std::get<0>(i.getLower()) - start) / toDouble(step)));
+            int endIndex = std::min((int)rs.size() - 1, (int)std::ceil(toDouble(std::get<0>(i.getUpper()) - start) / toDouble(step)));
             for (int index = startIndex; index < endIndex; index++) {
                 Point<X> startPoint(start + step * index);
                 Point<X> endPoint(start + step * (index + 1));
@@ -644,11 +646,11 @@ class INET_API PeriodicallyInterpolated2DFunction : public FunctionBase<R, Domai
         call(i.getIntersected(Interval<X, Y>(Point<X, Y>(getLowerBound<X>(), Y(startY)), Point<X, Y>(X(startX), Y(endY)), 0b01, 0b00, 0b00)), callback);
         const auto& i1 = i.getIntersected(Interval<X, Y>(Point<X, Y>(X(startX), Y(startY)), Point<X, Y>(X(endX), Y(endY)), 0b11, 0b00, 0b00));
         if (!i1.isEmpty()) {
-            int startIndexX = math::maxnan(0, (int)std::floor(toDouble(std::get<0>(i.getLower()) - startX) / toDouble(stepX)));
-            int endIndexX = math::minnan(sizeX - 1, (int)std::ceil(toDouble(std::get<0>(i.getUpper()) - startX) / toDouble(stepX)));
+            int startIndexX = std::max(0, (int)std::floor(toDouble(std::get<0>(i.getLower()) - startX) / toDouble(stepX)));
+            int endIndexX = std::min(sizeX - 1, (int)std::ceil(toDouble(std::get<0>(i.getUpper()) - startX) / toDouble(stepX)));
             for (int indexX = startIndexX; indexX < endIndexX; indexX++) {
-                int startIndexY = math::maxnan(0, (int)std::floor(toDouble(std::get<1>(i.getLower()) - startY) / toDouble(stepY)));
-                int endIndexY = math::minnan(sizeY - 1, (int)std::ceil(toDouble(std::get<1>(i.getUpper()) - startY) / toDouble(stepY)));
+                int startIndexY = std::max(0, (int)std::floor(toDouble(std::get<1>(i.getLower()) - startY) / toDouble(stepY)));
+                int endIndexY = std::min(sizeY - 1, (int)std::ceil(toDouble(std::get<1>(i.getUpper()) - startY) / toDouble(stepY)));
                 for (int indexY = startIndexY; indexY < endIndexY; indexY++) {
                     Point<X, Y> startPoint(startX + stepX * indexX, startY + stepY * indexY);
                     Point<X, Y> endPoint(startX + stepX * (indexX + 1), startY + stepY * (indexY + 1));
@@ -808,5 +810,5 @@ void simplifyAndCall(const typename D::I& i, const BilinearFunction<R, D> *f, co
 
 } // namespace inet
 
-#endif // #ifndef __INET_MATH_PRIMITIVEFUNCTIONS_H_
+#endif
 

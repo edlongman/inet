@@ -12,13 +12,13 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 #ifndef __INET_SCTPALGORITHM_H
 #define __INET_SCTPALGORITHM_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/transportlayer/sctp/SctpAssociation.h"
 #include "inet/transportlayer/sctp/SctpQueue.h"
 
@@ -68,19 +68,19 @@ class INET_API SctpAlgorithm : public cObject
 
     virtual void sendCommandInvoked(SctpPathVariables *path) = 0;
 
-    virtual void receivedDataAck(uint32 firstSeqAcked) = 0;
+    virtual void receivedDataAck(uint32_t firstSeqAcked) = 0;
 
     virtual void receivedDuplicateAck() = 0;
 
-    virtual void receivedAckForDataNotYetSent(uint32 seq) = 0;
+    virtual void receivedAckForDataNotYetSent(uint32_t seq) = 0;
 
     virtual void sackSent() = 0;
 
-    virtual void dataSent(uint32 fromseq) = 0;
+    virtual void dataSent(uint32_t fromseq) = 0;
 };
 
 } // namespace sctp
 } // namespace inet
 
-#endif // ifndef __INET_SCTPALGORITHM_H
+#endif
 

@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,11 +12,12 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "inet/common/ModuleAccess.h"
 #include "inet/queueing/scheduler/MarkovScheduler.h"
+
+#include "inet/common/ModuleAccess.h"
 
 namespace inet {
 namespace queueing {
@@ -57,11 +58,11 @@ void MarkovScheduler::initialize(int stage)
         WATCH(state);
     }
     else if (stage == INITSTAGE_QUEUEING) {
-        for (int i = 0; i < (int)inputGates.size(); i++)
-            checkPushOrPopPacketSupport(inputGates[i]);
-        checkPushOrPopPacketSupport(outputGate);
+        for (auto & inputGate : inputGates)
+            checkPacketOperationSupport(inputGate);
+        checkPacketOperationSupport(outputGate);
         if (producers[state] != nullptr)
-            producers[state]->handleCanPushPacket(inputGates[state]);
+            producers[state]->handleCanPushPacketChanged(inputGates[state]->getPathStartGate());
         scheduleWaitTimer();
     }
 }
@@ -80,7 +81,7 @@ void MarkovScheduler::handleMessage(cMessage *message)
             }
         }
         if (producers[state] != nullptr)
-            producers[state]->handleCanPushPacket(inputGates[state]);
+            producers[state]->handleCanPushPacketChanged(inputGates[state]->getPathStartGate());
         scheduleWaitTimer();
     }
     else
@@ -94,7 +95,7 @@ int MarkovScheduler::schedulePacket()
 
 void MarkovScheduler::scheduleWaitTimer()
 {
-    scheduleAt(simTime() + waitIntervals[state].doubleValue(this), waitTimer);
+    scheduleAfter(waitIntervals[state].doubleValue(this), waitTimer);
 }
 
 bool MarkovScheduler::canPushSomePacket(cGate *gate) const
@@ -110,6 +111,7 @@ bool MarkovScheduler::canPushPacket(Packet *packet, cGate *gate) const
 void MarkovScheduler::pushPacket(Packet *packet, cGate *gate)
 {
     Enter_Method("pushPacket");
+    take(packet);
     if (gate->getIndex() != state)
         throw cRuntimeError("Cannot push to gate");
     processedTotalLength += packet->getDataLength();
@@ -131,11 +133,18 @@ const char *MarkovScheduler::resolveDirective(char directive) const
     return result.c_str();
 }
 
-void MarkovScheduler::handleCanPushPacket(cGate *gate)
+void MarkovScheduler::handleCanPushPacketChanged(cGate *gate)
 {
-    Enter_Method("handleCanPushPacket");
+    Enter_Method("handleCanPushPacketChanged");
     if (producers[state] != nullptr)
-        producers[state]->handleCanPushPacket(inputGates[state]);
+        producers[state]->handleCanPushPacketChanged(inputGates[state]->getPathStartGate());
+}
+
+void MarkovScheduler::handlePushPacketProcessed(Packet *packet, cGate *gate, bool successful)
+{
+    Enter_Method("handlePushPacketProcessed");
+    if (producers[state] != nullptr)
+        producers[state]->handlePushPacketProcessed(packet, inputGates[state]->getPathStartGate(), successful);
 }
 
 } // namespace queueing

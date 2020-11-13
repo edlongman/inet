@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,16 +12,17 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/visualizer/physicallayer/MediumOsgVisualizer.h"
 
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/OsgScene.h"
 #include "inet/common/OsgUtils.h"
-#include "inet/visualizer/physicallayer/MediumOsgVisualizer.h"
 
 #ifdef WITH_RADIO
-#include "inet/physicallayer/pathloss/FreeSpacePathLoss.h"
+#include "inet/physicallayer/wireless/common/pathloss/FreeSpacePathLoss.h"
 #endif // WITH_RADIO
 
 #ifdef WITH_OSG
@@ -81,7 +82,7 @@ void MediumOsgVisualizer::initialize(int stage)
             if (imageStream != nullptr)
                 imageStream->play();
         }
-        networkNodeVisualizer = getModuleFromPar<NetworkNodeOsgVisualizer>(par("networkNodeVisualizerModule"), this);
+        networkNodeVisualizer.reference(this, "networkNodeVisualizerModule", true);
     }
 }
 void MediumOsgVisualizer::refreshDisplay() const
@@ -351,7 +352,7 @@ void MediumOsgVisualizer::refreshSphereTransmissionNode(const ITransmission *tra
 
 void MediumOsgVisualizer::handleRadioAdded(const IRadio *radio)
 {
-    Enter_Method_Silent();
+    Enter_Method("handleRadioAdded");
     if (displaySignalDepartures || displaySignalArrivals || displayInterferenceRanges || displayCommunicationRanges) {
         auto group = new osg::Group();
         auto module = const_cast<cModule *>(check_and_cast<const cModule *>(radio));
@@ -412,7 +413,7 @@ void MediumOsgVisualizer::handleRadioAdded(const IRadio *radio)
 
 void MediumOsgVisualizer::handleRadioRemoved(const IRadio *radio)
 {
-    Enter_Method_Silent();
+    Enter_Method("handleRadioRemoved");
     auto node = removeRadioOsgNode(radio);
     if (node != nullptr) {
         auto module = const_cast<cModule *>(check_and_cast<const cModule *>(radio));
@@ -423,7 +424,7 @@ void MediumOsgVisualizer::handleRadioRemoved(const IRadio *radio)
 
 void MediumOsgVisualizer::handleSignalAdded(const ITransmission *transmission)
 {
-    Enter_Method_Silent();
+    Enter_Method("handleSignalAdded");
     MediumVisualizerBase::handleSignalAdded(transmission);
     if (displaySignals) {
         transmissions.push_back(transmission);
@@ -437,7 +438,7 @@ void MediumOsgVisualizer::handleSignalAdded(const ITransmission *transmission)
 
 void MediumOsgVisualizer::handleSignalRemoved(const ITransmission *transmission)
 {
-    Enter_Method_Silent();
+    Enter_Method("handleSignalRemoved");
     MediumVisualizerBase::handleSignalRemoved(transmission);
     if (displaySignals) {
         transmissions.erase(std::remove(transmissions.begin(), transmissions.end(), transmission));
@@ -450,7 +451,7 @@ void MediumOsgVisualizer::handleSignalRemoved(const ITransmission *transmission)
 
 void MediumOsgVisualizer::handleSignalDepartureStarted(const ITransmission *transmission)
 {
-    Enter_Method_Silent();
+    Enter_Method("handleSignalDepartureStarted");
     if (displaySignals)
         setAnimationSpeed();
     if (displaySignalDepartures) {
@@ -462,7 +463,7 @@ void MediumOsgVisualizer::handleSignalDepartureStarted(const ITransmission *tran
 
 void MediumOsgVisualizer::handleSignalDepartureEnded(const ITransmission *transmission)
 {
-    Enter_Method_Silent();
+    Enter_Method("handleSignalDepartureEnded");
     if (displaySignals)
         setAnimationSpeed();
     if (displaySignalDepartures) {
@@ -475,7 +476,7 @@ void MediumOsgVisualizer::handleSignalDepartureEnded(const ITransmission *transm
 
 void MediumOsgVisualizer::handleSignalArrivalStarted(const IReception *reception)
 {
-    Enter_Method_Silent();
+    Enter_Method("handleSignalArrivalStarted");
     if (displaySignals)
         setAnimationSpeed();
     if (displaySignalArrivals) {
@@ -487,7 +488,7 @@ void MediumOsgVisualizer::handleSignalArrivalStarted(const IReception *reception
 
 void MediumOsgVisualizer::handleSignalArrivalEnded(const IReception *reception)
 {
-    Enter_Method_Silent();
+    Enter_Method("handleSignalArrivalEnded");
     if (displaySignals)
         setAnimationSpeed();
     if (displaySignalArrivals) {

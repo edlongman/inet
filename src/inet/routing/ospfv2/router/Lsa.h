@@ -12,16 +12,17 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 #ifndef __INET_LSA_H
 #define __INET_LSA_H
 
 #include <math.h>
+
 #include <vector>
 
-#include "inet/common/INETDefs.h"
 #include "inet/routing/ospfv2/Ospfv2Packet_m.h"
 #include "inet/routing/ospfv2/router/Ospfv2Common.h"
 
@@ -208,5 +209,5 @@ std::ostream& operator<<(std::ostream& ostr, const Ospfv2AsExternalLsa& lsa);
 
 } // namespace inet
 
-#endif    // __LSA_HPP__
+#endif
 

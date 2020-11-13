@@ -1,10 +1,10 @@
 //
 // Copyright (C) 2014 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #ifndef __INET_QUATERNION_H
@@ -37,10 +37,10 @@ class INET_API Quaternion
     //! basic ctors
     Quaternion() {}
     Quaternion(double real, double i, double j, double k): s(real), v(i, j, k) { }
-    Quaternion(double real, const Coord &imag): s(real), v(imag) { }
+    Quaternion(double real, const Coord& imag): s(real), v(imag) { }
 
     //! constructs a Quaternion from a normalized axis - angle pair rotation
-    Quaternion(const Coord &axis, double angle);
+    Quaternion(const Coord& axis, double angle);
 
     //! from 3 euler angles
     explicit Quaternion(const EulerAngles& angles);
@@ -113,7 +113,7 @@ class INET_API Quaternion
     void getRotationAxisAndAngle(Coord &axis, double &angle) const;
 
     //! rotates v by this quaternion (quaternion must be unit)
-    Coord rotate(const Coord &v) const;
+    Coord rotate(const Coord& v) const;
 
     //! returns the euler angles from a rotation Quaternion
     EulerAngles toEulerAngles(bool homogenous=false) const;
@@ -150,4 +150,5 @@ inline std::string Quaternion::str() const
 
 } /* namespace inet */
 
-#endif // ifndef __INET_QUATERNION_H
+#endif
+

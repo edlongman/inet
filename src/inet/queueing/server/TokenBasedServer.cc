@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,12 +12,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/queueing/server/TokenBasedServer.h"
 
 #include "inet/common/Simsignals.h"
 #include "inet/common/StringFormat.h"
-#include "inet/queueing/server/TokenBasedServer.h"
 
 namespace inet {
 namespace queueing {
@@ -46,7 +47,7 @@ void TokenBasedServer::initialize(int stage)
 void TokenBasedServer::processPackets()
 {
     while (true) {
-        auto packet = provider->canPopPacket(inputGate->getPathStartGate());
+        auto packet = provider->canPullPacket(inputGate->getPathStartGate());
         if (packet == nullptr)
             break;
         else {
@@ -54,8 +55,9 @@ void TokenBasedServer::processPackets()
             auto tokenConsumptionPerBit = tokenConsumptionPerBitParameter->doubleValue();
             int numRequiredTokens = tokenConsumptionPerPacket + tokenConsumptionPerBit * packet->getTotalLength().get();
             if (numTokens >= numRequiredTokens) {
-                packet = provider->popPacket(inputGate->getPathStartGate());
-                EV_INFO << "Processing packet " << packet->getName() << ".\n";
+                packet = provider->pullPacket(inputGate->getPathStartGate());
+                take(packet);
+                EV_INFO << "Processing packet" << EV_FIELD(packet) << EV_ENDL;
                 processedTotalLength += packet->getDataLength();
                 emit(packetServedSignal, packet);
                 pushOrSendPacket(packet, outputGate, consumer);
@@ -75,14 +77,14 @@ void TokenBasedServer::processPackets()
     }
 }
 
-void TokenBasedServer::handleCanPushPacket(cGate *gate)
+void TokenBasedServer::handleCanPushPacketChanged(cGate *gate)
 {
-    Enter_Method("handleCanPushPacket");
+    Enter_Method("handleCanPushPacketChanged");
 }
 
-void TokenBasedServer::handleCanPopPacket(cGate *gate)
+void TokenBasedServer::handleCanPullPacketChanged(cGate *gate)
 {
-    Enter_Method("handleCanPopPacket");
+    Enter_Method("handleCanPullPacketChanged");
     processPackets();
     updateDisplayString();
 }

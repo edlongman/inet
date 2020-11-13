@@ -1,10 +1,10 @@
 //
 // Copyright (C) 2016 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,13 +12,14 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/linklayer/ieee80211/mac/rateselection/QosRateSelection.h"
 
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/Simsignals.h"
-#include "inet/linklayer/ieee80211/mac/rateselection/QosRateSelection.h"
-#include "inet/physicallayer/ieee80211/packetlevel/Ieee80211Tag_m.h"
+#include "inet/physicallayer/wireless/ieee80211/packetlevel/Ieee80211Tag_m.h"
 
 namespace inet {
 namespace ieee80211 {
@@ -31,7 +32,7 @@ void QosRateSelection::initialize(int stage)
 {
     ModeSetListener::initialize(stage);
     if (stage == INITSTAGE_LINK_LAYER) {
-        dataOrMgmtRateControl = dynamic_cast<IRateControl*>(getModuleByPath(par("rateControlModule")));
+        dataOrMgmtRateControl = dynamic_cast<IRateControl*>(findModuleByPath(par("rateControlModule")));
         double multicastFrameBitrate = par("multicastFrameBitrate");
         multicastFrameMode = (multicastFrameBitrate == -1) ? nullptr : modeSet->getMode(bps(multicastFrameBitrate));
         double dataFrameBitrate = par("dataFrameBitrate");
@@ -51,10 +52,10 @@ void QosRateSelection::initialize(int stage)
 
 const IIeee80211Mode* QosRateSelection::getMode(Packet *packet, const Ptr<const Ieee80211MacHeader>& header)
 {
-    auto modeReqTag = packet->findTag<Ieee80211ModeReq>();
+    const auto& modeReqTag = packet->findTag<Ieee80211ModeReq>();
     if (modeReqTag)
         return modeReqTag->getMode();
-    auto modeIndTag = packet->findTag<Ieee80211ModeInd>();
+    const auto& modeIndTag = packet->findTag<Ieee80211ModeInd>();
     if (modeIndTag)
         return modeIndTag->getMode();
     throw cRuntimeError("Missing mode");
@@ -245,7 +246,7 @@ const IIeee80211Mode* QosRateSelection::computeMode(Packet *packet, const Ptr<co
 
 void QosRateSelection::receiveSignal(cComponent* source, simsignal_t signalID, cObject* obj, cObject* details)
 {
-    Enter_Method_Silent("receiveSignal");
+    Enter_Method("receiveSignal");
     if (signalID == modesetChangedSignal) {
         modeSet = check_and_cast<Ieee80211ModeSet*>(obj);
         fastestMandatoryMode = modeSet->getFastestMandatoryMode();

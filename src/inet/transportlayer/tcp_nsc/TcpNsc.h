@@ -14,18 +14,15 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
-#ifndef __INET_TCP_NSC_H
-#define __INET_TCP_NSC_H
+#ifndef __INET_TCPNSC_H
+#define __INET_TCPNSC_H
 
 #include <map>
 
 #include "inet/common/INETDefs.h"
-
-#include <sim_interface.h>    // NSC. We need this here to derive from classes
-
 #include "inet/common/lifecycle/LifecycleUnsupported.h"
 #include "inet/common/packet/Message.h"
 #include "inet/networklayer/common/L3Address.h"
@@ -33,6 +30,7 @@
 #include "inet/transportlayer/contract/tcp/TcpCommand_m.h"
 #include "inet/transportlayer/tcp_common/TcpCrcInsertionHook.h"
 #include "inet/transportlayer/tcp_nsc/TcpNscConnection.h"
+#include "sim_interface.h"    // NSC. We need this here to derive from classes
 
 namespace inet {
 
@@ -194,5 +192,5 @@ class INET_API TcpNsc : public cSimpleModule, ISendCallback, IInterruptCallback,
 
 } // namespace inet
 
-#endif // ifndef __INET_TCP_NSC_H
+#endif
 

@@ -13,10 +13,14 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
+#include "inet/routing/ospfv2/interface/Ospfv2Interface.h"
+
 #include <memory.h>
+
 #include <vector>
 
 #include "inet/common/checksum/TcpIpChecksum.h"
@@ -24,7 +28,6 @@
 #include "inet/networklayer/ipv4/Ipv4InterfaceData.h"
 #include "inet/routing/ospfv2/Ospfv2Crc.h"
 #include "inet/routing/ospfv2/Ospfv2PacketSerializer.h"
-#include "inet/routing/ospfv2/interface/Ospfv2Interface.h"
 #include "inet/routing/ospfv2/interface/Ospfv2InterfaceStateDown.h"
 #include "inet/routing/ospfv2/messagehandler/MessageHandler.h"
 #include "inet/routing/ospfv2/router/Ospfv2Area.h"
@@ -67,7 +70,7 @@ Ospfv2Interface::Ospfv2Interface(Ospfv2Interface::Ospfv2InterfaceType ifType) :
     waitTimer->setContextPointer(this);
     acknowledgementTimer = new cMessage("Interface::InterfaceAcknowledgementTimer", INTERFACE_ACKNOWLEDGEMENT_TIMER);
     acknowledgementTimer->setContextPointer(this);
-    memset(authenticationKey.bytes, 0, 8 * sizeof(char));
+    memset(authenticationKey.bytes, 0, sizeof(authenticationKey.bytes));
 }
 
 Ospfv2Interface::~Ospfv2Interface()
@@ -139,7 +142,7 @@ void Ospfv2Interface::setIfIndex(IInterfaceTable *ift, int index)
 {
     ifIndex = index;
     if (interfaceType == Ospfv2Interface::UNKNOWN_TYPE) {
-        InterfaceEntry *routingInterface = ift->getInterfaceById(ifIndex);
+        NetworkInterface *routingInterface = ift->getInterfaceById(ifIndex);
         interfaceAddressRange.address = routingInterface->getProtocolData<Ipv4InterfaceData>()->getIPAddress();
         interfaceAddressRange.mask = routingInterface->getProtocolData<Ipv4InterfaceData>()->getNetmask();
         mtu = routingInterface->getMtu();
@@ -180,7 +183,6 @@ void Ospfv2Interface::reset()
 
 void Ospfv2Interface::sendHelloPacket(Ipv4Address destination, short ttl)
 {
-    Ospfv2Options options;
     const auto& helloPacket = makeShared<Ospfv2HelloPacket>();
     std::vector<Ipv4Address> neighbors;
 
@@ -197,7 +199,8 @@ void Ospfv2Interface::sendHelloPacket(Ipv4Address destination, short ttl)
     else {
         helloPacket->setNetworkMask(interfaceAddressRange.mask);
     }
-    memset(&options, 0, sizeof(Ospfv2Options));
+
+    Ospfv2Options options;
     options.E_ExternalRoutingCapability = parentArea->getExternalRoutingCapability();
     helloPacket->setOptions(options);
     helloPacket->setHelloInterval(helloInterval);

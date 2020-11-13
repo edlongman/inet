@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2005 Andras Varga
+// Copyright (C) 2005 OpenSim Ltd.
 // Copyright (C) 2008 Alfonso Ariza
 //
 // This program is free software; you can redistribute it and/or
@@ -14,15 +14,16 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
+#include "inet/mobility/single/Ns2MotionMobility.h"
 
 #include <fstream>
 #include <sstream>
 #include <string>
 
 #include "inet/common/INETMath.h"
-#include "inet/mobility/single/Ns2MotionMobility.h"
 
 #ifndef atoi
 #include <cstdlib>

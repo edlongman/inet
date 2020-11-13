@@ -1,4 +1,6 @@
 //
+// Copyright (C) 2020 OpenSim Ltd.
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -10,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #include "inet/common/checksum/EthernetCRC.h"
@@ -63,16 +65,17 @@ const uint32_t crc32_tab[] = {
     0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d
 };
 
-uint32_t ethernetCRC(const unsigned char *buf, unsigned int bufsize)
+uint32_t ethernetCRC(const unsigned char *buf, unsigned int bufsize, uint32_t crc)
 {
     const uint8_t *p = buf;
-    uint32_t crc = ~0U;
+    crc = (crc >> 24) | ((crc >> 8) & 0x0000FF00) | ((crc << 8) & 0x00FF0000) | (crc << 24);
+    crc = crc ^ ~0U;
     while (bufsize--)
         crc = crc32_tab[(crc ^ *p++) & 0xFF] ^ (crc >> 8);
     crc = crc ^ ~0U;
 
     // swap byte order:
-    return (crc >> 24) | ((crc >>  8) & 0x0000FF00) | ((crc <<  8) & 0x00FF0000) | (crc << 24);
+    return (crc >> 24) | ((crc >> 8) & 0x0000FF00) | ((crc << 8) & 0x00FF0000) | (crc << 24);
 }
 
 } // namespace inet

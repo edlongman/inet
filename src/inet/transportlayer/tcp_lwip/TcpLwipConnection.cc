@@ -1,34 +1,33 @@
 //
-// Copyright (C) 2010 Zoltan Bojthe
+// Copyright (C) 2010 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// GNU Lesser General Public License for more details.
 //
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#include "inet/transportlayer/tcp_lwip/TcpLwipConnection.h"
 
-#include "inet/applications/common/SocketTag_m.h"
 #include "inet/common/INETUtils.h"
 #include "inet/common/ProtocolTag_m.h"
 #include "inet/common/checksum/TcpIpChecksum.h"
 #include "inet/common/packet/Message.h"
+#include "inet/common/socket/SocketTag_m.h"
 #include "inet/transportlayer/contract/tcp/TcpCommand_m.h"
 #include "inet/transportlayer/tcp_common/TcpHeader.h"
 #include "inet/transportlayer/tcp_common/headers/tcphdr.h"
-#include "lwip/lwip_tcp.h"
 #include "inet/transportlayer/tcp_lwip/TcpLwip.h"
-#include "inet/transportlayer/tcp_lwip/TcpLwipConnection.h"
 #include "inet/transportlayer/tcp_lwip/queues/TcpLwipQueues.h"
+#include "lwip/lwip_tcp.h"
 
 namespace inet {
 namespace tcp {
@@ -95,9 +94,14 @@ void TcpLwipConnection::initConnection(TcpLwipConnection& connP, int connIdP, Lw
 
 TcpLwipConnection::~TcpLwipConnection()
 {
-    ASSERT(!pcbM);
     delete receiveQueueM;
     delete sendQueueM;
+    if (pcbM) {
+        pcbM->callback_arg = nullptr;
+        tcpLwipM->getLwipTcpLayer()->tcp_pcb_purge(pcbM);
+        memp_free(MEMP_TCP_PCB, pcbM);
+        pcbM = nullptr;
+    }
 }
 
 void TcpLwipConnection::sendAvailableIndicationToApp(int listenConnId)
@@ -146,7 +150,7 @@ void TcpLwipConnection::sendEstablishedMsg()
 const char *TcpLwipConnection::indicationName(int code)
 {
 #define CASE(x)    case x: \
-        s = #x + 6; break
+        s = #x; s += 6; break
     const char *s = "unknown";
 
     switch (code) {

@@ -1,18 +1,18 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+// GNU Lesser General Public License for more details.
 //
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #include <omnetpp/platdep/sockets.h>
@@ -31,6 +31,7 @@
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/NetworkNamespaceContext.h"
 #include "inet/common/ProtocolTag_m.h"
+#include "inet/common/Simsignals.h"
 #include "inet/common/packet/Packet.h"
 #include "inet/emulation/networklayer/ipv4/ExtIpv4TunDevice.h"
 #include "inet/linklayer/common/InterfaceTag_m.h"
@@ -52,12 +53,13 @@ void ExtIpv4TunDevice::initialize(int stage)
         device = par("device").stdstringValue();
         packetNameFormat = par("packetNameFormat");
         rtScheduler = check_and_cast<RealTimeScheduler *>(getSimulation()->getScheduler());
-        registerService(Protocol::ipv4, nullptr, gate("lowerLayerIn"));
-        registerProtocol(Protocol::ipv4, gate("lowerLayerOut"), nullptr);
         openTun(device);
         numSent = numReceived = 0;
         WATCH(numSent);
         WATCH(numReceived);
+    }
+    else if (stage == INITSTAGE_NETWORK_LAYER) {
+        registerProtocol(Protocol::ipv4, gate("lowerLayerOut"), gate("lowerLayerIn"));
     }
 }
 
@@ -136,7 +138,7 @@ void ExtIpv4TunDevice::closeTun()
 
 bool ExtIpv4TunDevice::notify(int fd)
 {
-    Enter_Method_Silent();
+    Enter_Method("notify");
     ASSERT(fd == this->fd);
     uint8_t buffer[1 << 16];
     ssize_t nread = read(fd, buffer, sizeof(buffer));

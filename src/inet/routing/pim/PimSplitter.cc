@@ -1,10 +1,10 @@
 //
 // Copyright (C) 2013 Brno University of Technology (http://nes.fit.vutbr.cz/ansa)
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 3
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,10 +12,12 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 // Authors: Veronika Rybova, Vladimir Vesely (ivesely@fit.vutbr.cz),
 //          Tamas Borbely (tomi@omnetpp.org)
+
+#include "inet/routing/pim/PimSplitter.h"
 
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/Protocol.h"
@@ -23,7 +25,6 @@
 #include "inet/linklayer/common/InterfaceTag_m.h"
 #include "inet/networklayer/common/IpProtocolId_m.h"
 #include "inet/networklayer/ipv4/IcmpHeader_m.h"
-#include "inet/routing/pim/PimSplitter.h"
 
 namespace inet {
 
@@ -77,7 +78,7 @@ void PimSplitter::processPIMPacket(Packet *pkt)
 {
     const auto& pimPkt = pkt->peekAtFront<PimPacket>();
     (void)pimPkt;       // unused variable
-    InterfaceEntry *ie = ift->getInterfaceById(pkt->getTag<InterfaceInd>()->getInterfaceId());
+    NetworkInterface *ie = ift->getInterfaceById(pkt->getTag<InterfaceInd>()->getInterfaceId());
     ASSERT(ie);
 
     EV_INFO << "Received packet on interface '" << ie->getInterfaceName() << "'" << endl;

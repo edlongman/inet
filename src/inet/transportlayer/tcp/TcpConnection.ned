@@ -1,7 +1,7 @@
 //
-// Copyright (C) 2004 Andras Varga
+// Copyright (C) 2004 OpenSim Ltd.
 // Copyright (C) 2009-2010 Thomas Reschka
-// Copyright (C) 2010 Zoltan Bojthe
+// Copyright (C) 2010 OpenSim Ltd.
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License
@@ -14,7 +14,8 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 package inet.transportlayer.tcp;
@@ -39,6 +40,7 @@ simple TcpConnection {
         @signal[sackedBytes];    // current number of received sacked bytes
         @signal[tcpRcvQueueBytes];    // current amount of used bytes in tcp receive queue
         @signal[tcpRcvQueueDrops];    // number of drops in tcp receive queue
+        @signal[tcpRcvPayloadBytes];   // amount of payload bytes received (including duplicates, out of order etc) for TCP throughput
 
         //TcpAlgorithm signals:
         @signal[cwnd];    // will record changes to snd_cwnd
@@ -48,6 +50,10 @@ simple TcpConnection {
         @signal[rttvar];    // will record RTT variance (rttvar)
         @signal[rto];    // will record retransmission timeout
         @signal[numRtos];    // will record total number of RTOs
+
+        @signal[load];   // will record load (currently only with DcTcp)
+        @signal[calcLoad];    // will record calcLoad (currently only with DcTcp)
+        @signal[markingProb];   // will record marking probability (currently only with DcTcp)
 
         @statistic[state](record=vector; interpolationmode=sample-hold);
         @statistic[sndWnd](record=vector; interpolationmode=sample-hold);    // snd_wnd
@@ -67,6 +73,7 @@ simple TcpConnection {
         @statistic[sackedBytes](record=vector; interpolationmode=sample-hold);    // current number of received sacked bytes
         @statistic[tcpRcvQueueBytes](record=vector; interpolationmode=sample-hold);    // current amount of used bytes in tcp receive queue
         @statistic[tcpRcvQueueDrops](record=vector; interpolationmode=sample-hold);    // number of drops in tcp receive queue
+        @statistic[tcpRcvPayloadBytes](record=vector; interpolationmode=sample-hold);    // current amount of payload bytes received (including duplicates, out of order etc) for TCP throughput
 
         @statistic[cwnd](record=vector; interpolationmode=sample-hold);    // will record changes to snd_cwnd
         @statistic[ssthresh](record=vector; interpolationmode=sample-hold);    // will record changes to ssthresh
@@ -75,5 +82,9 @@ simple TcpConnection {
         @statistic[rttvar](record=vector; interpolationmode=sample-hold);    // will record RTT variance (rttvar)
         @statistic[rto](record=vector; interpolationmode=sample-hold);    // will record retransmission timeout
         @statistic[numRtos](record=vector; interpolationmode=sample-hold);    // will record total number of RTOs
+
+        @statistic[load](record=vector; interpolationmode=sample-hold);    // will record load (currently only with DcTcp)
+        @statistic[calcLoad](record=vector; interpolationmode=sample-hold);    // will record calcLoad (currently only with DcTcp)
+        @statistic[markingProb](record=vector; interpolationmode=sample-hold);    // will record marking probability (currently only with DcTcp)
 }
 

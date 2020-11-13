@@ -12,17 +12,14 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
-//
-// Author: Benjamin Martin Seregi
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #ifndef __INET_IEEE8021DINTERFACEDATA_H
 #define __INET_IEEE8021DINTERFACEDATA_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/linklayer/common/MacAddress.h"
-#include "inet/networklayer/common/InterfaceEntry.h"
+#include "inet/networklayer/common/NetworkInterface.h"
 
 namespace inet {
 
@@ -57,7 +54,7 @@ class INET_API Ieee8021dInterfaceData : public InterfaceProtocolData
         unsigned int bridgePriority;
         MacAddress bridgeAddress;
         unsigned int portPriority;
-        unsigned int portNum;    // The number of the switch port (i.e. EtherSwitch ethg[] gate index).
+        unsigned int portNum;    // The number of the switch port (i.e. EthernetSwitch ethg[] gate index).
 
         simtime_t age;    // This parameter is conveyed to enable a switch to discard information whose age exceeds Max Age. (STP,RSTP)
         simtime_t maxAge;
@@ -85,7 +82,7 @@ class INET_API Ieee8021dInterfaceData : public InterfaceProtocolData
     Ieee8021dInterfaceData();
 
     virtual std::string str() const override;
-    virtual std::string detailedInfo() const OMNETPP5_CODE(override);
+    virtual std::string detailedInfo() const;
 
     bool isLearning() const { return portData.state == LEARNING || portData.state == FORWARDING; }
 
@@ -182,5 +179,5 @@ class INET_API Ieee8021dInterfaceData : public InterfaceProtocolData
 
 } // namespace inet
 
-#endif // ifndef __INET_IEEE8021DINTERFACEDATA_H
+#endif
 

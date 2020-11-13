@@ -1,10 +1,9 @@
 
-#ifndef __INET_OSPFV3INTERFACE_H_
-#define __INET_OSPFV3INTERFACE_H_
+#ifndef __INET_OSPFV3INTERFACE_H
+#define __INET_OSPFV3INTERFACE_H
 
 #include <string>
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/packet/Packet.h"
 #include "inet/networklayer/contract/IInterfaceTable.h"
@@ -171,7 +170,7 @@ class INET_API Ospfv3Interface : public cObject
     void addNeighbor(Ospfv3Neighbor*);
 
     std::string str() const override;
-    std::string detailedInfo() const OMNETPP5_CODE(override);
+    std::string detailedInfo() const;
     void acknowledgeLSA(const Ospfv3LsaHeader& lsaHeader, AcknowledgementFlags ackFlags, Ipv4Address routerID);
 
     // LINK LSA
@@ -258,5 +257,5 @@ inline std::ostream& operator<<(std::ostream& ostr, const Ospfv3Interface& inter
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3INTERFACE_H_
+#endif
 

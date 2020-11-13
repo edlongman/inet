@@ -1,5 +1,6 @@
-// Copyright (C) 2013 Andras Varga
-// 
+//
+// Copyright (C) 2013 OpenSim Ltd.
+//
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License
 // as published by the Free Software Foundation; either version 2
@@ -18,7 +19,7 @@ package inet.examples.pim.dm.assert;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ethernet.Eth100M;
-import inet.node.ethernet.EtherSwitch;
+import inet.node.ethernet.EthernetSwitch;
 import inet.node.inet.MulticastRouter;
 import inet.node.inet.StandardHost;
 
@@ -48,7 +49,7 @@ network Network
         Receiver: StandardHost {
             @display("p=1000,199");
         }
-        switch: EtherSwitch {
+        switch: EthernetSwitch {
             @display("p=700,199");
         }
     connections allowunconnected:

@@ -1,26 +1,23 @@
-/***************************************************************************
- * file:        Coord.h
- *
- * author:      Christian Frank
- *
- * copyright:   (C) 2004 Telecommunication Networks Group (TKN) at
- *              Technische Universitaet Berlin, Germany.
- *
- *              This program is free software; you can redistribute it
- *              and/or modify it under the terms of the GNU General Public
- *              License as published by the Free Software Foundation; either
- *              version 2 of the License, or (at your option) any later
- *              version.
- *              For further information see file COPYING
- *              in the top level directory
- ***************************************************************************
- * part of:     framework implementation developed by tkn
- **************************************************************************/
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
 
 #ifndef __INET_COORD_H
 #define __INET_COORD_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/INETMath.h"
 
 namespace inet {
@@ -31,7 +28,6 @@ namespace inet {
  * Some comparison and basic arithmetic operators are implemented.
  *
  * @ingroup utils
- * @author Christian Frank
  */
 class INET_API Coord
 {
@@ -142,7 +138,7 @@ class INET_API Coord
     /**
      * @brief Dot product
      */
-    float operator*(const Coord& v) const {
+    double operator*(const Coord& v) const {
         return x * v.x + y * v.y + z * v.z;
     }
 
@@ -321,14 +317,14 @@ class INET_API Coord
     /**
      * @brief Returns the minimal coordinates.
      */
-    Coord min(const Coord& a) {
+    Coord min(const Coord& a) const {
         return Coord(x < a.x ? x : a.x, y < a.y ? y : a.y, z < a.z ? z : a.z);
     }
 
     /**
      * @brief Returns the maximal coordinates.
      */
-    Coord max(const Coord& a) {
+    Coord max(const Coord& a) const {
         return Coord(x > a.x ? x : a.x, y > a.y ? y : a.y, z > a.z ? z : a.z);
     }
 
@@ -376,5 +372,5 @@ inline std::string Coord::str() const
 
 } // namespace inet
 
-#endif // ifndef __INET_COORD_H
+#endif
 

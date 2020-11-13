@@ -1,9 +1,10 @@
 //
 // Copyright (C) 2009 Kristjan V. Jonsson, LDSS (kristjanvj@gmail.com)
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License version 3
-// as published by the Free Software Foundation.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -11,26 +12,24 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #ifndef __INET_HTTPNODEBASE_H
 #define __INET_HTTPNODEBASE_H
 
-#include <string>
+#include <fstream>
+#include <iostream>
 #include <map>
 #include <queue>
-#include <iostream>
-#include <fstream>
+#include <string>
 
-#include "inet/common/INETDefs.h"
-#include "inet/common/lifecycle/LifecycleUnsupported.h"
-#include "inet/common/packet/Packet.h"
-#include "inet/applications/httptools/configurator/HttpController.h"
 #include "inet/applications/httptools/common/HttpMessages_m.h"
 #include "inet/applications/httptools/common/HttpRandom.h"
 #include "inet/applications/httptools/common/HttpUtils.h"
+#include "inet/applications/httptools/configurator/HttpController.h"
+#include "inet/common/lifecycle/LifecycleUnsupported.h"
+#include "inet/common/packet/Packet.h"
 
 namespace inet {
 
@@ -102,5 +101,5 @@ class INET_API HttpNodeBase : public cSimpleModule, public LifecycleUnsupported
 
 } // namespace inet
 
-#endif // ifndef __INET_HTTPNODEBASE_H
+#endif
 

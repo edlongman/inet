@@ -13,42 +13,46 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 package inet.linklayer.ieee802154;
 
 import inet.linklayer.contract.IWirelessInterface;
-import inet.networklayer.common.InterfaceEntry;
-import inet.physicallayer.contract.packetlevel.IRadio;
+import inet.networklayer.common.NetworkInterface;
+import inet.physicallayer.wireless.common.contract.packetlevel.IRadio;
 
-module Ieee802154NarrowbandInterface extends InterfaceEntry like IWirelessInterface
+//
+// This module implements an IEEE 802.15.4 narrowband network interface.
+//
+module Ieee802154NarrowbandInterface extends NetworkInterface like IWirelessInterface
 {
     parameters:
-        @class(InterfaceEntry);
+        @class(NetworkInterface);
         string interfaceTableModule;
         string energySourceModule = default("");
         *.interfaceTableModule = default(absPath(interfaceTableModule));
         *.energySourceModule = default(absPath(energySourceModule));
-        @display("i=block/ifcard");
     gates:
         input upperLayerIn;
         output upperLayerOut;
-        input radioIn @labels(ISignal);
+        input radioIn @labels(IWirelessSignal);
     submodules:
         mac: Ieee802154NarrowbandMac {
             parameters:
-                @display("p=100,100");
+                @display("p=300,100");
         }
         radio: <default("Ieee802154NarrowbandScalarRadio")> like IRadio {
             parameters:
-                @display("p=100,200");
+                @display("p=300,200");
         }
     connections:
-        upperLayerIn --> mac.upperLayerIn;
+        upperLayerIn --> { @display("m=n"); } --> mac.upperLayerIn;
         mac.lowerLayerOut --> radio.upperLayerIn;
-        mac.upperLayerOut --> { @display("m=n"); } --> upperLayerOut;
+
         radioIn --> { @display("m=s"); } --> radio.radioIn;
         radio.upperLayerOut --> mac.lowerLayerIn;
+        mac.upperLayerOut --> { @display("m=n"); } --> upperLayerOut;
 }
 

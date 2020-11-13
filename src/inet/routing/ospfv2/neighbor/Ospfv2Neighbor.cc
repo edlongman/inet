@@ -12,15 +12,17 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
+#include "inet/routing/ospfv2/neighbor/Ospfv2Neighbor.h"
 
 #include <memory.h>
 
 #include "inet/networklayer/ipv4/Ipv4Header_m.h"
 #include "inet/routing/ospfv2/Ospfv2Crc.h"
 #include "inet/routing/ospfv2/messagehandler/MessageHandler.h"
-#include "inet/routing/ospfv2/neighbor/Ospfv2Neighbor.h"
 #include "inet/routing/ospfv2/neighbor/Ospfv2NeighborState.h"
 #include "inet/routing/ospfv2/neighbor/Ospfv2NeighborStateDown.h"
 #include "inet/routing/ospfv2/router/Ospfv2Area.h"
@@ -41,7 +43,8 @@ Neighbor::Neighbor(RouterId neighbor) :
     neighborsBackupDesignatedRouter(NULL_DESIGNATEDROUTERID),
     neighborsRouterDeadInterval(40)
 {
-    memset(&lastReceivedDDPacket, 0, sizeof(Neighbor::DdPacketId));
+    Neighbor::DdPacketId emptyDD;
+    lastReceivedDDPacket = emptyDD;
     // setting only I and M bits is invalid -> good initializer
     lastReceivedDDPacket.ddOptions.I_Init = true;
     lastReceivedDDPacket.ddOptions.M_More = true;
@@ -190,7 +193,6 @@ void Neighbor::sendDatabaseDescriptionPacket(bool init)
     }
 
     Ospfv2Options options;
-    memset(&options, 0, sizeof(Ospfv2Options));
     options.E_ExternalRoutingCapability = parentInterface->getArea()->getExternalRoutingCapability();
     ddPacket->setOptions(options);
 
@@ -218,7 +220,6 @@ void Neighbor::sendDatabaseDescriptionPacket(bool init)
     }
 
     Ospfv2DdOptions ddOptions;
-    memset(&ddOptions, 0, sizeof(Ospfv2DdOptions));
     if (init) {
         ddOptions.I_Init = true;
         ddOptions.M_More = true;

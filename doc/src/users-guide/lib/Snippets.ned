@@ -1,18 +1,18 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 import inet.applications.contract.IApp;
@@ -24,12 +24,12 @@ import inet.networklayer.common.InterfaceTable;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.networklayer.ipv4.Ipv4;
 import inet.node.ethernet.Eth1G;
-import inet.node.ethernet.EtherSwitch;
+import inet.node.ethernet.EthernetSwitch;
 import inet.node.inet.AdhocHost;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
-import inet.physicallayer.apskradio.packetlevel.ApskScalarRadio;
-import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
+import inet.physicallayer.wireless.apsk.packetlevel.ApskScalarRadio;
+import inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
 import inet.transportlayer.tcp.Tcp;
 
 //!WiredNetworkExample
@@ -41,7 +41,7 @@ network WiredNetworkExample
         configurator: Ipv4NetworkConfigurator; // network autoconfiguration
         server: StandardHost; // predefined standard host
         router: Router; // predefined router
-        switch: EtherSwitch; // predefined ethernet switch
+        switch: EthernetSwitch; // predefined ethernet switch
         client[numClients]: StandardHost;
     connections: // network level connections
         router.pppg++ <--> { datarate = 1GBps; } <--> server.pppg++; // PPP

@@ -1,5 +1,6 @@
 User's Guide
 ============
+Release: |release|
 
 This manual is written for users who are interested in assembling
 simulations using the components provided by the INET Framework. (In
@@ -34,6 +35,7 @@ recommend the :doc:`INET Developer's Guide </developers-guide/index>`.)
    ch-80211
    ch-802154
    ch-sensor-macs
+   ch-clock
    ch-physicallayer
    ch-transmission-medium
    ch-environment

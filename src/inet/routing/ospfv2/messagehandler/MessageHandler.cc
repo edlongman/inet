@@ -12,15 +12,17 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
+#include "inet/routing/ospfv2/messagehandler/MessageHandler.h"
 
 #include "inet/common/ProtocolTag_m.h"
 #include "inet/linklayer/common/InterfaceTag_m.h"
 #include "inet/networklayer/common/HopLimitTag_m.h"
 #include "inet/networklayer/common/L3AddressTag_m.h"
 #include "inet/networklayer/ipv4/IcmpHeader.h"
-#include "inet/routing/ospfv2/messagehandler/MessageHandler.h"
 #include "inet/routing/ospfv2/router/Ospfv2Router.h"
 
 namespace inet {
@@ -384,7 +386,7 @@ void MessageHandler::clearTimer(cMessage *timer)
 
 void MessageHandler::startTimer(cMessage *timer, simtime_t delay)
 {
-    ospfModule->scheduleAt(simTime() + delay, timer);
+    ospfModule->scheduleAfter(delay, timer);
 }
 
 void MessageHandler::printEvent(const char *eventString, const Ospfv2Interface *onInterface, const Neighbor *forNeighbor    /*= nullptr*/) const

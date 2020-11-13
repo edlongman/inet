@@ -12,13 +12,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 #ifndef __INET_IMESSAGEHANDLER_H
 #define __INET_IMESSAGEHANDLER_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/packet/Packet.h"
 #include "inet/routing/ospfv2/Ospfv2Packet_m.h"
 
@@ -46,5 +46,5 @@ class INET_API IMessageHandler
 
 } // namespace inet
 
-#endif // ifndef __INET_IMESSAGEHANDLER_H
+#endif
 

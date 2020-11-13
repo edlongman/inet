@@ -12,7 +12,8 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 #ifndef __INET_OSPFV2NEIGHBOR_H
@@ -20,7 +21,6 @@
 
 #include <list>
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/packet/Packet.h"
 #include "inet/routing/ospfv2/Ospfv2Packet_m.h"
 #include "inet/routing/ospfv2/router/Lsa.h"
@@ -78,7 +78,7 @@ class INET_API Neighbor
     {
         Ospfv2DdOptions ddOptions;
         Ospfv2Options options;
-        unsigned long sequenceNumber;
+        unsigned long sequenceNumber = 0;
     };
 
   private:
@@ -218,5 +218,5 @@ inline bool operator!=(Neighbor::DdPacketId leftID, Neighbor::DdPacketId rightID
 
 } // namespace inet
 
-#endif // ifndef __INET_OSPFV2NEIGHBOR_H
+#endif
 

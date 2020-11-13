@@ -1,7 +1,6 @@
-#ifndef __INET_OSPFV3LSA_H_
-#define __INET_OSPFV3LSA_H_
+#ifndef __INET_OSPFV3LSA_H
+#define __INET_OSPFV3LSA_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/routing/ospfv3/Ospfv3Common.h"
 #include "inet/routing/ospfv3/Ospfv3Packet_m.h"
 
@@ -198,5 +197,5 @@ std::ostream& operator<<(std::ostream& ostr, const Ospfv3AsExternalLsa& lsa);
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3LSA_H_
+#endif
 

@@ -13,13 +13,17 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
+#include "inet/routing/ospfv2/Ospfv2ConfigReader.h"
+
+#include <memory.h>
+#include <stdlib.h>
 
 #include <algorithm>
 #include <map>
-#include <memory.h>
-#include <stdlib.h>
 #include <string>
 
 #include "inet/common/ModuleAccess.h"
@@ -29,7 +33,6 @@
 #include "inet/networklayer/contract/IInterfaceTable.h"
 #include "inet/networklayer/contract/ipv4/Ipv4Address.h"
 #include "inet/networklayer/ipv4/Ipv4InterfaceData.h"
-#include "inet/routing/ospfv2/Ospfv2ConfigReader.h"
 #include "inet/routing/ospfv2/interface/Ospfv2Interface.h"
 #include "inet/routing/ospfv2/messagehandler/MessageHandler.h"
 #include "inet/routing/ospfv2/router/Ospfv2Area.h"
@@ -93,7 +96,7 @@ bool Ospfv2ConfigReader::loadConfigFromXML(cXMLElement *asConfig, Router *ospfRo
 
     // load interface information
     for (int n = 0; n < ift->getNumInterfaces(); n++) {
-        InterfaceEntry *intf = ift->getInterface(n);
+        NetworkInterface *intf = ift->getInterface(n);
         cXMLElement *ifConfig = findMatchingConfig(routerConfig, *intf);
         if(ifConfig) {
             if(intf->isLoopback())
@@ -203,7 +206,7 @@ void Ospfv2ConfigReader::loadAreaFromXML(const cXMLElement& asConfig, AreaId are
     ospfRouter->addArea(area);
 }
 
-void Ospfv2ConfigReader::loadInterfaceParameters(const cXMLElement& ifConfig, InterfaceEntry& ie)
+void Ospfv2ConfigReader::loadInterfaceParameters(const cXMLElement& ifConfig, NetworkInterface& ie)
 {
     std::string intfModeStr = getStrAttrOrPar(ifConfig, "interfaceMode");
     if(intfModeStr == "NoOSPF")
@@ -393,7 +396,7 @@ void Ospfv2ConfigReader::loadHostRoute(const cXMLElement& hostRouteConfig)
     }
 }
 
-void Ospfv2ConfigReader::loadLoopbackParameters(const cXMLElement& loConfig, InterfaceEntry& ie)
+void Ospfv2ConfigReader::loadLoopbackParameters(const cXMLElement& loConfig, NetworkInterface& ie)
 {
     int ifIndex = ie.getInterfaceId();
     EV_DEBUG << "        loading LoopbackInterface " << ie.getInterfaceName() << " ifIndex[" << ifIndex << "]\n";
@@ -513,7 +516,7 @@ void Ospfv2ConfigReader::initiateDefaultRouteDistribution()
     }
 }
 
-cXMLElement * Ospfv2ConfigReader::findMatchingConfig(const cXMLElementList& routerConfig, const InterfaceEntry& intf)
+cXMLElement * Ospfv2ConfigReader::findMatchingConfig(const cXMLElementList& routerConfig, const NetworkInterface& intf)
 {
     for (auto & ifConfig : routerConfig) {
         std::string nodeName = ifConfig->getTagName();
@@ -549,14 +552,14 @@ cXMLElement * Ospfv2ConfigReader::findMatchingConfig(const cXMLElementList& rout
     return nullptr;
 }
 
-std::vector<InterfaceEntry *> Ospfv2ConfigReader::getInterfaceByXMLAttributesOf(const cXMLElement& ifConfig)
+std::vector<NetworkInterface *> Ospfv2ConfigReader::getInterfaceByXMLAttributesOf(const cXMLElement& ifConfig)
 {
-    std::vector<InterfaceEntry *> results;
+    std::vector<NetworkInterface *> results;
     const char *ifName = ifConfig.getAttribute("ifName");
     if (ifName && *ifName) {
         inet::PatternMatcher pattern(ifName, true, true, true);
         for (int n = 0; n < ift->getNumInterfaces(); n++) {
-            InterfaceEntry *intf = ift->getInterface(n);
+            NetworkInterface *intf = ift->getInterface(n);
             if (pattern.matches(intf->getFullName()) ||
                     pattern.matches(intf->getInterfaceFullPath().c_str()) ||
                     pattern.matches(intf->getInterfaceName())) {
@@ -573,7 +576,7 @@ std::vector<InterfaceEntry *> Ospfv2ConfigReader::getInterfaceByXMLAttributesOf(
 
     cModule *host = ift->getHostModule();
     for (int i = 0; i < ift->getNumInterfaces(); i++) {
-        InterfaceEntry *ie = ift->getInterface(i);
+        NetworkInterface *ie = ift->getInterface(i);
         if (ie) {
             int gateId = ie->getNodeOutputGateId();
             if ((gateId != -1) && (host->gate(gateId)->pathContains(destnode))) {
@@ -616,14 +619,12 @@ const char *Ospfv2ConfigReader::getStrAttrOrPar(const cXMLElement& ifConfig, con
 
 void Ospfv2ConfigReader::joinMulticastGroups(int interfaceId)
 {
-    InterfaceEntry *ie = ift->getInterfaceById(interfaceId);
+    NetworkInterface *ie = ift->getInterfaceById(interfaceId);
     if (!ie)
         throw cRuntimeError("Interface id=%d does not exist", interfaceId);
     if (!ie->isMulticast())
         return;
-    Ipv4InterfaceData *ipv4Data = ie->findProtocolData<Ipv4InterfaceData>();
-    if (!ipv4Data)
-        throw cRuntimeError("Interface %s (id=%d) does not have Ipv4 data", ie->getInterfaceName(), interfaceId);
+    auto ipv4Data = ie->getProtocolDataForUpdate<Ipv4InterfaceData>();
     ipv4Data->joinMulticastGroup(Ipv4Address::ALL_OSPF_ROUTERS_MCAST);
     ipv4Data->joinMulticastGroup(Ipv4Address::ALL_OSPF_DESIGNATED_ROUTERS_MCAST);
 }

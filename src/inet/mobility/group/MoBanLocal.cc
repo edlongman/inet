@@ -1,3 +1,18 @@
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+//
 /* -*- mode:c++ -*- ********************************************************
  * file:        MoBanLocal.cc
  *
@@ -9,13 +24,6 @@
  *              Eindhoven University of Technology (TU/e), the Netherlands.
  *
  *
- *              This program is free software; you can redistribute it
- *              and/or modify it under the terms of the GNU General Public
- *              License as published by the Free Software Foundation; either
- *              version 2 of the License, or (at your option) any later
- *              version.
- *              For further information see file COPYING
- *              in the top level directory
  ***************************************************************************
  * part of:    MoBAN (Mobility Model for wireless Body Area Networks)
  * description:     Implementation of the local module of the MoBAN mobility model
@@ -39,8 +47,9 @@
  *
  **************************************************************************/
 
-#include "inet/common/INETMath.h"
 #include "inet/mobility/group/MoBanLocal.h"
+
+#include "inet/common/INETMath.h"
 
 namespace inet {
 
@@ -61,6 +70,8 @@ void MoBanLocal::initialize(int stage)
 
     EV_TRACE << "initializing MoBanLocal stage " << stage << endl;
     if (stage == INITSTAGE_LOCAL) {
+        WATCH(lastCompositePosition);
+        WATCH(lastCompositeVelocity);
         WATCH_PTR(coordinator);
         WATCH(referencePosition);
         WATCH(radius);
@@ -115,7 +126,7 @@ void MoBanLocal::computeMaxSpeed()
 
 void MoBanLocal::setMoBANParameters(Coord referencePoint, double radius, double speed)
 {
-    Enter_Method_Silent();
+    Enter_Method("setMoBANParameters");
     this->referencePosition = referencePoint;
     this->radius = radius;
     this->speed = speed;
@@ -124,14 +135,16 @@ void MoBanLocal::setMoBANParameters(Coord referencePoint, double radius, double 
     scheduleUpdate();
 }
 
-Coord MoBanLocal::getCurrentPosition()
+const Coord& MoBanLocal::getCurrentPosition()
 {
-    return LineSegmentsMobilityBase::getCurrentPosition() + coordinator->getCurrentPosition();
+    lastCompositePosition = LineSegmentsMobilityBase::getCurrentPosition() + coordinator->getCurrentPosition();
+    return lastCompositePosition;
 }
 
-Coord MoBanLocal::getCurrentVelocity()
+const Coord& MoBanLocal::getCurrentVelocity()
 {
-    return LineSegmentsMobilityBase::getCurrentVelocity() + coordinator->getCurrentVelocity();
+    lastCompositeVelocity = LineSegmentsMobilityBase::getCurrentVelocity() + coordinator->getCurrentVelocity();
+    return lastCompositeVelocity;
 }
 
 

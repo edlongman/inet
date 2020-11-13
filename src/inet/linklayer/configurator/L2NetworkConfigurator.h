@@ -12,9 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
-//
-// Author: Benjamin Seregi
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #ifndef __INET_L2NETWORKCONFIGURATOR_H
@@ -23,7 +21,6 @@
 #include <algorithm>
 #include <vector>
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/PatternMatcher.h"
 #include "inet/common/Topology.h"
 #include "inet/linklayer/configurator/Ieee8021dInterfaceData.h"
@@ -66,12 +63,12 @@ class INET_API L2NetworkConfigurator : public cSimpleModule
       public:
         Node *node;
         Node *childNode;
-        InterfaceEntry *interfaceEntry;
+        NetworkInterface *networkInterface;
         PortInfo portData;
 
       public:
-        InterfaceInfo(Node *node, Node *childNode, InterfaceEntry *interfaceEntry);
-        virtual std::string getFullPath() const override { return interfaceEntry->getInterfaceFullPath(); }
+        InterfaceInfo(Node *node, Node *childNode, NetworkInterface *networkInterface);
+        virtual std::string getFullPath() const override { return networkInterface->getInterfaceFullPath(); }
     };
 
     class Matcher
@@ -142,10 +139,10 @@ class INET_API L2NetworkConfigurator : public cSimpleModule
     /**
      * Configures the provided interface based on the current network configuration.
      */
-    virtual void configureInterface(InterfaceEntry *interfaceEntry);
+    virtual void configureInterface(NetworkInterface *networkInterface);
 };
 
 } // namespace inet
 
-#endif // ifndef __INET_L2NETWORKCONFIGURATOR_H
+#endif
 

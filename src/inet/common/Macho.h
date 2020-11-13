@@ -206,8 +206,8 @@
 //       - Initial release
 //
 
-#include <new>
 #include <cassert>
+#include <new>
 
 #include "inet/common/INETDefs.h"
 
@@ -2174,5 +2174,5 @@ Snapshot<TOP>::Snapshot(Machine<TOP>& machine)
 
 } // namespace inet
 
-#endif    // __MACHO_HPP__
+#endif
 

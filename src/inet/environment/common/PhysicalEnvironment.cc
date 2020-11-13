@@ -1,10 +1,10 @@
 //
 // Copyright (C) 2013 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,17 +12,18 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/environment/common/PhysicalEnvironment.h"
 
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/geometry/common/RotationMatrix.h"
 #include "inet/common/geometry/object/Box.h"
 #include "inet/common/geometry/shape/Cuboid.h"
-#include "inet/common/geometry/shape/polyhedron/Polyhedron.h"
 #include "inet/common/geometry/shape/Prism.h"
 #include "inet/common/geometry/shape/Sphere.h"
-#include "inet/environment/common/PhysicalEnvironment.h"
+#include "inet/common/geometry/shape/polyhedron/Polyhedron.h"
 
 namespace inet {
 
@@ -52,7 +53,7 @@ void PhysicalEnvironment::initialize(int stage)
 {
     if (stage == INITSTAGE_LOCAL)
     {
-        coordinateSystem = getModuleFromPar<IGeographicCoordinateSystem>(par("coordinateSystemModule"), this, false);
+        coordinateSystem = findModuleFromPar<IGeographicCoordinateSystem>(par("coordinateSystemModule"), this);
         objectCache = dynamic_cast<IObjectCache *>(getSubmodule("objectCache"));
         ground = dynamic_cast<IGround *>(getSubmodule("ground"));
         temperature = K(par("temperature"));

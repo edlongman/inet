@@ -1,22 +1,22 @@
-/**
- * Copyright (C) 2007
- * Christian Bauer
- * Institute of Communications and Navigation, German Aerospace Center (DLR)
-
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
+//
+// Copyright (C) 2007
+// Christian Bauer
+// Institute of Communications and Navigation, German Aerospace Center (DLR)
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+//
 
 //
 // Implementation of RFC 2473
@@ -34,7 +34,10 @@
 // TODO
 //  - 8.: Tunnel Error Reporting and Processing
 
+#include "inet/networklayer/ipv6tunneling/Ipv6Tunneling.h"
+
 #include <algorithm>
+#include <functional>
 
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/ProtocolTag_m.h"
@@ -46,11 +49,10 @@
 #include "inet/networklayer/ipv6/Ipv6Header.h"
 #include "inet/networklayer/ipv6/Ipv6InterfaceData.h"
 #include "inet/networklayer/ipv6/Ipv6RoutingTable.h"
-#include "inet/networklayer/ipv6tunneling/Ipv6Tunneling.h"
 
 #ifdef WITH_xMIPv6
-#include "inet/networklayer/xmipv6/xMIPv6.h"
 #include "inet/networklayer/xmipv6/MobilityHeader_m.h"    // for HA Option header
+#include "inet/networklayer/xmipv6/xMIPv6.h"
 #endif // ifdef WITH_xMIPv6
 
 namespace inet {
@@ -188,8 +190,10 @@ int Ipv6Tunneling::createTunnel(TunnelType tunnelType,
 int Ipv6Tunneling::findTunnel(const Ipv6Address& src, const Ipv6Address& dest,
         const Ipv6Address& destTrigger) const
 {
-    TI it = find_if(tunnels.begin(), tunnels.end(),
-                bind1st(equalTunnel(), std::make_pair((int)0, Tunnel(src, dest, destTrigger))));
+    TI it = std::find_if(tunnels.begin(), tunnels.end(),
+                std::bind(equalTunnel(),
+                    std::make_pair((int)0, Tunnel(src, dest, destTrigger)),
+                    std::placeholders::_1));
 
     if (it != tunnels.end())
         return it->first;
@@ -505,7 +509,7 @@ void Ipv6Tunneling::decapsulateDatagram(Packet *packet)
 #ifdef WITH_xMIPv6
     // Alain Tigyo, 21.03.2008
     // The following code is used for triggering RO to a CN
-    InterfaceEntry *ie = ift->getInterfaceById(packet->getTag<InterfaceInd>()->getInterfaceId());
+    NetworkInterface *ie = ift->getInterfaceById(packet->getTag<InterfaceInd>()->getInterfaceId());
     if (rt->isMobileNode() && (srcAddr == ie->getProtocolData<Ipv6InterfaceData>()->getHomeAgentAddress())
         && (ipv6Header->getProtocolId() != IP_PROT_IPv6EXT_MOB))
     {

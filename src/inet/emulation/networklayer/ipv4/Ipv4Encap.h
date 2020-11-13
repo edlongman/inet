@@ -1,5 +1,5 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -12,12 +12,14 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #ifndef __INET_IPV4ENCAP_H
 #define __INET_IPV4ENCAP_H
 
+#include "inet/common/packet/Message.h"
+#include "inet/common/packet/Packet.h"
 #include "inet/networklayer/ipv4/Ipv4Header_m.h"
 
 namespace inet {
@@ -53,5 +55,5 @@ class INET_API Ipv4Encap : public cSimpleModule
 
 } // namespace inet
 
-#endif // ifndef __INET_IPV4ENCAP_H
+#endif
 

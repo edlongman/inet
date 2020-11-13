@@ -1,10 +1,10 @@
 //
-// Copyright (C) 2006-2015 Opensim Ltd
+// Copyright (C) 2006-2015 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #include "inet/common/OsgUtils.h"
@@ -22,8 +22,8 @@
 #include <osg/Depth>
 #include <osg/Light>
 #include <osg/LightSource>
-#include <osg/LineWidth>
 #include <osg/LineStipple>
+#include <osg/LineWidth>
 #include <osgDB/ReadFile>
 #endif // ifdef WITH_OSG
 
@@ -170,7 +170,7 @@ Geometry *createPolygonGeometry(const std::vector<Coord>& points, const Coord& t
     return geometry;
 }
 
-osg::Node *createArrowhead(const Coord& start, const Coord &end, double width, double height)
+osg::Node *createArrowhead(const Coord& start, const Coord& end, double width, double height)
 {
     auto direction = start - end;
     auto arrowhead = inet::osg::createArrowheadGeometry(direction, Coord::ZERO, width, height);

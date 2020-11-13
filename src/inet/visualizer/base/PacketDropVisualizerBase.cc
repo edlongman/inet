@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,14 +12,16 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#include "inet/visualizer/base/PacketDropVisualizerBase.h"
+
 #include <algorithm>
+
 #include "inet/common/LayeredProtocolBase.h"
 #include "inet/common/ModuleAccess.h"
 #include "inet/mobility/contract/IMobility.h"
-#include "inet/visualizer/base/PacketDropVisualizerBase.h"
 
 namespace inet {
 
@@ -49,7 +51,7 @@ const cModule *PacketDrop::getNetworkNode() const
     return module != nullptr ? findContainingNode(module) : nullptr;
 }
 
-const InterfaceEntry *PacketDrop::getNetworkInterface() const
+const NetworkInterface *PacketDrop::getNetworkInterface() const
 {
     auto module = getModule();
     return module != nullptr ? findContainingNicModule(module) : nullptr;
@@ -101,12 +103,12 @@ bool PacketDropVisualizerBase::DetailsFilter::matches(const PacketDropDetails *d
     return const_cast<DetailsFilter *>(this)->matchExpression.matches(&matchableObject);
 }
 
-PacketDropVisualizerBase::~PacketDropVisualizerBase()
+void PacketDropVisualizerBase::preDelete(cComponent *root)
 {
-    for (auto packetDropVisualization : packetDropVisualizations)
-        delete packetDropVisualization;
-    if (displayPacketDrops)
+    if (displayPacketDrops) {
         unsubscribe();
+        removeAllPacketDropVisualizations();
+    }
 }
 
 void PacketDropVisualizerBase::initialize(int stage)
@@ -185,21 +187,21 @@ void PacketDropVisualizerBase::subscribe()
 void PacketDropVisualizerBase::unsubscribe()
 {
     // NOTE: lookup the module again because it may have been deleted first
-    auto visualizationSubjectModule = getModuleFromPar<cModule>(par("visualizationSubjectModule"), this, false);
+    auto visualizationSubjectModule = findModuleFromPar<cModule>(par("visualizationSubjectModule"), this);
     if (visualizationSubjectModule != nullptr)
         visualizationSubjectModule->unsubscribe(packetDroppedSignal, this);
 }
 
 void PacketDropVisualizerBase::receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details)
 {
-    Enter_Method_Silent();
+    Enter_Method("receiveSignal");
     if (signal == packetDroppedSignal) {
         auto module = check_and_cast<cModule *>(source);
         auto packet = check_and_cast<cPacket *>(object);
         auto packetDropDetails = check_and_cast<PacketDropDetails *>(details);
         auto networkNode = findContainingNode(module);
-        auto interfaceEntry = findContainingNicModule(module);
-        if ((networkNode == nullptr || nodeFilter.matches(networkNode)) && (interfaceEntry == nullptr || interfaceFilter.matches(interfaceEntry)) &&
+        auto networkInterface = findContainingNicModule(module);
+        if ((networkNode == nullptr || nodeFilter.matches(networkNode)) && (networkInterface == nullptr || interfaceFilter.matches(networkInterface)) &&
             packetFilter.matches(packet) && detailsFilter.matches(packetDropDetails))
         {
             auto position = networkNode != nullptr ? getPosition(networkNode) : Coord::NIL;

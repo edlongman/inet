@@ -1,9 +1,8 @@
-#ifndef __INET_OSPFV3INTERFACESTATEDOWN_H_
-#define __INET_OSPFV3INTERFACESTATEDOWN_H_
+#ifndef __INET_OSPFV3INTERFACESTATEDOWN_H
+#define __INET_OSPFV3INTERFACESTATEDOWN_H
 
 #include <string>
 
-#include "inet/common/INETDefs.h"
 #include "inet/routing/ospfv3/interface/Ospfv3InterfaceState.h"
 #include "inet/routing/ospfv3/interface/Ospfv3InterfaceStateWaiting.h"
 
@@ -22,5 +21,5 @@ class INET_API Ospfv3InterfaceStateDown : public Ospfv3InterfaceState
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3INTERFACESTATEDOWN_H_
+#endif
 

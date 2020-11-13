@@ -1,10 +1,10 @@
 //
-// Copyright (C) 2012 Andras Varga
+// Copyright (C) 2012 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,12 +12,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/networklayer/ipv4/RoutingTableRecorder.h"
 
 #include <cinttypes>
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/INETUtils.h"
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/Simsignals.h"
@@ -25,7 +26,6 @@
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
 #include "inet/networklayer/ipv4/Ipv4InterfaceData.h"
 #include "inet/networklayer/ipv4/Ipv4Route.h"
-#include "inet/networklayer/ipv4/RoutingTableRecorder.h"
 
 namespace inet {
 
@@ -100,12 +100,12 @@ void RoutingTableRecorder::receiveChangeNotification(cComponent *nsource, simsig
     if (signalID == routeAddedSignal || signalID == routeDeletedSignal || signalID == routeChangedSignal)
         recordRouteChange(host, check_and_cast<const IRoute *>(obj), signalID);
     else if (signalID == interfaceCreatedSignal || signalID == interfaceDeletedSignal)
-        recordInterfaceChange(host, check_and_cast<const InterfaceEntry *>(obj), signalID);
+        recordInterfaceChange(host, check_and_cast<const NetworkInterface *>(obj), signalID);
     else if (signalID == interfaceConfigChangedSignal || signalID == interfaceIpv4ConfigChangedSignal)
-        recordInterfaceChange(host, check_and_cast<const InterfaceEntryChangeDetails *>(obj)->getInterfaceEntry(), signalID);
+        recordInterfaceChange(host, check_and_cast<const NetworkInterfaceChangeDetails *>(obj)->getNetworkInterface(), signalID);
 }
 
-void RoutingTableRecorder::recordInterfaceChange(cModule *host, const InterfaceEntry *ie, simsignal_t signalID)
+void RoutingTableRecorder::recordInterfaceChange(cModule *host, const NetworkInterface *ie, simsignal_t signalID)
 {
     // Note: ie->getInterfaceTable() may be nullptr (entry already removed from its table)
 
@@ -125,11 +125,11 @@ void RoutingTableRecorder::recordInterfaceChange(cModule *host, const InterfaceE
     // action, eventNo, simtime, moduleId, ifname, address
     ensureRoutingLogFileOpen();
     auto ipv4Data = ie->findProtocolData<Ipv4InterfaceData>();
-    fprintf(routingLogFile, "%s  %" PRId64 "  %s  %d  %s %s\n",
+    fprintf(routingLogFile, "%s  #%" PRId64 "  %ss  %s  %s %s\n",
             tag,
             getSimulation()->getEventNumber(),
             SIMTIME_STR(simTime()),
-            host->getId(),
+            host->getFullPath().c_str(),
             ie->getInterfaceName(),
             (ipv4Data != nullptr ? ipv4Data->getIPAddress().str().c_str() : Ipv4Address().str().c_str())
             );
@@ -152,15 +152,17 @@ void RoutingTableRecorder::recordRouteChange(cModule *host, const IRoute *route,
 
     // action, eventNo, simtime, moduleId, routerID, dest, dest netmask, nexthop
     ensureRoutingLogFileOpen();
-    fprintf(routingLogFile, "%s %" PRId64 "  %s  %d  %s  %s  %d  %s\n",
+    auto ie = route->getInterface();
+    fprintf(routingLogFile, "%s #%" PRId64 "  %ss  %s  %s  %s/%d  %s  %s\n",
             tag,
             getSimulation()->getEventNumber(),
             SIMTIME_STR(simTime()),
-            host->getId(),
+            host->getFullPath().c_str(),
             (rt ? rt->getRouterIdAsGeneric().str().c_str() : "*"),
             route->getDestinationAsGeneric().str().c_str(),
             route->getPrefixLength(),
-            route->getNextHopAsGeneric().str().c_str()
+            route->getNextHopAsGeneric().str().c_str(),
+            (ie ? ie->getInterfaceName() : "*")
             );
     fflush(routingLogFile);
 }

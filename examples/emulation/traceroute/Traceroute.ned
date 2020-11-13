@@ -13,12 +13,12 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 package inet.examples.emulation.traceroute;
 
-import inet.node.ethernet.EtherSwitch;
+import inet.node.ethernet.EthernetSwitch;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
 import ned.DatarateChannel;
@@ -94,25 +94,25 @@ network Traceroute
             gates:
                 ethg[1];
         }
-        switch1: EtherSwitch {
+        switch1: EthernetSwitch {
             parameters:
                 @display("p=127,102;i=device/switch");
             gates:
                 ethg[3];
         }
-        switch2: EtherSwitch {
+        switch2: EthernetSwitch {
             parameters:
                 @display("p=129,254;i=device/switch");
             gates:
                 ethg[3];
         }
-        switch3: EtherSwitch {
+        switch3: EthernetSwitch {
             parameters:
                 @display("p=137,398;i=device/switch");
             gates:
                 ethg[3];
         }
-        switch4: EtherSwitch {
+        switch4: EthernetSwitch {
             parameters:
                 @display("p=138,534;i=device/switch");
             gates:

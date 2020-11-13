@@ -1,6 +1,4 @@
 //
-// Author: Marcin Kosiba
-//
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2
@@ -12,13 +10,15 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+//
+// Author: Marcin Kosiba
 //
 
 #ifndef __INET_CHIANGMOBILITY_H
 #define __INET_CHIANGMOBILITY_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/mobility/base/LineSegmentsMobilityBase.h"
 
 namespace inet {
@@ -58,5 +58,5 @@ class INET_API ChiangMobility : public LineSegmentsMobilityBase
 
 } // namespace inet
 
-#endif // ifndef __INET_CHIANGMOBILITY_H
+#endif
 

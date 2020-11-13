@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,17 +12,18 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/visualizer/base/MediumVisualizerBase.h"
 
 #include "inet/common/ModuleAccess.h"
 #include "inet/networklayer/common/L3AddressResolver.h"
-#include "inet/visualizer/base/MediumVisualizerBase.h"
 
 #ifdef WITH_RADIO
-#include "inet/physicallayer/analogmodel/packetlevel/DimensionalAnalogModel.h"
-#include "inet/physicallayer/analogmodel/packetlevel/DimensionalReception.h"
-#include "inet/physicallayer/analogmodel/packetlevel/DimensionalTransmission.h"
+#include "inet/physicallayer/wireless/common/analogmodel/packetlevel/DimensionalAnalogModel.h"
+#include "inet/physicallayer/wireless/common/analogmodel/packetlevel/DimensionalReception.h"
+#include "inet/physicallayer/wireless/common/analogmodel/packetlevel/DimensionalTransmission.h"
 #endif // WITH_RADIO
 
 namespace inet {
@@ -33,10 +34,10 @@ namespace visualizer {
 
 using namespace inet::physicallayer;
 
-MediumVisualizerBase::~MediumVisualizerBase()
+void MediumVisualizerBase::preDelete(cComponent *root)
 {
     // NOTE: lookup the medium module again because it may have been deleted first
-    auto radioMediumModule = getModuleFromPar<cModule>(par("mediumModule"), this, false);
+    auto radioMediumModule = findModuleFromPar<cModule>(par("mediumModule"), this);
     if (radioMediumModule != nullptr) {
         radioMediumModule->unsubscribe(IRadioMedium::radioAddedSignal, this);
         radioMediumModule->unsubscribe(IRadioMedium::radioRemovedSignal, this);
@@ -140,7 +141,7 @@ void MediumVisualizerBase::initialize(int stage)
         spectrogramPlacementHint = parsePlacement(par("spectrogramPlacementHint"));
         spectrogramPlacementPriority = par("spectrogramPlacementPriority");
         mediumPowerDensityFunction = makeShared<SummedFunction<WpHz, Domain<m, m, m, simsec, Hz>>>();
-        radioMedium = getModuleFromPar<IRadioMedium>(par("mediumModule"), this, false);
+        radioMedium = findModuleFromPar<IRadioMedium>(par("mediumModule"), this);
         if (radioMedium != nullptr) {
             cModule *radioMediumModule = check_and_cast<cModule *>(radioMedium);
             radioMediumModule->subscribe(IRadioMedium::radioAddedSignal, this);
@@ -198,7 +199,7 @@ void MediumVisualizerBase::handleParameterChange(const char *name)
 
 void MediumVisualizerBase::receiveSignal(cComponent *source, simsignal_t signal, cObject *object, cObject *details)
 {
-    Enter_Method_Silent();
+    Enter_Method("receiveSignal");
     if (signal == IRadioMedium::radioAddedSignal)
         handleRadioAdded(check_and_cast<IRadio *>(object));
     else if (signal == IRadioMedium::radioRemovedSignal)
@@ -246,8 +247,8 @@ bool MediumVisualizerBase::matchesTransmission(const ITransmission *transmission
     auto networkNode = getContainingNode(radio);
     if (!networkNodeFilter.matches(networkNode))
         return false;
-    auto interfaceEntry = getContainingNicModule(radio);
-    if (!interfaceFilter.matches(interfaceEntry))
+    auto networkInterface = getContainingNicModule(radio);
+    if (!interfaceFilter.matches(networkInterface))
         return false;
     auto packet = transmission->getPacket();
     return packet == nullptr || packetFilter.matches(packet);

@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,18 +12,19 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "inet/applications/common/SocketTag_m.h"
+#include "inet/linklayer/ieee8022/Ieee8022Llc.h"
+
 #include "inet/common/IProtocolRegistrationListener.h"
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/ProtocolGroup.h"
 #include "inet/common/ProtocolTag_m.h"
 #include "inet/common/Simsignals.h"
 #include "inet/common/lifecycle/NodeStatus.h"
+#include "inet/common/socket/SocketTag_m.h"
 #include "inet/linklayer/common/Ieee802SapTag_m.h"
-#include "inet/linklayer/ieee8022/Ieee8022Llc.h"
 #include "inet/linklayer/ieee8022/Ieee8022LlcSocketCommand_m.h"
 
 namespace inet {
@@ -43,10 +44,9 @@ void Ieee8022Llc::initialize(int stage)
     }
     else if (stage == INITSTAGE_LINK_LAYER)
     {
-        if (par("registerProtocol").boolValue()) {    //FIXME //KUDGE should redesign place of EtherEncap and LLC modules
+        if (par("registerProtocol").boolValue()) {    //FIXME //KUDGE should redesign place of EthernetEncapsulation and LLC modules
             //register service and protocol
-            registerService(Protocol::ieee8022, gate("upperLayerIn"), nullptr);
-            registerProtocol(Protocol::ieee8022, nullptr, gate("upperLayerOut"));
+            registerService(Protocol::ieee8022llc, gate("upperLayerIn"), gate("upperLayerOut"));
         }
 
         WATCH_PTRMAP(socketIdToSocketDescriptor);
@@ -89,7 +89,7 @@ void Ieee8022Llc::processCommandFromHigherLayer(Request *request)
         socketIdToSocketDescriptor[socketId] = descriptor;
         delete request;
     }
-    else if (dynamic_cast<Ieee8022LlcSocketCloseCommand *>(ctrl) != nullptr) {
+    else if (dynamic_cast<SocketCloseCommand *>(ctrl) != nullptr) {
         int socketId = request->getTag<SocketReq>()->getSocketId();
         auto it = socketIdToSocketDescriptor.find(socketId);
         if (it != socketIdToSocketDescriptor.end()) {
@@ -97,14 +97,14 @@ void Ieee8022Llc::processCommandFromHigherLayer(Request *request)
             socketIdToSocketDescriptor.erase(it);
         }
         delete request;
-        auto indication = new Indication("closed", IEEE8022_LLC_I_SOCKET_CLOSED);
-        auto ctrl = new Ieee8022LlcSocketClosedIndication();
+        auto indication = new Indication("closed", SOCKET_I_CLOSED);
+        auto ctrl = new SocketClosedIndication();
         indication->setControlInfo(ctrl);
         indication->addTag<SocketInd>()->setSocketId(socketId);
         send(indication, "upperLayerOut");
 
     }
-    else if (dynamic_cast<Ieee8022LlcSocketDestroyCommand *>(ctrl) != nullptr) {
+    else if (dynamic_cast<SocketDestroyCommand *>(ctrl) != nullptr) {
         int socketId = request->getTag<SocketReq>()->getSocketId();
         auto it = socketIdToSocketDescriptor.find(socketId);
         if (it != socketIdToSocketDescriptor.end()) {
@@ -132,14 +132,14 @@ void Ieee8022Llc::processPacketFromMac(Packet *packet)
                 auto *packetCopy = packet->dup();
                 packetCopy->addTagIfAbsent<SocketInd>()->setSocketId(elem.second->socketId);
                 EV_INFO << "Passing up to socket " << elem.second->socketId << "\n";
-                packetCopy->setKind(IEEE8022_LLC_I_DATA);
+                packetCopy->setKind(SOCKET_I_DATA);
                 send(packetCopy, "upperLayerOut");
                 isSent = true;
             }
         }
     }
 
-    auto protocolTag = packet->findTag<PacketProtocolTag>();
+    const auto& protocolTag = packet->findTag<PacketProtocolTag>();
     if (protocolTag != nullptr && upperProtocols.find(protocolTag->getProtocol()) != upperProtocols.end()) {
         send(packet, "upperLayerOut");
     }
@@ -156,7 +156,7 @@ void Ieee8022Llc::processPacketFromMac(Packet *packet)
 
 void Ieee8022Llc::encapsulate(Packet *frame)
 {
-    auto protocolTag = frame->findTag<PacketProtocolTag>();
+    const auto& protocolTag = frame->findTag<PacketProtocolTag>();
     const Protocol *protocol = protocolTag ? protocolTag->getProtocol() : nullptr;
     int ethType = -1;
     int snapOui = -1;
@@ -193,7 +193,7 @@ void Ieee8022Llc::encapsulate(Packet *frame)
         }
         frame->insertAtFront(llcHeader);
     }
-    frame->addTagIfAbsent<PacketProtocolTag>()->setProtocol(&Protocol::ieee8022);
+    frame->addTagIfAbsent<PacketProtocolTag>()->setProtocol(&Protocol::ieee8022llc);
 }
 
 void Ieee8022Llc::decapsulate(Packet *frame)
@@ -216,8 +216,8 @@ void Ieee8022Llc::decapsulate(Packet *frame)
         frame->addTagIfAbsent<PacketProtocolTag>()->setProtocol(payloadProtocol);
     }
     else {
-        delete frame->removeTagIfPresent<DispatchProtocolReq>();
-        delete frame->removeTagIfPresent<PacketProtocolTag>();
+        frame->removeTagIfPresent<DispatchProtocolReq>();
+        frame->removeTagIfPresent<PacketProtocolTag>();
     }
 }
 
@@ -240,15 +240,16 @@ const Protocol *Ieee8022Llc::getProtocol(const Ptr<const Ieee8022LlcHeader>& llc
     return payloadProtocol;
 }
 
-void Ieee8022Llc::handleRegisterService(const Protocol& protocol, cGate *out, ServicePrimitive servicePrimitive)
+void Ieee8022Llc::handleRegisterService(const Protocol& protocol, cGate *gate, ServicePrimitive servicePrimitive)
 {
     Enter_Method("handleRegisterService");
 }
 
-void Ieee8022Llc::handleRegisterProtocol(const Protocol& protocol, cGate *in, ServicePrimitive servicePrimitive)
+void Ieee8022Llc::handleRegisterProtocol(const Protocol& protocol, cGate *gate, ServicePrimitive servicePrimitive)
 {
     Enter_Method("handleRegisterProtocol");
-    if (!strcmp("upperLayerIn", in->getBaseName()))
+// KLUDGE: this should be here: if (!strcmp("upperLayerOut", gate->getBaseName()))
+//         but then the register protocol calls are lost, because they can't go through the traffic conditioner
         upperProtocols.insert(&protocol);
 }
 

@@ -1,4 +1,6 @@
 //
+// Copyright (C) 2020 OpenSim Ltd.
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -10,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #ifndef __INET_ROTATINGMOBILITYBASE_H
@@ -73,13 +75,13 @@ class INET_API RotatingMobilityBase : public MobilityBase
 
   public:
     /** @brief Returns the current angular position at the current simulation time. */
-    virtual Quaternion getCurrentAngularPosition() override;
+    virtual const Quaternion& getCurrentAngularPosition() override;
 
     /** @brief Returns the current angular velocity at the current simulation time. */
-    virtual Quaternion getCurrentAngularVelocity() override;
+    virtual const Quaternion& getCurrentAngularVelocity() override;
 };
 
 } // namespace inet
 
-#endif /* ROTATINGMOBILITYBASE_H_ */
+#endif
 

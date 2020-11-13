@@ -1,9 +1,8 @@
-#ifndef __INET_OSPFV3INTERFACESTATELOOPBACK_H_
-#define __INET_OSPFV3INTERFACESTATELOOPBACK_H_
+#ifndef __INET_OSPFV3INTERFACESTATELOOPBACK_H
+#define __INET_OSPFV3INTERFACESTATELOOPBACK_H
 
 #include <string>
 
-#include "inet/common/INETDefs.h"
 #include "inet/routing/ospfv3/interface/Ospfv3InterfaceState.h"
 
 namespace inet {
@@ -27,5 +26,5 @@ class INET_API Ospfv3InterfaceStateLoopback : public Ospfv3InterfaceState
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3INTERFACESTATELOOPBACK_H_
+#endif
 

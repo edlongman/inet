@@ -1,10 +1,10 @@
 //
-// Copyright (C) 2006-2015 Opensim Ltd
+// Copyright (C) 2006-2015 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 #ifndef __INET_OSGUTILS_H
@@ -23,6 +23,7 @@
 
 #if defined(WITH_OSG) && defined(WITH_VISUALIZERS)
 #include <omnetpp/osgutil.h>
+
 #include <osg/AutoTransform>
 #include <osg/Geode>
 #include <osg/Geometry>
@@ -56,7 +57,7 @@ Geometry *createAnnulusGeometry(const Coord& center, double outerRadius, double 
 Geometry *createQuadGeometry(const Coord& start, const Coord& end);
 Geometry *createPolygonGeometry(const std::vector<Coord>& points, const Coord& translation = Coord::ZERO);
 
-Node *createArrowhead(const Coord& start, const Coord &end, double width = 10.0, double height = 20.0);
+Node *createArrowhead(const Coord& start, const Coord& end, double width = 10.0, double height = 20.0);
 Node *createLine(const Coord& start, const Coord& end, cFigure::Arrowhead startArrowhead, cFigure::Arrowhead endArrowhead);
 Node *createPolyline(const std::vector<Coord>& coords, cFigure::Arrowhead startArrowhead, cFigure::Arrowhead endArrowhead);
 osgText::Text *createText(const char *string, const Coord& position, const cFigure::Color& color);
@@ -106,5 +107,5 @@ class INET_API LineNode : public Group
 
 } // namespace inet
 
-#endif // ifndef __INET_OSGUTILS_H
+#endif
 

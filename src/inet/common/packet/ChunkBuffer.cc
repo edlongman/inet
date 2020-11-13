@@ -1,4 +1,6 @@
 //
+// Copyright (C) 2020 OpenSim Ltd.
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -10,12 +12,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/common/packet/ChunkBuffer.h"
 
 #include <algorithm>
 
-#include "inet/common/packet/ChunkBuffer.h"
 #include "inet/common/packet/chunk/ByteCountChunk.h"
 #include "inet/common/packet/chunk/SequenceChunk.h"
 
@@ -179,7 +182,7 @@ std::string ChunkBuffer::str() const
             os << " | ";
         else
             first = false;
-        os << "offset = " << region.offset << ", chunk = ";
+        os << EV_FIELD(offset, region.offset) << ", chunk = ";
         if (region.data == nullptr)
             os << "<nullptr>";
         else

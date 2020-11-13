@@ -1,5 +1,6 @@
 
 #include "inet/routing/ospfv3/neighbor/Ospfv3Neighbor.h"
+
 #include "inet/routing/ospfv3/neighbor/Ospfv3NeighborStateDown.h"
 
 namespace inet {
@@ -185,7 +186,6 @@ void Ospfv3Neighbor::sendDDPacket(bool init)
 
     //DD packet next
     Ospfv3Options options;
-    memset(&options, 0, sizeof(Ospfv3Options));
     options.eBit = this->getInterface()->getArea()->getExternalRoutingCapability();
     ddPacket->setOptions(options);
     ddPacket->setInterfaceMTU(this->getInterface()->getInterfaceMTU());

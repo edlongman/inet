@@ -1,10 +1,10 @@
 //
-// Copyright (C) 2005 Andras Varga
+// Copyright (C) 2005 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,27 +12,16 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "inet/common/INETMath.h"
 #include "inet/mobility/single/CircleMobility.h"
+
+#include "inet/common/INETMath.h"
 
 namespace inet {
 
 Define_Module(CircleMobility);
-
-CircleMobility::CircleMobility()
-{
-    cx = 0;
-    cy = 0;
-    cz = 0;
-    r = -1;
-    startAngle = deg(0);
-    speed = 0;
-    omega = 0;
-    angle = deg(0);
-}
 
 void CircleMobility::initialize(int stage)
 {
@@ -49,12 +38,15 @@ void CircleMobility::initialize(int stage)
         speed = par("speed");
         omega = speed / r;
         stationary = (omega == 0);
+        lastAngularVelocity = Quaternion(EulerAngles(rad(omega), rad(0), rad(0)));
+        WATCH(lastAngularVelocity);
     }
 }
 
 void CircleMobility::setInitialPosition()
 {
     move();
+    orient();
 }
 
 void CircleMobility::move()

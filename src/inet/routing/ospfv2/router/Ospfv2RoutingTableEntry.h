@@ -12,7 +12,8 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 #ifndef __INET_OSPFV2ROUTINGTABLEENTRY_H
@@ -20,7 +21,6 @@
 
 #include <memory.h>
 
-#include "inet/common/INETDefs.h"
 #include "inet/networklayer/contract/IInterfaceTable.h"
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
 #include "inet/routing/ospfv2/Ospfv2Packet_m.h"
@@ -99,5 +99,5 @@ std::ostream& operator<<(std::ostream& out, const Ospfv2RoutingTableEntry& entry
 
 } // namespace inet
 
-#endif // ifndef __INET_OSPFV2ROUTINGTABLEENTRY_H
+#endif
 

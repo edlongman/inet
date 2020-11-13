@@ -1,10 +1,10 @@
 //
-// Copyright (C) 2012 OpenSim Ltd
+// Copyright (C) 2012 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,13 +12,12 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
-//
-// @author Zoltan Bojthe
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "inet/linklayer/common/InterfaceTag_m.h"
 #include "inet/networklayer/internetcloud/CloudDelayerBase.h"
+
+#include "inet/linklayer/common/InterfaceTag_m.h"
 #include "inet/networklayer/ipv4/Ipv4.h"
 
 namespace inet {
@@ -78,7 +77,7 @@ INetfilter::IHook::Result CloudDelayerBase::datagramPreRoutingHook(Packet *datag
 
 INetfilter::IHook::Result CloudDelayerBase::datagramForwardHook(Packet *datagram)
 {
-    Enter_Method_Silent();
+    Enter_Method("datagramForwardHook");
 
     auto ifInd = datagram->getTag<InterfaceInd>();
     int srcID = ifInd ? ifInd->getInterfaceId() : -1;
@@ -98,7 +97,7 @@ INetfilter::IHook::Result CloudDelayerBase::datagramForwardHook(Packet *datagram
         EV_INFO << "Message " << datagram->str() << " delayed with " << propDelay * 1000.0 << "ms in cloud.\n";
         cMessage *selfmsg = new cMessage("Delay");
         selfmsg->setContextPointer(datagram);     // datagram owned by INetfilter module (Ipv4, Ipv6, ...)
-        scheduleAt(simTime() + propDelay, selfmsg);
+        scheduleAfter(propDelay, selfmsg);
         return INetfilter::IHook::QUEUE;
     }
     return INetfilter::IHook::ACCEPT;

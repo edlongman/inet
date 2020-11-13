@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,13 +12,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "omnetpp/cstatisticbuilder.h"
+#include "inet/visualizer/base/StatisticVisualizerBase.h"
 
 #include "inet/common/ModuleAccess.h"
-#include "inet/visualizer/base/StatisticVisualizerBase.h"
+#include "omnetpp/cstatisticbuilder.h"
 
 namespace inet {
 
@@ -33,10 +33,12 @@ StatisticVisualizerBase::StatisticVisualization::StatisticVisualization(int modu
 {
 }
 
-StatisticVisualizerBase::~StatisticVisualizerBase()
+void StatisticVisualizerBase::preDelete(cComponent *root)
 {
-    if (displayStatistics)
+    if (displayStatistics) {
         unsubscribe();
+        removeAllStatisticVisualizations();
+    }
 }
 
 const char *StatisticVisualizerBase::DirectiveResolver::resolveDirective(char directive) const
@@ -114,7 +116,7 @@ void StatisticVisualizerBase::subscribe()
 void StatisticVisualizerBase::unsubscribe()
 {
     // NOTE: lookup the module again because it may have been deleted first
-    auto visualizationSubjectModule = getModuleFromPar<cModule>(par("visualizationSubjectModule"), this, false);
+    auto visualizationSubjectModule = findModuleFromPar<cModule>(par("visualizationSubjectModule"), this);
     if (visualizationSubjectModule != nullptr) {
         if (*signalName != '\0')
             visualizationSubjectModule->unsubscribe(registerSignal(signalName), this);

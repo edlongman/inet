@@ -10,12 +10,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/transportlayer/rtp/RtcpPacketSerializer.h"
 
 #include "inet/common/packet/serializer/ChunkSerializerRegistry.h"
 #include "inet/transportlayer/rtp/RtcpPacket_m.h"
-#include "inet/transportlayer/rtp/RtcpPacketSerializer.h"
 
 namespace inet {
 namespace rtp {

@@ -1,11 +1,10 @@
 //
-// Copyright (C) 2012 Opensim Ltd.
-// Author: Tamas Borbely
+// Copyright (C) 2012 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,12 +12,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include "inet/common/INETUtils.h"
-#include "inet/networklayer/common/InterfaceEntry.h"
 #include "inet/networklayer/diffserv/DiffservUtil.h"
+
+#include "inet/common/INETUtils.h"
+#include "inet/networklayer/common/NetworkInterface.h"
 #include "inet/networklayer/diffserv/Dscp_m.h"
 
 #ifdef WITH_IPv4
@@ -182,7 +182,7 @@ std::string colorToString(int color)
 
 double getInterfaceDatarate(IInterfaceTable *ift, cSimpleModule *interfaceModule)
 {
-    InterfaceEntry *ie = ift ? ift->findInterfaceByInterfaceModule(interfaceModule) : nullptr;
+    NetworkInterface *ie = ift ? ift->findInterfaceByInterfaceModule(interfaceModule) : nullptr;
     return ie ? ie->getDatarate() : -1;
 }
 

@@ -12,11 +12,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
-#include "inet/common/ProtocolGroup.h"
 #include "inet/linklayer/ieee80211/llc/Ieee80211LlcLpd.h"
+
+#include "inet/common/ProtocolGroup.h"
 #include "inet/linklayer/ieee80211/llc/LlcProtocolTag_m.h"
 
 namespace inet {
@@ -32,7 +34,7 @@ void Ieee80211LlcLpd::encapsulate(Packet *frame)
 
 const Protocol *Ieee80211LlcLpd::getProtocol() const
 {
-    return &Protocol::ieee8022;
+    return &Protocol::ieee8022llc;
 }
 
 } // namespace ieee80211

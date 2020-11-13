@@ -1,7 +1,6 @@
-#ifndef __INET_OSPFV3NEIGHBORSTATEATTEMPT_H_
-#define __INET_OSPFV3NEIGHBORSTATEATTEMPT_H_
+#ifndef __INET_OSPFV3NEIGHBORSTATEATTEMPT_H
+#define __INET_OSPFV3NEIGHBORSTATEATTEMPT_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/routing/ospfv3/neighbor/Ospfv3Neighbor.h"
 #include "inet/routing/ospfv3/neighbor/Ospfv3NeighborState.h"
 
@@ -24,5 +23,5 @@ class INET_API Ospfv3NeighborStateAttempt : public Ospfv3NeighborState
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3NEIGHBORSTATEATTEMPT_H_
+#endif
 

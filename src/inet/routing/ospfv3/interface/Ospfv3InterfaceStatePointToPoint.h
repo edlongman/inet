@@ -1,11 +1,11 @@
-#ifndef __INET_OSPFV3INTERFACESTATEPOINTTOPOINT_H_
-#define __INET_OSPFV3INTERFACESTATEPOINTTOPOINT_H_
+#ifndef __INET_OSPFV3INTERFACESTATEPOINTTOPOINT_H
+#define __INET_OSPFV3INTERFACESTATEPOINTTOPOINT_H
 
 #include <omnetpp.h>
+
 #include <string>
 
 #include "inet/routing/ospfv3/interface/Ospfv3InterfaceState.h"
-#include "inet/common/INETDefs.h"
 
 namespace inet {
 namespace ospfv3 {
@@ -28,5 +28,5 @@ class INET_API Ospfv3InterfaceStatePointToPoint : public Ospfv3InterfaceState
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3INTERFACESTATEPOINTTOPOINT_H_
+#endif
 

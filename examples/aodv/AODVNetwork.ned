@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 package inet.examples.aodv;
@@ -21,7 +21,7 @@ import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.networklayer.ipv4.RoutingTableRecorder;
 import inet.node.aodv.AodvRouter;
-import inet.physicallayer.unitdisk.UnitDiskRadioMedium;
+import inet.physicallayer.wireless.unitdisk.UnitDiskRadioMedium;
 
 
 network AODVNetwork

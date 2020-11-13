@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2004-2005 Andras Varga
+// Copyright (C) 2004-2005 OpenSim Ltd.
 // Copyright (C) 2009 Thomas Reschka
 //
 // This program is free software; you can redistribute it and/or
@@ -13,13 +13,15 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
+#include "inet/transportlayer/tcp/flavours/TcpReno.h"
 
 #include <algorithm>    // min,max
 
 #include "inet/transportlayer/tcp/Tcp.h"
-#include "inet/transportlayer/tcp/flavours/TcpReno.h"
 
 namespace inet {
 namespace tcp {
@@ -45,8 +47,8 @@ void TcpReno::recalculateSlowStartThreshold()
 
     // set ssthresh to flight size / 2, but at least 2 SMSS
     // (the formula below practically amounts to ssthresh = cwnd / 2 most of the time)
-    uint32 flight_size = std::min(state->snd_cwnd, state->snd_wnd);    // FIXME TODO - Does this formula computes the amount of outstanding data?
-    // uint32 flight_size = state->snd_max - state->snd_una;
+    uint32_t flight_size = std::min(state->snd_cwnd, state->snd_wnd);    // FIXME TODO - Does this formula computes the amount of outstanding data?
+    // uint32_t flight_size = state->snd_max - state->snd_una;
     state->ssthresh = std::max(flight_size / 2, 2 * state->snd_mss);
 
     conn->emit(ssthreshSignal, state->ssthresh);
@@ -86,11 +88,11 @@ void TcpReno::processRexmitTimer(TcpEventCode& event)
     conn->retransmitOneSegment(true);
 }
 
-void TcpReno::receivedDataAck(uint32 firstSeqAcked)
+void TcpReno::receivedDataAck(uint32_t firstSeqAcked)
 {
     TcpTahoeRenoFamily::receivedDataAck(firstSeqAcked);
 
-    if (state->dupacks >= DUPTHRESH) {    // DUPTHRESH = 3
+    if (state->dupacks >= state->dupthresh) {
         //
         // Perform Fast Recovery: set cwnd to ssthresh (deflating the window).
         //
@@ -124,7 +126,7 @@ void TcpReno::receivedDataAck(uint32 firstSeqAcked)
             // within the last round trip time.
             if (simTime() - state->eceReactionTime > state->srtt) {
                 state->ssthresh = state->snd_cwnd / 2;
-                state->snd_cwnd = std::max(state->snd_cwnd / 2, uint32(1));
+                state->snd_cwnd = std::max(state->snd_cwnd / 2, uint32_t(1));
                 state->sndCwr = true;
                 performSsCa = false;
                 EV_INFO
@@ -166,7 +168,7 @@ void TcpReno::receivedDataAck(uint32 firstSeqAcked)
             }
             else {
                 // perform Congestion Avoidance (RFC 2581)
-                uint32 incr = state->snd_mss * state->snd_mss / state->snd_cwnd;
+                uint32_t incr = state->snd_mss * state->snd_mss / state->snd_cwnd;
 
                 if (incr == 0)
                     incr = 1;
@@ -240,8 +242,8 @@ void TcpReno::receivedDuplicateAck()
 {
     TcpTahoeRenoFamily::receivedDuplicateAck();
 
-    if (state->dupacks == DUPTHRESH) {    // DUPTHRESH = 3
-        EV_INFO << "Reno on dupAcks == DUPTHRESH(=3): perform Fast Retransmit, and enter Fast Recovery:";
+    if (state->dupacks == state->dupthresh) {
+        EV_INFO << "Reno on dupAcks == DUPTHRESH(=" << state->dupthresh << ": perform Fast Retransmit, and enter Fast Recovery:";
 
         if (state->sack_enabled) {
             // RFC 3517, page 6: "When a TCP sender receives the duplicate ACK corresponding to
@@ -329,14 +331,14 @@ void TcpReno::receivedDuplicateAck()
         // try to transmit new segments (RFC 2581)
         sendData(false);
     }
-    else if (state->dupacks > DUPTHRESH) {    // DUPTHRESH = 3
+    else if (state->dupacks > state->dupthresh) {
         //
         // Reno: For each additional duplicate ACK received, increment cwnd by SMSS.
         // This artificially inflates the congestion window in order to reflect the
         // additional segment that has left the network
         //
         state->snd_cwnd += state->snd_mss;
-        EV_DETAIL << "Reno on dupAcks > DUPTHRESH(=3): Fast Recovery: inflating cwnd by SMSS, new cwnd=" << state->snd_cwnd << "\n";
+        EV_DETAIL << "Reno on dupAcks > DUPTHRESH(=" << state->dupthresh << ": Fast Recovery: inflating cwnd by SMSS, new cwnd=" << state->snd_cwnd << "\n";
 
         conn->emit(cwndSignal, state->snd_cwnd);
 

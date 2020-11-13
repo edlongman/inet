@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2004-2006 Andras Varga
+// Copyright (C) 2004-2006 OpenSim Ltd.
 // Copyright (C) 2000 Institut fuer Telematik, Universitaet Karlsruhe
 //
 // This program is free software; you can redistribute it and/or
@@ -13,16 +13,19 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
-#include <sstream>
+#include "inet/networklayer/ipv4/Ipv4Route.h"
+
 #include <stdio.h>
 
-#include "inet/networklayer/common/InterfaceEntry.h"
+#include <sstream>
+
+#include "inet/networklayer/common/NetworkInterface.h"
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
 #include "inet/networklayer/ipv4/Ipv4InterfaceData.h"
-#include "inet/networklayer/ipv4/Ipv4Route.h"
 #include "inet/networklayer/ipv4/Ipv4RoutingTable.h"
 
 namespace inet {
@@ -218,7 +221,7 @@ void Ipv4MulticastRoute::addOutInterface(OutInterface *outInterface)
     changed(F_OUT);
 }
 
-bool Ipv4MulticastRoute::removeOutInterface(const InterfaceEntry *ie)
+bool Ipv4MulticastRoute::removeOutInterface(const NetworkInterface *ie)
 {
     for (auto it = outInterfaces.begin(); it != outInterfaces.end(); ++it) {
         if ((*it)->getInterface() == ie) {

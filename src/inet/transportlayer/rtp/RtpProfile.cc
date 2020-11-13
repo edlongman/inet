@@ -1,3 +1,18 @@
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+//
 /***************************************************************************
                           RtpProfile.cc  -  description
                              -------------------
@@ -6,21 +21,14 @@
 
 ***************************************************************************/
 
-/***************************************************************************
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-***************************************************************************/
+
+#include "inet/transportlayer/rtp/RtpProfile.h"
 
 #include <string.h>
 
 #include "inet/transportlayer/rtp/RtpInnerPacket_m.h"
 #include "inet/transportlayer/rtp/RtpPayloadReceiver.h"
 #include "inet/transportlayer/rtp/RtpPayloadSender.h"
-#include "inet/transportlayer/rtp/RtpProfile.h"
 
 namespace inet {
 namespace rtp {
@@ -205,7 +213,7 @@ void RtpProfile::dataIn(RtpInnerPacket *rinp)
     Packet *packet = check_and_cast<Packet *>(rinp->getEncapsulatedPacket());
     const auto& rtpHeader = packet->peekAtFront<RtpHeader>();
 
-    uint32 ssrc = rtpHeader->getSsrc();
+    uint32_t ssrc = rtpHeader->getSsrc();
 
     SsrcGate *ssrcGate = findSSRCGate(ssrc);
 
@@ -272,7 +280,7 @@ void RtpProfile::processOutgoingPacket(RtpInnerPacket *rinp)
     // do nothing with the packet
 }
 
-RtpProfile::SsrcGate *RtpProfile::findSSRCGate(uint32 ssrc)
+RtpProfile::SsrcGate *RtpProfile::findSSRCGate(uint32_t ssrc)
 {
     auto objectIndex = _ssrcGates.find(ssrc);
     if (objectIndex == _ssrcGates.end())
@@ -280,7 +288,7 @@ RtpProfile::SsrcGate *RtpProfile::findSSRCGate(uint32 ssrc)
     return objectIndex->second;
 }
 
-RtpProfile::SsrcGate *RtpProfile::newSSRCGate(uint32 ssrc)
+RtpProfile::SsrcGate *RtpProfile::newSSRCGate(uint32_t ssrc)
 {
     SsrcGate *ssrcGate = new SsrcGate(ssrc);
     bool assigned = false;

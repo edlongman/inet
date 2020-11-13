@@ -1,9 +1,8 @@
-#ifndef __INET_OSPFV3NEIGHBORSTATEINIT_H_
-#define __INET_OSPFV3NEIGHBORSTATEINIT_H_
+#ifndef __INET_OSPFV3NEIGHBORSTATEINIT_H
+#define __INET_OSPFV3NEIGHBORSTATEINIT_H
 
 #include "inet/routing/ospfv3/neighbor/Ospfv3Neighbor.h"
 #include "inet/routing/ospfv3/neighbor/Ospfv3NeighborState.h"
-#include "inet/common/INETDefs.h"
 
 namespace inet {
 namespace ospfv3 {
@@ -25,5 +24,5 @@ class INET_API Ospfv3NeighborStateInit : public Ospfv3NeighborState
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3NEIGHBORSTATEINIT_H_
+#endif
 

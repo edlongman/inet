@@ -1,10 +1,10 @@
 //
 // Copyright (C) 2019 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 3
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,9 +12,10 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
-// Authors: Zoltan Bojthe
+
+#include "inet/routing/pim/Pim.h"
 
 #include "inet/common/IProtocolRegistrationListener.h"
 #include "inet/common/ProtocolTag_m.h"
@@ -23,7 +24,6 @@
 #include "inet/networklayer/common/IpProtocolId_m.h"
 #include "inet/networklayer/common/L3AddressTag_m.h"
 #include "inet/networklayer/common/L3Tools.h"
-#include "inet/routing/pim/Pim.h"
 
 namespace inet {
 
@@ -52,15 +52,14 @@ void Pim::initialize(int stage)
             // the PIM register header (8).  The Next Header value used in the
             // pseudo-header is 103.
 #ifdef WITH_IPv6
-            auto ipv6 = dynamic_cast<INetfilter *>(getModuleByPath("^.ipv6.ipv6"));
+            auto ipv6 = dynamic_cast<INetfilter *>(findModuleByPath("^.ipv6.ipv6"));
             if (ipv6 != nullptr)
                 ipv6->registerHook(0, &crcInsertion);
 #endif
         }
     }
     else if (stage == INITSTAGE_ROUTING_PROTOCOLS) {
-        registerService(Protocol::pim, nullptr, gate("networkLayerIn"));
-        registerProtocol(Protocol::pim, gate("networkLayerOut"), nullptr);
+        registerProtocol(Protocol::pim, gate("networkLayerOut"), gate("networkLayerIn"));
     }
 }
 

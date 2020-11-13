@@ -12,12 +12,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program.  If not, see http://www.gnu.org/licenses/.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
+
+#include "inet/linklayer/ieee80211/mac/framesequence/FrameSequenceHandler.h"
 
 #include "inet/common/INETUtils.h"
 #include "inet/linklayer/ieee80211/mac/framesequence/FrameSequenceContext.h"
-#include "inet/linklayer/ieee80211/mac/framesequence/FrameSequenceHandler.h"
 #include "inet/linklayer/ieee80211/mac/framesequence/FrameSequenceStep.h"
 
 namespace inet {
@@ -146,17 +147,20 @@ void FrameSequenceHandler::finishFrameSequenceStep()
 void FrameSequenceHandler::finishFrameSequence()
 {
     EV_INFO << "Frame sequence finished.\n";
+    auto inProgressFrames = context->getInProgressFrames();
     callback->frameSequenceFinished();
     delete context;
     delete frameSequence;
     context = nullptr;
     frameSequence = nullptr;
     callback = nullptr;
+    inProgressFrames->clearDroppedFrames();
 }
 
 void FrameSequenceHandler::abortFrameSequence()
 {
     EV_INFO << "Frame sequence aborted.\n";
+    auto inProgressFrames = context->getInProgressFrames();
     auto step = context->getLastStep();
     auto failedTxStep = check_and_cast<ITransmitStep*>(dynamic_cast<IReceiveStep*>(step) ? context->getStepBeforeLast() : step);
     auto frameToTransmit = failedTxStep->getFrameToTransmit();
@@ -173,6 +177,7 @@ void FrameSequenceHandler::abortFrameSequence()
     context = nullptr;
     frameSequence = nullptr;
     callback = nullptr;
+    inProgressFrames->clearDroppedFrames();
 }
 
 FrameSequenceHandler::~FrameSequenceHandler()

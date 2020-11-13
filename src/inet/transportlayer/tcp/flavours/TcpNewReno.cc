@@ -12,13 +12,15 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
+#include "inet/transportlayer/tcp/flavours/TcpNewReno.h"
 
 #include <algorithm>    // min,max
 
 #include "inet/transportlayer/tcp/Tcp.h"
-#include "inet/transportlayer/tcp/flavours/TcpNewReno.h"
 
 namespace inet {
 namespace tcp {
@@ -44,8 +46,8 @@ void TcpNewReno::recalculateSlowStartThreshold()
 
     // set ssthresh to flight size / 2, but at least 2 SMSS
     // (the formula below practically amounts to ssthresh = cwnd / 2 most of the time)
-    uint32 flight_size = std::min(state->snd_cwnd, state->snd_wnd);    // FIXME TODO - Does this formula computes the amount of outstanding data?
-    // uint32 flight_size = state->snd_max - state->snd_una;
+    uint32_t flight_size = std::min(state->snd_cwnd, state->snd_wnd);    // FIXME TODO - Does this formula computes the amount of outstanding data?
+    // uint32_t flight_size = state->snd_max - state->snd_una;
     state->ssthresh = std::max(flight_size / 2, 2 * state->snd_mss);
 
     conn->emit(ssthreshSignal, state->ssthresh);
@@ -94,7 +96,7 @@ void TcpNewReno::processRexmitTimer(TcpEventCode& event)
     conn->retransmitOneSegment(true);
 }
 
-void TcpNewReno::receivedDataAck(uint32 firstSeqAcked)
+void TcpNewReno::receivedDataAck(uint32_t firstSeqAcked)
 {
     TcpTahoeRenoFamily::receivedDataAck(firstSeqAcked);
 
@@ -126,7 +128,7 @@ void TcpNewReno::receivedDataAck(uint32 firstSeqAcked)
             // Exit Fast Recovery: deflating cwnd
             //
             // option (1): set cwnd to min (ssthresh, FlightSize + SMSS)
-            uint32 flight_size = state->snd_max - state->snd_una;
+            uint32_t flight_size = state->snd_max - state->snd_una;
             state->snd_cwnd = std::min(state->ssthresh, flight_size + state->snd_mss);
             EV_INFO << "Fast Recovery - Full ACK received: Exit Fast Recovery, setting cwnd to " << state->snd_cwnd << "\n";
             // option (2): set cwnd to ssthresh
@@ -223,7 +225,7 @@ void TcpNewReno::receivedDataAck(uint32 firstSeqAcked)
         }
         else {
             // perform Congestion Avoidance (RFC 2581)
-            uint32 incr = state->snd_mss * state->snd_mss / state->snd_cwnd;
+            uint32_t incr = state->snd_mss * state->snd_mss / state->snd_cwnd;
 
             if (incr == 0)
                 incr = 1;
@@ -260,7 +262,7 @@ void TcpNewReno::receivedDuplicateAck()
 {
     TcpTahoeRenoFamily::receivedDuplicateAck();
 
-    if (state->dupacks == DUPTHRESH) {    // DUPTHRESH = 3
+    if (state->dupacks == state->dupthresh) {
         if (!state->lossRecovery) {
             // RFC 3782, page 4:
             // "1) Three duplicate ACKs:
@@ -276,7 +278,7 @@ void TcpNewReno::receivedDuplicateAck()
             // the acknowledgement "ack_number" covers more than "recover" when:
             //      ack_number - 1 > recover;"
             if (state->snd_una - 1 > state->recover) {
-                EV_INFO << "NewReno on dupAcks == DUPTHRESH(=3): perform Fast Retransmit, and enter Fast Recovery:";
+                EV_INFO << "NewReno on dupAcks == DUPTHRESH(=" << state->dupthresh << ": perform Fast Retransmit, and enter Fast Recovery:";
 
                 // RFC 3782, page 4:
                 // "1A) Invoking Fast Retransmit:
@@ -311,7 +313,7 @@ void TcpNewReno::receivedDuplicateAck()
                 sendData(false);
             }
             else {
-                EV_INFO << "NewReno on dupAcks == DUPTHRESH(=3): not invoking Fast Retransmit and Fast Recovery\n";
+                EV_INFO << "NewReno on dupAcks == DUPTHRESH(=" << state->dupthresh << ": not invoking Fast Retransmit and Fast Recovery\n";
 
                 // RFC 3782, page 4:
                 // "1B) Not invoking Fast Retransmit:
@@ -321,9 +323,9 @@ void TcpNewReno::receivedDuplicateAck()
                 // subsequent duplicate ACKs."
             }
         }
-        EV_INFO << "NewReno on dupAcks == DUPTHRESH(=3): TCP is already in Fast Recovery procedure\n";
+        EV_INFO << "NewReno on dupAcks == DUPTHRESH(=" << state->dupthresh << ": TCP is already in Fast Recovery procedure\n";
     }
-    else if (state->dupacks > DUPTHRESH) {    // DUPTHRESH = 3
+    else if (state->dupacks > state->dupthresh) {
         if (state->lossRecovery) {
             // RFC 3782, page 4:
             // "3) Fast Recovery:
@@ -335,7 +337,7 @@ void TcpNewReno::receivedDuplicateAck()
 
             conn->emit(cwndSignal, state->snd_cwnd);
 
-            EV_DETAIL << "NewReno on dupAcks > DUPTHRESH(=3): Fast Recovery: inflating cwnd by SMSS, new cwnd=" << state->snd_cwnd << "\n";
+            EV_DETAIL << "NewReno on dupAcks > DUPTHRESH(=" << state->dupthresh << ": Fast Recovery: inflating cwnd by SMSS, new cwnd=" << state->snd_cwnd << "\n";
 
             // RFC 3782, page 5:
             // "4) Fast Recovery, continued:

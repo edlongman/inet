@@ -3,7 +3,7 @@
 // University of Dortmund, Germany
 // faqir.yousaf@uni-dortmund.de
 //
-// Copyright (C) 2004 Andras Varga
+// Copyright (C) 2004 OpenSim Ltd.
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,20 +17,20 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 
 package inet.examples.mobileipv6;
 
 import inet.networklayer.configurator.ipv6.Ipv6FlatNetworkConfigurator;
-import inet.node.ethernet.EtherSwitch;
+import inet.node.ethernet.EthernetSwitch;
 import inet.node.ipv6.Router6;
 import inet.node.wireless.AccessPoint;
 import inet.node.xmipv6.CorrespondentNode6;
 import inet.node.xmipv6.HomeAgent6;
 import inet.node.xmipv6.WirelessHost6;
-import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
+import inet.physicallayer.wireless.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
 
 
 channel fiberline extends ned.DatarateChannel
@@ -91,7 +91,7 @@ network mIPv6Network
             parameters:
                 @display("p=566,172;i=device/accesspoint_s");
         }
-        switch: EtherSwitch {
+        switch: EthernetSwitch {
             parameters:
                 @display("p=405,467;i=device/hub_s");
         }

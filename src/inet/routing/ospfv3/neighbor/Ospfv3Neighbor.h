@@ -1,9 +1,8 @@
-#ifndef __INET_OSPFV3NEIGHBOR_H_
-#define __INET_OSPFV3NEIGHBOR_H_
+#ifndef __INET_OSPFV3NEIGHBOR_H
+#define __INET_OSPFV3NEIGHBOR_H
 
 #include <omnetpp.h>
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/packet/Packet.h"
 #include "inet/networklayer/contract/ipv4/Ipv4Address.h"
 #include "inet/routing/ospfv3/Ospfv3Common.h"
@@ -187,5 +186,5 @@ class Ospfv3Neighbor
 } // namespace ospfv3
 }//namespace inet
 
-#endif // __INET_OSPFV3NEIGHBOR_H_
+#endif
 

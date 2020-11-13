@@ -1,10 +1,10 @@
 //
-// Copyright (C) OpenSim Ltd.
+// Copyright (C) 2020 OpenSim Ltd.
 //
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,7 +12,7 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
 package inet.node.inet;
@@ -22,6 +22,7 @@ import inet.node.base.ApplicationLayerNodeBase;
 import inet.routing.contract.IBgp;
 import inet.routing.contract.IOspf;
 import inet.routing.contract.IPim;
+import inet.routing.contract.IEigrp;
 
 //
 // IPv4 router that supports wireless, Ethernet, PPP and external interfaces.
@@ -52,6 +53,7 @@ module Router extends ApplicationLayerNodeBase
         @display("i=abstract/router");
         @figure[submodules];
         forwarding = true;
+        bool hasEigrp = default(false);
         bool hasOspf = default(false);
         bool hasRip = default(false);
         bool hasBgp = default(false);
@@ -83,10 +85,19 @@ module Router extends ApplicationLayerNodeBase
             parameters:
                 @display("p=1125,76");
         }
+        eigrp: <"EigrpProcessDS"> like IEigrp if hasEigrp {
+            parameters:
+                enableIPv6 = hasIpv6;
+                enableIPv4 = hasIpv4;
+                @display("p=1113,225");
+        }
 
     connections allowunconnected:
         ospf.ipOut --> tn.in++ if hasOspf;
         ospf.ipIn <-- tn.out++ if hasOspf;
+
+        eigrp.ipOut --> tn.in++ if hasEigrp;
+        eigrp.ipIn <-- tn.out++ if hasEigrp;
 
         bgp.socketOut --> at.in++ if hasBgp;
         bgp.socketIn <-- at.out++ if hasBgp;

@@ -1,28 +1,23 @@
-/* -*- mode:c++ -*- ********************************************************
- * file:        IMobility.h
- *
- * author:      Levente Meszaros
- *
- * copyright:   (C) 2004 Telecommunication Networks Group (TKN) at
- *              Technische Universitaet Berlin, Germany.
- *
- *              (C) 2005 Andras Varga
- *
- *              This program is free software; you can redistribute it
- *              and/or modify it under the terms of the GNU General Public
- *              License as published by the Free Software Foundation; either
- *              version 2 of the License, or (at your option) any later
- *              version.
- *              For further information see file COPYING
- *              in the top level directory
- ***************************************************************************
- * part of:     framework implementation developed by tkn
- *************************************************************************/
+//
+// Copyright (C) 2020 OpenSim Ltd.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
 
 #ifndef __INET_IMOBILITY_H
 #define __INET_IMOBILITY_H
 
-#include "inet/common/INETDefs.h"
 #include "inet/common/geometry/common/Coord.h"
 #include "inet/common/geometry/common/Quaternion.h"
 
@@ -47,7 +42,6 @@ namespace inet {
  * along the X axis rotates Y into Z (leans right).
  *
  * @ingroup mobility
- * @author Levente Meszaros
  */
 class INET_API IMobility
 {
@@ -64,47 +58,47 @@ class INET_API IMobility
     virtual double getMaxSpeed() const = 0;
 
     /**
-     * Returns the current position at the current simulation time.
+     * Returns the position at the current simulation time.
      */
-    virtual Coord getCurrentPosition() = 0;
+    virtual const Coord& getCurrentPosition() = 0;
 
     /**
-     * Returns the current velocity at the current simulation time.
+     * Returns the velocity at the current simulation time.
      */
-    virtual Coord getCurrentVelocity() = 0;
+    virtual const Coord& getCurrentVelocity() = 0;
 
     /**
-     * Returns the current acceleration at the current simulation time.
+     * Returns the acceleration at the current simulation time.
      */
-    virtual Coord getCurrentAcceleration() = 0;
+    virtual const Coord& getCurrentAcceleration() = 0;
 
     /**
-     * Returns the current angular position at the current simulation time.
+     * Returns the angular position at the current simulation time.
      */
-    virtual Quaternion getCurrentAngularPosition() = 0;
+    virtual const Quaternion& getCurrentAngularPosition() = 0;
 
     /**
-     * Returns the current angular velocity at the current simulation time.
+     * Returns the angular velocity at the current simulation time.
      */
-    virtual Quaternion getCurrentAngularVelocity() = 0;
+    virtual const Quaternion& getCurrentAngularVelocity() = 0;
 
     /**
-     * Returns the current angular acceleration at the current simulation time.
+     * Returns the angular acceleration at the current simulation time.
      */
-    virtual Quaternion getCurrentAngularAcceleration() = 0;
+    virtual const Quaternion& getCurrentAngularAcceleration() = 0;
 
     /**
-     * Returns the maximum positions along each axes.
+     * Returns the maximum position along each axes for.
      */
-    virtual Coord getConstraintAreaMax() const = 0;
+    virtual const Coord& getConstraintAreaMax() const = 0;
 
     /**
-     * Returns the minimum positions along each axes.
+     * Returns the minimum position along each axes for.
      */
-    virtual Coord getConstraintAreaMin() const = 0;
+    virtual const Coord& getConstraintAreaMin() const = 0;
 };
 
 } // namespace inet
 
-#endif // ifndef __INET_IMOBILITY_H
+#endif
 

@@ -12,7 +12,8 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with this program; if not, see <http://www.gnu.org/licenses/>.
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
 package inet.applications.ethernet;
@@ -21,7 +22,7 @@ package inet.applications.ethernet;
 // A simple traffic generator for the Ethernet model and the 802.11 model,
 // and generally for any L2 model that accepts ~Ieee802SapReq tags on the
 // packets. It generates packets containing ~EtherAppReq chunks. It should
-// be connected directly to ~EtherEncap/~Ieee8022Llc.
+// be connected directly to ~EthernetEncapsulation/~Ieee8022Llc.
 //
 simple EtherAppClient
 {
